@@ -1,7 +1,7 @@
-/* CS342 Term Project Part III: Addition of Characters and Inheritance
+/* CS342 Term Project Part IV: Combination and Extension
  * Name:   Shyam Patel
  * NetID:  spate54
- * Date:   Oct 24, 2018
+ * Date:   Nov 14, 2018
  */
 
 import java.util.Scanner;
