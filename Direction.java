@@ -60,7 +60,7 @@ public class Direction
         lockPattern = 1;
     }
 
-    public Direction(Scanner scn)
+    public Direction(Scanner scn, int ver)
     {
         Scanner sc = new Scanner(CleanLineScanner.gameFileParser(scn, d_delim_Pattern));
 

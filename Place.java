@@ -40,7 +40,7 @@ public class Place
             allPlacesMap.put(PID, this);
     }
 
-    public Place(Scanner scn)
+    public Place(Scanner scn, int ver)
     {
         StringBuilder desc = new StringBuilder();
         Scanner sc = new Scanner(CleanLineScanner.gameFileParser(scn, g_delim_Pattern));
@@ -214,4 +214,21 @@ public class Place
             System.out.println("\n");
         }
     }
+    
+    public static int getSizePlaces()
+    {
+        return allPlacesMap.size();
+    }
+    
+    public static HashMap<Integer,Place> getPlaceDirectory(){ return allPlacesMap;}
+    
+    // return random place other than nowhere and exit
+    public static Place getRandomPlace() {
+        // make list of place IDs
+        ArrayList<Integer> IDs = new ArrayList<Integer>(allPlacesMap.keySet());
+        // get random ID from list (excluding nowhere and exit)
+        int randomID = IDs.get(2 + new Random().nextInt(IDs.size() - 2));
+
+        return allPlacesMap.get(randomID);   // return place
+    }//end getRandomPlace()
 }
