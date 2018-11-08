@@ -73,17 +73,17 @@ public class Character {
 
  //parameter constructor, also accounts for a random starting place if 0
  // happens to be the first place read in
- public Character(int HP, String name, String description, int firstPlace,
+ public Character(int id, String name, String description, int firstPlace,
                   String charType){
-        this.HP = HP;
+        this.CHARID = id;
         this.name = name;
         this.description = description;
         indexCurrentPlace = firstPlace;
         if(charType.equalsIgnoreCase("NPC")){
-            chooser = new AI();
+            dm = new AI();
         }
         else{
-            chooser = new UI();
+            dm = new UI();
         }
         if(indexCurrentPlace == 0){
             Random rand = new Random();
@@ -111,6 +111,8 @@ public class Character {
     public int getIndexCurrentPlace(){
         return indexCurrentPlace;
     }
+    
+/*************    
     public void makeMove(){ //makes the move specified in the Move object
         Move nextMove = chooser.getMove(this,
                 Place.getPlacebyID(this.indexCurrentPlace)); //actually make
@@ -167,7 +169,7 @@ public class Character {
                     // artifact
                     if(a.name().equalsIgnoreCase(nextMove.getArgument())) {
                         //if found tries to use the artifact on each direction
-                        a.use(this, Place.getPlaceByID(this.indexCurrentPlace));
+                        a.use(this, Place.getPlacebyID(this.indexCurrentPlace));
                         change = true;
                         break;
                     }
@@ -196,18 +198,20 @@ public class Character {
             }
         }
     }
+*********************/
+    
     public void print(){
-        System.out.println("Player name: " + name + " Current HP: " + HP +
+        System.out.println("Player name: " + name + " ID: " + CHARID +
                 "\nDescription: " + description + "\nCurrent Place: " + indexCurrentPlace);
     }
     public void display(){
-        System.out.println(name + "'s turn" + "\nCurrent HP: " + HP + "\n" +
+        System.out.println(name + "'s turn" + "\nCurrent ID: " + CHARID + "\n" +
                 "--------------------------------------------");
     }
     public void getArtifact(Character c, String arti) {	//checks to see if the
         // artifact
         // is in the room, then adds to player inventory
-        Artifact a = Place.getPlacebyID(c.indexCurrentPlace).getArtifact(arti);
+        Artifact a = Place.getPlacebyID(c.indexCurrentPlace).removeArtifactByName(arti);
 
         if (a == null) {	//if not in room
             if(isPlayer)
@@ -232,9 +236,11 @@ public class Character {
     public void addArtifact(Artifact a){
         inventory.add(a);
     }
-    public int getHP(){
+    
+   /* public int getHP(){
         return HP;
-    }
+    }*/
+    
     public boolean isPlayer(){ return  isPlayer;}   //player vs npc
     public Vector<Artifact> getInventory() {return  inventory;}
     public boolean quit(){ return quit;}//used to quit the game
