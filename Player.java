@@ -37,7 +37,7 @@ public class Player extends Character {
     // get next move from player and execute it, returning false for all
     // move executions except for "GO" (success returns true)
     public boolean makeMove() {
-        Move m = dm.getMove(this); // get move
+        Move m = dm.getMove(this,currPlace); // get move
         return m.execute();        // execute move
     }//end makeMove()
 
@@ -48,7 +48,7 @@ public class Player extends Character {
         ArrayList<Artifact> matches = new ArrayList<Artifact>();
 
         // iterate thru Place object's collection of artifacts
-        for (Artifact a : artifacts) {
+        for (Artifact a : inventory) {
             if (a.match(str)) {     // exact match found :
                 matches.add(a);     //   add it to list of matches,
                 return matches;     //   and return it
@@ -56,7 +56,7 @@ public class Player extends Character {
         }//end for...
 
         // iterate thru Place object's collection of artifacts
-        for (Artifact a : artifacts) {
+        for (Artifact a : inventory) {
             if (a.matchTokens(str)) // potential match found :
                 matches.add(a);     //   add it to list of matches
         }//end for...
@@ -67,7 +67,7 @@ public class Player extends Character {
 
     // check if player has reached exit for use in play() method's "GO" command
     public boolean reachedExit() {
-        if (currPlace == Place.getPlaceByID(1)) {
+        if (currPlace == Place.getPlacebyID(1)) {
             System.out.printf("You've reached the exit. Thanks for playing!\n");
             return true; // reached
         }
@@ -80,7 +80,7 @@ public class Player extends Character {
         for (int i = 0; i < newlines; i++) // # of newlines :
             System.out.printf("\n");       //   print newline
 
-        currPlace.display(this);           // display current place
+        currPlace.display();           // display current place
     }//end look();
 
 
@@ -88,26 +88,26 @@ public class Player extends Character {
     // "INVE" and "GET" commands
     public void inve() {
         System.out.printf("\n");                                 // newline
-        UI.printHeader(String.format("%s's Inventory", name())); // print header
+        UI.printHeader(String.format("%s's Inventory", name)); // print header
 
-        if      (artifacts.size() == 0)  // player doesn't possess artifacts
+        if      (inventory.size() == 0)  // player doesn't possess artifacts
             UI.printFormat(String.format("%s, you currently possess no " +
                            "artifacts.\nUse the \'GET\' and \'DROP\' "   +
                            "commands to pick up and drop artifacts.",
-                           name().replace("The ", "").replace("A ", "")));
-        else if (artifacts.size() == 1)  // player possesses one artifact
+                           name.replace("The ", "").replace("A ", "")));
+        else if (inventory.size() == 1)  // player possesses one artifact
             UI.printFormat(String.format("%s, you currently possess the " +
                            "following artifact.",
-                           name().replace("The ", "").replace("A ", "")));
+                           name.replace("The ", "").replace("A ", "")));
         else                             // player possesses multiple artifacts
             UI.printFormat(String.format("%s, you currently possess the " +
                            "following artifacts.",
-                           name().replace("The ", "").replace("A ", "")));
+                           name.replace("The ", "").replace("A ", "")));
 
         int count         = 0;           // # of artifacts
         int totalValue    = 0;           // total value
         int totalMobility = 0;           // total weight
-        for (Artifact a : artifacts) {   // iterate thru artifacts :
+        for (Artifact a : inventory) {   // iterate thru artifacts :
             totalValue    += a.value();  //   add to total value
             totalMobility += a.weight(); //   add to total weight
             a.inventory(++count);        //   display inventory info
