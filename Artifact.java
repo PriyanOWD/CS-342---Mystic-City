@@ -20,7 +20,7 @@ public class Artifact {
 
     // constructor for Artifact class
     public Artifact(Scanner sc, int ver) {
-        if (ver < 3) return;                                 // unsupported ver
+        if (ver < 30) return;                                // unsupported ver
         try {
             Scanner s   = new Scanner(CleanLineScanner.getCleanLine(sc));
             int source  = s.nextInt();                       // get source ID
@@ -46,7 +46,7 @@ public class Artifact {
                     description += CleanLineScanner.getCleanLine(sc);
             }//end for...
 
-            if (ver < 4 || source > 0)                       // source > 0 :
+            if (ver < 40 || source > 0)                      // source > 0 :
                 Place.getPlacebyID(source).addArtifact(this);//   given  place
             else if (source == 0)                            // source = 0 :
                 Place.getRandomPlace().addArtifact(this);    //   random place
@@ -138,7 +138,6 @@ public class Artifact {
 //        }
         else
             charPlaceVar.useKey(this);
-        return;
     }
 
 

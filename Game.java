@@ -47,25 +47,26 @@ public class Game {
             numPlayers = num;                        // set # of players
 
             Scanner s  = new Scanner(CleanLineScanner.getCleanLine(sc));
-            ver        = (int) s.skip("GDF").nextDouble();  // set version
-            name       = CleanLineScanner.getCleanLine(s);  // set name
-            s.close();                                      // close scanner
+            ver        = Integer.parseInt(s.skip("GDF").next().replace(".",""));
+            name       = CleanLineScanner.getCleanLine(s);   // set name
+            s.close();                                       // close scanner
 
-                                                            // allocate :
-            new Place(0, "nowhere", "");                    //   nowhere
-            new Place(1, "exit",    "");                    //   exit
-            allocateObjects(sc, "PLACES"    );              //   places
-            allocateObjects(sc, "DIRECTIONS");              //   directions
-            if (ver > 3) allocateObjects(sc, "CHARACTERS"); //   characters
+                                                             // allocate :
+            new Place(0, "nowhere", "");                     //   nowhere
+            new Place(1, "exit",    "");                     //   exit
+            allocateObjects(sc, "PLACES"    );               //   places
+            allocateObjects(sc, "DIRECTIONS");               //   directions
+            if (ver > 39) allocateObjects(sc, "CHARACTERS"); //   characters
             else {
                 if (numPlayers < 1) numPlayers = UI.requestNumPlayers();
-                allocatePlayers(0);                         //   (manual entry)
+                allocatePlayers(0);                          //   (manual entry)
             }
-            if (ver > 2) allocateObjects(sc, "ARTIFACTS" ); //   artifacts
+            if      (ver > 50) allocateArtifacts(sc);        //   artifacts
+            else if (ver > 29) allocateObjects(sc, "ARTIFACTS");
 
-            System.out.printf("\nWelcome to %s!\n",         // print name
+            System.out.printf("\nWelcome to %s!\n",          // print name
                               name().replace("\t", " ").replace("!", ""));
-        } catch (Exception e) { e.printStackTrace(); }      // exception
+        } catch (Exception e) { e.printStackTrace(); }       // exception
     }//end class constructor
 
 
@@ -119,6 +120,26 @@ public class Game {
                 allocatePlayers(playerNum);            // allocate remaining
         } catch (Exception e) { e.printStackTrace(); } // exception
     }//end allocateObjects()
+
+
+    // allocate artifacts according to type (v5.1+)
+    private void allocateArtifacts(Scanner sc) {
+        try {
+            Scanner s = new Scanner(CleanLineScanner.getCleanLine(sc));
+            int num   = s.skip("ARTIFACTS").nextInt(); // get # of artifacts
+            s.close();                                 // close scanner
+
+            for (int i = 0; i < num; i++) {            // allocate artifacts :
+                String type = CleanLineScanner.getCleanLine(sc);
+                if      (type.equals("ARMOR" )) new Armor   (sc, version());
+                else if (type.equals("WEAPON")) new Weapon  (sc, version());
+                else if (type.equals("FOOD"  )) new Food    (sc, version());
+                else if (type.equals("POTION")) new Potion  (sc, version());
+                else                            new Artifact(sc, version());
+            }//end for...
+        } catch (Exception e) { e.printStackTrace(); } // exception
+    }//end allocateArtifacts()
+
 
     // allocate remaining players and support pre-4.0 backward compatibility
     private void allocatePlayers(int num) {
