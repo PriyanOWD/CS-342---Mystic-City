@@ -19,11 +19,13 @@ import java.util.regex.Pattern;
 public class Place
 {
 
-    static final TreeMap<Integer, Place> allPlacesMap; // Can optionally make hashmap public --- use
+    static final TreeMap<Integer, Place> allPlacesMap;
+    static Place entryPlace;
     // DoubleBraceInitialization??
     static
     {
         allPlacesMap = new TreeMap<Integer, Place>();
+        entryPlace   = null;
     }
 
     public static Place getPlacebyID(int id)
@@ -74,6 +76,8 @@ public class Place
 
         if (!allPlacesMap.containsKey(PID))
             allPlacesMap.put(PID, this);
+        if (entryPlace == null)
+            entryPlace = this;
         sc.close();
     }
 
@@ -86,11 +90,6 @@ public class Place
     {
         return PNAME;
     }
-/*
-    public String description()
-    {
-        return PDESCRIPTION;
-    }*/
 
     public void addDirection(Direction dir)
     {
@@ -244,10 +243,7 @@ public class Place
         UI.printDivider(1);
     }
 
-    public static int getSizePlaces()
-    {
-        return allPlacesMap.size();
-    }
+    public static Place getEntryPlace() { return entryPlace; }
 
     public static TreeMap<Integer,Place> getPlaceDirectory() { return allPlacesMap; }
 

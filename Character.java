@@ -4,184 +4,127 @@
  * Date:   Nov 14, 2018
  */
 
-import java.util.Map;
-import java.util.Random;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.Vector;
 
 
-public abstract class Character{
-  //Each players inventory
+public abstract class Character
+{
+    // each players inventory
     protected Vector<Artifact> inventory;
     protected static TreeMap<Integer, Character> characterTree;
     protected String name = "";
     protected int CHARID;
     protected String description = "";
     protected DecisionMaker dm;
-    protected int indexCurrentPlace;
     protected Place currPlace;
-    protected boolean isPlayer;
-    protected boolean quit = false;
-    
-    static{
+
+    static
+    {
         characterTree = new TreeMap<Integer, Character>();
     }
 
-    //scanner constructor, creates the character based off the file by using
+    // scanner constructor, creates the character based off the file by using
     // StringTokenizer to parse each line
     public Character(Scanner in, int ver)
     {
         String line = in.nextLine();
         while (line.length() == 0 || line.startsWith("//")|| line.trim().startsWith("//")) 
-        {	//skips empty and comments
+        {	// skips empty and comments
             line = in.nextLine();
         }
         StringTokenizer st = new StringTokenizer(line);
 
-        indexCurrentPlace = Integer.valueOf(st.nextToken());
+        int indexCurrentPlace = Integer.valueOf(st.nextToken());
         line = in.nextLine();
         st = new StringTokenizer(line);
         CHARID = Integer.valueOf(st.nextToken());
-        while( st.hasMoreTokens() )
-        {    //creates the name of the artifact
+        while (st.hasMoreTokens())
+        {   // creates the name of the artifact
             String nameS = st.nextToken();
-
-            if (name.equals("")) 
-            {
+            if (name.equals(""))
                 name = nameS;
-            } else 
-            {
+            else
                 name += " " + nameS;
-            }
         }
         line = in.nextLine();
         st = new StringTokenizer(line);
         int numLines = Integer.valueOf(st.nextToken());
         int i =0;
-        while(i < numLines) 
-        {	//creates the description
+        while (i < numLines)
+        {	// creates the description
             description += in.nextLine() + "\n";
             i++;
         }
         inventory = new Vector<Artifact>();
         
-        if(indexCurrentPlace == 0)
-        {
-            indexCurrentPlace = Place.getRandomPlace().getIndex();
-            Place.getPlacebyID(indexCurrentPlace).addCharacter(this);
-        }
-        else 
-        {
-            Place.getPlacebyID(indexCurrentPlace).addCharacter(this);
-        }
-        
-        currPlace = Place.getPlacebyID(indexCurrentPlace);
+        if (indexCurrentPlace == 0)
+            currPlace = Place.getRandomPlace();
+        else
+            currPlace = Place.getPlacebyID(indexCurrentPlace);
+
+        currPlace.addCharacter(this);
         if (!characterTree.containsKey(CHARID))
             characterTree.put(CHARID, this);
     }
 
-    public Character(int _id, String _name, String _desc){
+    public Character(int _id, String _name, String _desc)
+    {
         CHARID = _id;
         name = _name;
         description = _desc;
 
         inventory = new Vector<Artifact>();
 
-        Random rand = new Random();
-
-        int rndPlaceID = rand.nextInt(Place.getSizePlaces()-2) + 2;
-        currPlace = Place.getPlacebyID(rndPlaceID);
-}
-
-
-
-//parameter constructor, also accounts for a random starting place if 0
-// happens to be the first place read in
-public Character(int id, String name, String description, int firstPlace,
-        String charType){
-    this.CHARID = id;
-    this.name = name;
-    this.description = description;
-    indexCurrentPlace = firstPlace;
-    if(charType.equalsIgnoreCase("NPC")){
-        dm = new AI();
+        currPlace = Place.getEntryPlace();
     }
-    else{
-        dm = new UI();
+
+
+    public static Character getCharacterbyID(int ID)
+    {
+        return characterTree.get(ID);
     }
-    if(indexCurrentPlace == 0){
-        Random rand = new Random();
-        int random = rand.nextInt(Place.getSizePlaces()) + 1;
-        int count = 1;
-        for(Map.Entry<Integer,Place> p : Place.getPlaceDirectory().entrySet()){
-            if(count == random){
-                p.getValue().addCharacter(this);
-                break;
-            }
-            else ++count;
-        }
+
+    public void display()
+    {
+        UI.printFormat(String.format("In your midst is %s.\n%s",
+                       name.replace("The ", "the ").replace("A ", "a "), description));
     }
-    else {
-        Place.getPlacebyID(indexCurrentPlace).addCharacter(this);
+
+    public void print()
+    {
+        UI.printFormat(String.format("C%-5s%s\n%s", CHARID, name,
+                       description.replaceAll("(?m)^", "      ")));
     }
-    inventory = new Vector<>();
-}
 
-public static Character getCharacterbyID(int ID){   
-        return characterTree.get(ID); 
-}
-
-public int getIndexCurrentPlace(){
-    return indexCurrentPlace;
-}
-
-public abstract boolean makeMove();
-
-public void display() {
-    UI.printFormat(String.format("In your midst is %s.\n%s",
-                   name.replace("The ", "the ").replace("A ", "a "), description));
-}
-
-public void print() {
-    UI.printFormat(String.format("C%-5s%s\n%s", CHARID, name,
-                   description.replaceAll("(?m)^", "      ")));
-}
-
-public void removeArtifact(Artifact a) {    //removes
-    // artifact from player inventory and adds to place artifacts
-    String name = a.name();
-    Place.getPlacebyID(this.indexCurrentPlace).addArtifact(a);
-    inventory.remove(a);
-    if (isPlayer) {//makes sure the player gets the message, npc does not
-        // need it
-        System.out.println(name + " was dropped in this room.\n");
+    public void removeArtifact(Artifact a)
+    {
+        inventory.remove(a);
     }
-}
 
-public void addArtifact(Artifact a){
-    inventory.add(a);
-}
+    public void addArtifact(Artifact a)
+    {
+        inventory.add(a);
+    }
 
-public Artifact getArtifact()             
-{
-    if (inventory.size() > 0) 
-        return inventory.get(0);
-    else                      
-        return null;
-}
+    public Artifact getArtifact()
+    {
+        if (inventory.size() > 0)
+            return inventory.get(0);
+        else
+            return null;
+    }
 
-// return character's current place name
-public String   placeName()              { return currPlace.name(); }
-// return character's current place
-public Place    getCurrentPlace()        { return currPlace;        }
-// set    character's current place
-public void     setCurrentPlace(Place p) { currPlace = p;           }
-// return character name
-public String   name()                   { return name;             }
-// return player vs NPC
-public boolean isPlayer()                {  return  isPlayer;       }
-// return inventory
-public Vector<Artifact> getInventory()   { return  inventory;       }
+    // return character's current place name
+    public String   placeName()              { return currPlace.name(); }
+    // return character's current place
+    public Place    getCurrentPlace()        { return currPlace;        }
+    // set    character's current place
+    public void     setCurrentPlace(Place p) { currPlace = p;           }
+    // return character name
+    public String   name()                   { return name;             }
+    // abstract method : make move
+    public abstract boolean makeMove();
 }
