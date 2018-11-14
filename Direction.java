@@ -9,10 +9,8 @@ import java.util.regex.Pattern;
 
 public class Direction
 {
-
     private enum dirType
     {
-
         None("None", "None"), N("North", "N"), S("South", "S"), E("East", "E"), W("West", "W"), U("Up", "U"), 
         D("Down","D"), NE("NorthEast", "NE"), NW("NorthWest", "NW"), SE("SouthEast", "SE"), SW("SouthWest","SW"), 
         NNE("North-NorthEast", "NNE"), NNW("North-NorthWest", "NNW"), ENE("East-NorthEast", "ENE"), WNW("West-NorthWest", "WNW"),
@@ -30,6 +28,10 @@ public class Direction
         public String toString()
         {
             return text;
+        }
+        public String   toAbbreviation()  
+        {
+            return abbreviation; 
         }
 
         public boolean match(String str)
@@ -175,4 +177,27 @@ public class Direction
                 + SOURCE.name() + "Name of target Place:" + DESTINATION.name());
         return;
     }
+    
+    
+    public Place getTo() { return DESTINATION; }
+    public boolean isValid() { return !DESTINATION.checkID(0) && !DESTINATION.checkID(1); }
+    
+    public static String matchDirection(String str) {
+        // iterate thru DirType enumerator constants
+        for (dirType dt : dirType.values())         // iterate thru DirTypes :
+            if (str.equals(dt.toString()) || str.equals(dt.toAbbreviation()))
+                return dt.toString().toLowerCase(); //   return match
+
+        return "\'" + str.toLowerCase() + "\'";     // return no match
+    }//end matchDirection()
+    
+    // return true if passed string has valid direction
+    public static boolean isDirection(String str) {
+        // iterate thru DirType enumerator constants
+        for (dirType dt : dirType.values()) // iterate thru DirTypes :
+            if (str.equals(dt.toString()) || str.equals(dt.toAbbreviation()))
+                return true;                //   return true
+
+        return false;                       // return false
+    }//end isDirection()
 }

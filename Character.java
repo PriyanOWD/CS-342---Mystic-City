@@ -1,7 +1,7 @@
 import java.util.*;
 
 
-public abstract class Character {
+public abstract class Character{
   //Each players inventory
     protected Vector<Artifact> inventory;
     protected static TreeMap<Integer, Character> characterTree;
@@ -266,11 +266,29 @@ public void addArtifact(Artifact a){
     inventory.add(a);
 }
 
+public Place getCurrentPlace()
+{
+    return currPlace;
+}
+
+public Artifact getArtifact()             
+{
+    if (inventory.size() > 0) 
+        return inventory.get(0);
+    else                      
+        return null;
+}
+
 /* public int getHP(){
         return HP;
     }*/
 
+// return character's current place name
+public String   placeName()                { return currPlace.name(); }
+
 public boolean isPlayer(){ return  isPlayer;}   //player vs npc
 public Vector<Artifact> getInventory() {return  inventory;}
 public boolean quit(){ return quit;}//used to quit the game
+// set    character's current place
+public void     setCurrentPlace(Place p)   { currPlace = p;           }
 }

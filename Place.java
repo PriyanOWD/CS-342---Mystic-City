@@ -110,6 +110,19 @@ public class Place
         }
     }
     
+//    public boolean useKey(Artifact a) {
+//        boolean hasLock = false;         // lock status
+//
+//        for (Direction d : paths) { // iterate thru directions :
+//            if (hasLock)                 //   has lock :
+//                d.useKey(a);             //     use key
+//            else                         //   doesn't have lock :
+//                hasLock = d.useKey(a);   //     use key + update status
+//        }//end for...
+//
+//        return hasLock;                  // return status
+//    }//end useKey()
+    
     public void addCharacter(Character charVar)
     {
         placeCharacters.add(charVar);
@@ -140,6 +153,20 @@ public class Place
         for (Artifact tmp : placeArtifacts)
         {
             if ((itemName.trim()).equals(tmp.name()))
+            {
+                Artifact retrieve = tmp;
+                placeArtifacts.remove(tmp);
+                return retrieve;
+            }
+        }
+        return null;
+    }
+    
+    public Artifact removeArtifact(Artifact item)
+    {
+        for (Artifact tmp : placeArtifacts)
+        {
+            if ((item.name().trim()).equals(tmp.name()))
             {
                 Artifact retrieve = tmp;
                 placeArtifacts.remove(tmp);
@@ -231,4 +258,67 @@ public class Place
 
         return allPlacesMap.get(randomID);   // return place
     }//end getRandomPlace()
+    
+    public int pathsCount()
+    {
+        return paths.size();
+    }
+    
+    public Direction getDirection(int index)
+    {
+        return paths.get(index);
+    }
+    
+    public int getIndex()
+    {
+        return PID;
+    }
+    public int artiCount()
+    {
+        return placeArtifacts.size();
+    }
+    
+    public Artifact getArtifactbyIndex(int index)
+    {
+        return placeArtifacts.get(index);
+    }
+    
+    // return artifact from collection of artifacts
+    public Artifact getArtifact()            {
+        if (placeArtifacts.size() > 0) return placeArtifacts.get(0);
+        else                      return null;
+    }//end getArtifact()
+    
+    // check if place has valid artifact corresponding to passed string
+    // and, if so, return list of matches
+    public ArrayList<Artifact> followArtifact(String str) {
+        ArrayList<Artifact> matches = new ArrayList<Artifact>();
+
+        // iterate thru place's collection of artifacts
+        for (Artifact a : placeArtifacts) {
+            if (a.match(str)) {     // exact match found :
+                matches.add(a);     //   add it to list of matches,
+                return matches;     //   and return it
+            }//end if...
+        }//end for...
+
+        // iterate thru place's collection of artifacts
+        for (Artifact a : placeArtifacts) {
+            if (a.matchTokens(str)) // potential match found :
+                matches.add(a);     //   add it to list of matches
+        }//end for...
+
+        return matches;             // return all matches
+    }//end followArtifact()
+    
+    // return random valid unlocked direction
+    public Place getRandomDestination() {
+        Collections.shuffle(paths);      // shuffle directions
+        for (Direction d : paths)        // iterate thru directions :
+            if (!d.isLocked() && d.isValid()) //   unlocked :
+                return d.follow();            //     return dest
+
+        return this;                          // none found : return this
+    }//end getRandomDestination()
+    
 }

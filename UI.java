@@ -1,45 +1,52 @@
 import java.util.Scanner;
+import java.util.*;
 
 public class UI implements DecisionMaker {
 
-    public Move getMove(Character c, Place p){
-            //c.display();
-            //p.print();	//gets the room information from place
-            Scanner keyboard  = KeyboardScanner.getKeyboardScanner();
-            String command = keyboard.nextLine();	//grabs the next input
-            int commandLength = command.length();
-                if(command.equalsIgnoreCase("QUIT") || command.equalsIgnoreCase("EXIT")) { //sanity check to exit the game
-                    return new Move(Move.MoveType.QUIT, "");
-                }
-                else if(command.equalsIgnoreCase("LOOK")) {
-                   return new Move(Move.MoveType.LOOK, "");	//displays the
-                    // current room again
-                }
-                else if(commandLength >= 2 && command.substring(0,2).equalsIgnoreCase("GO")) { //goes to the direction specified
-                    return new Move(Move.MoveType.GO, command.substring(3));
-                }
-                else if(commandLength >= 3 && command.substring(0,3).equalsIgnoreCase("GET")) {
-                    //remove from current place and add to inventory
-                    return new Move(Move.MoveType.GET, command.substring(4));
-                }
-                //returns drop with a specific object name to remove from
-                // inventory
-                else if(commandLength >= 4 && command.substring(0,4).equalsIgnoreCase("DROP")) {
-                    return new Move(Move.MoveType.DROP, command.substring(5));
-                }
-                //returns use command
-                else if(commandLength >= 3 && command.substring(0,3).equalsIgnoreCase("USE")) {
-                   return new Move(Move.MoveType.USE, command.substring(4));
-                }
-                //returns Inventory command
-                else if(commandLength >= 4 && command.substring(0,4).equalsIgnoreCase("INVE")) {
-                   return new Move(Move.MoveType.INVE, "");
-                }
-                else {
-                    //returns nothing for invalid command
-                    return new Move(Move.MoveType.NOTHING, "");
-                }
-            }
+    public Move getMove(Character c, Place p) {
+        System.out.printf(">> ");                          // command prompt
+        Scanner sc = KeyboardScanner.getKeyboardScanner(); // keyboard scanner
+        String  a  = sc.nextLine().trim().toUpperCase();   // read input arg
+
+        // "QUIT" command : quit game
+        if (a.matches(".*QUIT.*") || a.matches(".*EXIT.*") || a.equals("Q"))
+            return new Quit();
+
+        // "COMMANDS"     : display list of commands
+        else if (a.matches(".*COMMANDS.*"))
+            return new Commands();
+
+        // "LOOK" command : redisplay current place
+        else if (a.matches(".*LOOK.*"))
+            return new Look((Player) c);
+
+        // "GET"  command : get artifact from current place
+        else if (a.matches("GET.*"))
+            return new GetPlayer((Player) c, a);
+
+        // "DROP" command : drop artifact
+        else if (a.matches("DROP.*"))
+            return new DropPlayer((Player) c, a);
+
+        // "USE"  command : use artifact to unlock door
+        else if (a.matches("USE.*"))
+            return new Use((Player) c, a);
+
+        // "INVE" command : display player's possessions
+        else if (a.matches(".*INVE.*"))
+            return new Inventory((Player) c);
+
+        // "GO"   command : go to direction(s)
+        else if (a.matches("GO.*") || Direction.isDirection(a))
+            return new GoPlayer((Player) c, a);
+
+        // unknown command
+        else {
+            System.out.printf("Sorry, the command wasn\'t recognized. " +
+                              "Try one of the following.\n");
+            return new Commands();
+        }
+    }//end getMove()
 
 
     // request pathname to access game data when command line argument
@@ -174,4 +181,7 @@ public class UI implements DecisionMaker {
         for (int i = 0; i < newlines; i++)   // # of newlines :
             System.out.printf("\n");         //   print newline
     }//end printHeader()
-        }
+
+
+    
+}

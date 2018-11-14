@@ -33,12 +33,12 @@ public class Use extends Move {
                 int n = 1;
                 if (matches.size() == 1) {                // exact match :
                     Artifact a = matches.get(n - 1);      //   get artifact
-                    a.use(p.getCurrentPlace());           //   use artifact
+                    a.use(p ,p.getCurrentPlace());           //   use artifact
                 }
                 else {                                    // possible matches :
                     n = UI.requestNumber(matches, "use"); //   request match #
                     Artifact a = matches.get(n - 1);      //   get artifact
-                    a.use(p.getCurrentPlace());           //   use artifact
+                    a.use(p, p.getCurrentPlace());           //   use artifact
                 }
             }//end if...                                  // no match
             else System.out.printf("Sorry, you don\'t possess the artifact.\n");

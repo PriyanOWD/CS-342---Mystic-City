@@ -107,21 +107,39 @@ public class Artifact {
     }//end matchKey()
 
 
-    // use artifact
-    public void use(Place currPlace) {
-        if (pattern() > 0) {                            // key artifact :
-            if (!currPlace.useKey(this)) {              //   can't use :
-                if (currPlace.name().matches("Room.*")) //     place is room
-                    System.out.printf("Sorry, there are no locked doors " +
-                                      "in %s.\n",     currPlace.name());
-                else                                    //     place isn't room
-                    System.out.printf("Sorry, there are no locked doors " +
-                                      "in the %s.\n", currPlace.name());
-            }//end if...
-        }//end if...                                    // non-key artifact :
-        else System.out.printf("Sorry, the %s is not a key.\n",
-                               name().toLowerCase());
-    }//end use()
+    // Shyam's use artifact
+//    public void use(Place currPlace) {
+//        if (pattern() > 0) {                            // key artifact :
+//            if (!currPlace.useKey(this)) {              //   can't use :
+//                if (currPlace.name().matches("Room.*")) //     place is room
+//                    System.out.printf("Sorry, there are no locked doors " +
+//                                      "in %s.\n",     currPlace.name());
+//                else                                    //     place isn't room
+//                    System.out.printf("Sorry, there are no locked doors " +
+//                                      "in the %s.\n", currPlace.name());
+//            }//end if...
+//        }//end if...                                    // non-key artifact :
+//        else System.out.printf("Sorry, the %s is not a key.\n",
+//                               name().toLowerCase());
+//    }//end use()
+    
+    //Priyan's Use
+    
+    public void use(Character charVar, Place charPlaceVar)
+    {
+        if (keyPattern <= 0)
+            System.out.println("\nNot a key\n");
+//        else if (A_COMBINATION == 0)
+//            System.out.println("\nNot a key\n");
+//        else  (A_COMBINATION > 0)
+//            charPlaceVar.useKey(this);
+//        else
+//        {
+//        }
+        else
+            charPlaceVar.useKey(this);
+        return;
+    }
 
 
     // display artifact information for use in "LOOK" command
@@ -159,4 +177,14 @@ public class Artifact {
                            ID(), name(), pattern(), value(), weight(),
                            description().replaceAll("(?m)^", "      ")));
     }//end print()
+    
+    public boolean Master()
+    {
+        return keyPattern == -1;
+    }
+    
+    public boolean Match(Integer toMatch)
+    {
+        return keyPattern == toMatch;
+    }
 }//end Artifact class
