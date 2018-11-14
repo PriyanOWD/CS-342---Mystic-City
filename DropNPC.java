@@ -4,18 +4,6 @@
  * Date:   Nov 14, 2018
  */
 
-/* CS342 Term Project Part IV: Combination and Extension
- * Name:   Joey Voorhees
- * NetID:  svoorh2
- * Date:   Nov 14, 2018
- */
-
-/* CS342 Term Project Part IV: Combination and Extension
- * Name:   Priyan Sureshkumar
- * NetID:  psures5
- * Date:   Nov 14, 2018
- */
-
 // DropNPC class that inherits Drop abstract class and, in its execution,
 // is used to allow an NPC to attempt to drop one of its artifacts
 public class DropNPC extends Drop {
