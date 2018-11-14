@@ -181,8 +181,8 @@ public class Direction
         }
         else if (isLocked() && DESTINATION == Place.getPlacebyID(0))
         {
-            System.out.printf("Sorry, the %s can\'t unlock the door to " +
-                    "nowhere.\n", dirArtifact.name().toLowerCase());
+            System.out.printf("Sorry, the %s can\'t unlock the door " +
+                    "to nowhere.\n", dirArtifact.name().toLowerCase());
             return true;
         }
         return false;
