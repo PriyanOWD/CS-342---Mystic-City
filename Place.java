@@ -145,21 +145,6 @@ public class Place
         placeCharacters.remove(charVar);
     }
 
-    /*
-     * public Artifact get(String itemName)
-     * {
-     *      for (Artifact tmp: placeArtifacts )
-     *      {
-     *          if((itemName.trim()).equals(tmp.name()))
-     *          {
-     *          Artifact retrieve = tmp; placeArtifacts.remove(tmp);
-     *          return retrieve;
-     *          }
-     *      }
-     *      return null;
-     * }
-     */
-
     public Artifact removeArtifactByName(String itemName)
     {
         for (Artifact tmp : placeArtifacts)
@@ -245,8 +230,6 @@ public class Place
 
     public static Place getEntryPlace() { return entryPlace; }
 
-    public static TreeMap<Integer,Place> getPlaceDirectory() { return allPlacesMap; }
-
     // return random place other than nowhere and exit
     public static Place getRandomPlace() {
         // make list of place IDs
@@ -256,30 +239,6 @@ public class Place
 
         return allPlacesMap.get(randomID);   // return place
     }//end getRandomPlace()
-
-    public int pathsCount()
-    {
-        return paths.size();
-    }
-
-    public Direction getDirection(int index)
-    {
-        return paths.get(index);
-    }
-
-    public int getIndex()
-    {
-        return PID;
-    }
-    public int artiCount()
-    {
-        return placeArtifacts.size();
-    }
-
-    public Artifact getArtifactbyIndex(int index)
-    {
-        return placeArtifacts.get(index);
-    }
 
     // return artifact from collection of artifacts
     public Artifact getArtifact()            {
