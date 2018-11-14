@@ -50,7 +50,7 @@ public class Artifact {
                 Place.getPlacebyID(source).addArtifact(this);//   given  place
             else if (source == 0)                            // source = 0 :
                 Place.getRandomPlace().addArtifact(this);    //   random place
-            else { 
+            else {
                 Character c = Character.getCharacterbyID(-source);
                 c.addArtifact(this);                         //   character
             }
@@ -86,7 +86,7 @@ public class Artifact {
     // return true if passed string matches tokenized stored artifact
     public boolean matchTokens(String str) {
         if (isMovable()) {                        // movable artifact :
-                                                  //   tokenize name
+            //   tokenize name
             String[] tokens = name().toUpperCase().split("\\s+");
             for (String n : tokens)               //   iterate thru tokens :
                 if (str.matches(".*" + n + ".*")) //     match found :
@@ -107,38 +107,21 @@ public class Artifact {
     }//end matchKey()
 
 
-    // Shyam's use artifact
-//    public void use(Place currPlace) {
-//        if (pattern() > 0) {                            // key artifact :
-//            if (!currPlace.useKey(this)) {              //   can't use :
-//                if (currPlace.name().matches("Room.*")) //     place is room
-//                    System.out.printf("Sorry, there are no locked doors " +
-//                                      "in %s.\n",     currPlace.name());
-//                else                                    //     place isn't room
-//                    System.out.printf("Sorry, there are no locked doors " +
-//                                      "in the %s.\n", currPlace.name());
-//            }//end if...
-//        }//end if...                                    // non-key artifact :
-//        else System.out.printf("Sorry, the %s is not a key.\n",
-//                               name().toLowerCase());
-//    }//end use()
-    
-    //Priyan's Use
-    
-    public void use(Character charVar, Place charPlaceVar)
-    {
-        if (keyPattern <= 0)
-            System.out.println("\nNot a key\n");
-//        else if (A_COMBINATION == 0)
-//            System.out.println("\nNot a key\n");
-//        else  (A_COMBINATION > 0)
-//            charPlaceVar.useKey(this);
-//        else
-//        {
-//        }
-        else
-            charPlaceVar.useKey(this);
-    }
+    // use artifact
+    public void use(Place currPlace) {
+        if (pattern() > 0) {                            // key artifact :
+            if (!currPlace.useKey(this)) {              //   can't use :
+                if (currPlace.name().matches("Room.*")) //     place is room
+                    System.out.printf("Sorry, there are no locked doors " +
+                            "in %s.\n",     currPlace.name());
+                else                                    //     place isn't room
+                    System.out.printf("Sorry, there are no locked doors " +
+                            "in the %s.\n", currPlace.name());
+            }//end if...
+        }//end if...                                    // non-key artifact :
+        else System.out.printf("Sorry, the %s is not a key.\n",
+                name().toLowerCase());
+    }//end use()
 
 
     // display artifact information for use in "LOOK" command
@@ -146,21 +129,21 @@ public class Artifact {
         String vowels = "AEIOU";
         if      (name().endsWith("s"))                   // plural
             UI.printFormat(String.format("You\'ve come across %s.\n%s",
-                           name().toLowerCase(), description()));
+                    name().toLowerCase(), description()));
         else if (vowels.indexOf(name().charAt(0)) != -1) // vowel
             UI.printFormat(String.format("You\'ve come across an %s.\n%s",
-                           name().toLowerCase(), description()));
+                    name().toLowerCase(), description()));
         else                                             // consonant
             UI.printFormat(String.format("You\'ve come across a %s.\n%s",
-                           name().toLowerCase(), description()));
+                    name().toLowerCase(), description()));
     }//end display()
 
 
     // print artifact information for use in "GET" and "INVE" commands
     public void inventory(int count) {
         UI.printFormat(String.format(" \n%2d. %s\n    Value:   %d\n    " +
-                       "Weight:  %d kg\n%s", count, name(), value(), weight(),
-                       description().replaceAll("(?m)^", "    ")));
+                        "Weight:  %d kg\n%s", count, name(), value(), weight(),
+                description().replaceAll("(?m)^", "    ")));
     }//end inventory()
 
 
@@ -168,20 +151,16 @@ public class Artifact {
     public void print() {
         if (keyPattern == 0) // ID, name, value, weight + desc
             UI.printFormat(String.format("A%-5d%s, value %d, mobility %d\n%s",
-                           ID(), name(), value(), weight(),
-                           description().replaceAll("(?m)^", "      ")));
+                    ID(), name(), value(), weight(),
+                    description().replaceAll("(?m)^", "      ")));
         else                 // +key pattern
             UI.printFormat(String.format("A%-5d%s (%d), value %d, " +
-                           "mobility %d\n%s",
-                           ID(), name(), pattern(), value(), weight(),
-                           description().replaceAll("(?m)^", "      ")));
+                            "mobility %d\n%s",
+                    ID(), name(), pattern(), value(), weight(),
+                    description().replaceAll("(?m)^", "      ")));
     }//end print()
-    
-    public boolean Master()
-    {
-        return keyPattern == -1;
-    }
-    
+
+
     public boolean Match(Integer toMatch)
     {
         return keyPattern == toMatch;

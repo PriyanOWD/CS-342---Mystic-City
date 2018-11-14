@@ -5,25 +5,25 @@
  */
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.TreeMap;
 import java.util.regex.Pattern;
 
 
 public class Place
 {
 
-    static final HashMap<Integer, Place> allPlacesMap; // Can optionally make hashmap public --- use
-                                                       // DoubleBraceInitialization??
+    static final TreeMap<Integer, Place> allPlacesMap; // Can optionally make hashmap public --- use
+    // DoubleBraceInitialization??
     static
     {
-        allPlacesMap = new HashMap<Integer, Place>();
+        allPlacesMap = new TreeMap<Integer, Place>();
     }
 
     public static Place getPlacebyID(int id)
@@ -47,7 +47,7 @@ public class Place
         placeArtifacts = new ArrayList<Artifact>();
         placeCharacters = new ArrayList<Character>();
         footprints = new LinkedList<String>();
-        
+
         PID = ID;
         PNAME = name;
         PDESCRIPTION = description;
@@ -61,7 +61,7 @@ public class Place
         placeArtifacts = new ArrayList<Artifact>();
         placeCharacters = new ArrayList<Character>();
         footprints = new LinkedList<String>();
-         
+
         StringBuilder desc = new StringBuilder();
         Scanner sc = new Scanner(CleanLineScanner.gameFileParser(scn, g_delim_Pattern));
 
@@ -95,7 +95,7 @@ public class Place
     public void addDirection(Direction dir)
     {
         if (dir.leadsToNowhere()) // Function to check if target place that direction leads to is a "Nowhere" and then
-                                  // auto locks it.
+            // auto locks it.
             dir.lock();
 
         paths.add(dir); // Adds Direction object to vector within Place object
@@ -106,7 +106,7 @@ public class Place
     {
         // Place result = this; //Sets place to calling object in case no matches are found
         for (Direction tmp : paths) // checks passed string value against every direction object in Place's vector
-                                    // member
+        // member
         {
             if (tmp.match(pToGo)) // calls Directions match method to determine what to do
                 return tmp.follow(); // Always returns first Match found in the places Direction Vector
@@ -121,27 +121,21 @@ public class Place
         placeArtifacts.add(item);
     }
 
-    public void useKey(Artifact arti)
+    public boolean useKey(Artifact arti)
     {
+        boolean hasLock = false;
+
         for (Direction tmp : paths)
         {
-            tmp.useKey(arti);
+            if (hasLock)
+                tmp.useKey(arti);
+            else
+                hasLock = tmp.useKey(arti);
         }
+
+        return hasLock;
     }
-    
-//    public boolean useKey(Artifact a) {
-//        boolean hasLock = false;         // lock status
-//
-//        for (Direction d : paths) { // iterate thru directions :
-//            if (hasLock)                 //   has lock :
-//                d.useKey(a);             //     use key
-//            else                         //   doesn't have lock :
-//                hasLock = d.useKey(a);   //     use key + update status
-//        }//end for...
-//
-//        return hasLock;                  // return status
-//    }//end useKey()
-    
+
     public void addCharacter(Character charVar)
     {
         placeCharacters.add(charVar);
@@ -151,19 +145,19 @@ public class Place
     {
         placeCharacters.remove(charVar);
     }
-    
+
     /*
-     * public Artifact get(String itemName) 
-     * { 
-     *      for (Artifact tmp: placeArtifacts ) 
+     * public Artifact get(String itemName)
+     * {
+     *      for (Artifact tmp: placeArtifacts )
      *      {
-     *          if((itemName.trim()).equals(tmp.name())) 
-     *          { 
-     *          Artifact retrieve = tmp; placeArtifacts.remove(tmp); 
+     *          if((itemName.trim()).equals(tmp.name()))
+     *          {
+     *          Artifact retrieve = tmp; placeArtifacts.remove(tmp);
      *          return retrieve;
-     *          } 
-     *      } 
-     *      return null; 
+     *          }
+     *      }
+     *      return null;
      * }
      */
 
@@ -180,7 +174,7 @@ public class Place
         }
         return null;
     }
-    
+
     public Artifact removeArtifact(Artifact item)
     {
         for (Artifact tmp : placeArtifacts)
@@ -194,82 +188,69 @@ public class Place
         }
         return null;
     }
-    
-    public void display()
+
+    public void display(Character ch)
     {
-        int count = 1;
-        System.out.println("\nCurrent Location ->" + PNAME + ":\n" + PDESCRIPTION);
-        if (!PNAME.equals("Exit"))
+        UI.printHeader(String.format("PLAYER %d: %s",  // name + player #
+                       ((Player) ch).playerNum(), ch.name()));
+
+        if (name().matches("Room.*"))                  // place is room
+            UI.printFormat(String.format("%s, you\'re in %s!\n%s",
+                           ch.name().replace("The ", "").replace("A ", ""),
+                           PNAME, PDESCRIPTION));
+        else                                           // place isn't room
+            UI.printFormat(String.format("%s, you\'re in the %s!\n%s",
+                           ch.name().replace("The ", "").replace("A ", ""),
+                           PNAME, PDESCRIPTION));
+
+        for (Character c : placeCharacters)  // iterate thru characters :
+            if (c != ch) c.display();        //   display
+        for (Artifact  a : placeArtifacts)   // iterate thru artifacts  :
+            a.display();                     //   display
+
+        UI.printDivider(2);                  // print divider
+    }
+
+    private void print()
+    {
+        if (name().matches("Room.*"))
+            UI.printHeader(String.format("%s", PNAME));
+        else
+            UI.printHeader(String.format("%s (P%d)", PNAME, PID));
+
+        UI.printFormat(String.format("%s", PDESCRIPTION));
+
+        for (Direction d : paths)
+            d.print();
+        for (Character c : placeCharacters)
+            c.print();
+        for (Artifact  a : placeArtifacts)
+            a.print();
+
+        UI.printFormat(" ");
+    }
+
+    public static void printAll()
+    {
+        System.out.printf("\n\n");
+
+        for (Map.Entry<Integer, Place> pair : allPlacesMap.entrySet())
         {
-            System.out.println(PNAME + " Directions:");
-            for (Direction tmp : paths)
-                tmp.display();
-            System.out.println("\n" + PNAME + " Artifacts:");
-            for (Artifact tmp : placeArtifacts)
-            {
-                System.out.print(count++ + ":");
-                tmp.display();
-            }
-            count = 1;
-            System.out.println("\nCharacters in " + PNAME + ":");
-            for (Character charVar : placeCharacters)
-            {
-                if(!Game.checkcurrPlayerbyName(charVar.name))
-                {
-                    System.out.print(count++ + ":");
-                    charVar.display();
-                }
-            }
+            Integer ID = pair.getKey();
+            if (ID != 0 && ID != 1)
+                pair.getValue().print();
         }
-        System.out.println("\n");
-        return;
+
+        UI.printDivider(1);
     }
 
-    public void print()
-    {
-
-        System.out.println("Place Name: " + PNAME + "\nDescription:" + PDESCRIPTION + "\nID:" + PID);
-        System.out.println("Directions:");
-        for (Direction tmp : paths)
-            tmp.display();
-        return;
-    }
-
-    public void printAll()
-    {
-        int count = 1;
-        Collection<Place> everyPlace = Place.allPlacesMap.values();
-        for(Place tmpPlace: everyPlace)
-        {
-            tmpPlace.print();
-            System.out.println(PNAME + " Directions:");
-            for (Direction tmp : paths)
-                tmp.print();
-            System.out.println("\n" + PNAME + " Artifacts:");
-            for (Artifact tmp : placeArtifacts)
-            {
-                System.out.println(count++ + ":");
-                tmp.print();
-            }
-            count = 0;
-            System.out.println("\nCharacters in " + PNAME + ":");
-            for (Character charVar : placeCharacters)
-            {
-                System.out.print(count++ + ":");
-                charVar.print();
-            }
-        
-            System.out.println("\n");
-        }
-    }
-    
     public static int getSizePlaces()
     {
         return allPlacesMap.size();
     }
-    
-    public static HashMap<Integer,Place> getPlaceDirectory(){ return allPlacesMap;}
-    
+
+    public static TreeMap<Integer,Place> getPlaceDirectory() { return allPlacesMap; }
+
     // return random place other than nowhere and exit
     public static Place getRandomPlace() {
         // make list of place IDs
@@ -279,17 +260,17 @@ public class Place
 
         return allPlacesMap.get(randomID);   // return place
     }//end getRandomPlace()
-    
+
     public int pathsCount()
     {
         return paths.size();
     }
-    
+
     public Direction getDirection(int index)
     {
         return paths.get(index);
     }
-    
+
     public int getIndex()
     {
         return PID;
@@ -298,18 +279,18 @@ public class Place
     {
         return placeArtifacts.size();
     }
-    
+
     public Artifact getArtifactbyIndex(int index)
     {
         return placeArtifacts.get(index);
     }
-    
+
     // return artifact from collection of artifacts
     public Artifact getArtifact()            {
         if (placeArtifacts.size() > 0) return placeArtifacts.get(0);
         else                      return null;
     }//end getArtifact()
-    
+
     // check if place has valid artifact corresponding to passed string
     // and, if so, return list of matches
     public ArrayList<Artifact> followArtifact(String str) {
@@ -331,7 +312,7 @@ public class Place
 
         return matches;             // return all matches
     }//end followArtifact()
-    
+
     // return random valid unlocked direction
     public Place getRandomDestination() {
         Collections.shuffle(paths);      // shuffle directions
@@ -341,5 +322,5 @@ public class Place
 
         return this;                          // none found : return this
     }//end getRandomDestination()
-    
+
 }

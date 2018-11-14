@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class UI implements DecisionMaker {
 
-    public Move getMove(Character c, Place p) {
+    public Move getMove(Character c) {
         System.out.printf(">> ");                          // command prompt
         Scanner sc = KeyboardScanner.getKeyboardScanner(); // keyboard scanner
         String  a  = sc.nextLine().trim().toUpperCase();   // read input arg

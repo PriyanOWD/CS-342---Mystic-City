@@ -45,9 +45,9 @@ public class Direction
         {
             return text;
         }
-        public String   toAbbreviation()  
+        public String toAbbreviation()
         {
-            return abbreviation; 
+            return abbreviation;
         }
 
         public boolean match(String str)
@@ -112,22 +112,26 @@ public class Direction
 
     public void lock()
     {
-        if (isLocked())
-            System.out.println("Already Locked");
-        else
-            System.out.println("Locking");
         secure = true;
-        return;
     }
 
     public void unlock()
     {
-        if (!isLocked())
-            System.out.println("Already Unlocked");
-        else
-            System.out.println("Unlocking");
         secure = false;
-        return;
+    }
+
+    private boolean toggle()
+    {
+        if (isLocked())
+        {
+            unlock();
+            return true;
+        }
+        else
+        {
+            lock();
+            return false;
+        }
     }
 
     public boolean isLocked()
@@ -140,80 +144,85 @@ public class Direction
     {
         if (!isLocked())
             return DESTINATION;
-
-        System.out.println("Attempted Location:  " + DESTINATION.name() + "   ...is Locked\n");
+        else {
+            if (DESTINATION == Place.getPlacebyID(0))
+                System.out.printf("Sorry, the door to nowhere is locked forever.\n");
+            else if (DESTINATION.name().matches("Room.*"))
+                System.out.printf("Sorry, the door to %s is locked.\n", DESTINATION.name());
+            else
+                System.out.printf("Sorry, the door to the %s is locked.\n", DESTINATION.name());
+        }
         return SOURCE;
     }
 
-    public void display()
+    public boolean useKey(Artifact dirArtifact)
     {
-        System.out.print(DIRECTION + ": leads to ->" + DESTINATION.name());
-        if (isLocked())
-            System.out.println(" LOCKED");
-        else
-            System.out.println(" UNLOCKED");
-        return;
-    }
-
-    public void useKey(Artifact dirArtifact)
-    {
-        if (lockPattern == 0)
+        if (lockPattern != 0)
         {
-            System.out.println("Path to " + DESTINATION.name() + " won't change \n");
-            return;
-        }
-
-        if (dirArtifact.Master())
-        {
-            if (isLocked())
-                unlock();
+            if (dirArtifact.matchKey(lockPattern))
+            {
+                if (toggle())
+                    System.out.printf("You\'ve used the %s to unlock the door ",
+                            dirArtifact.name().toLowerCase());
+                else
+                    System.out.printf("You\'ve used the %s to lock the door ",
+                            dirArtifact.name().toLowerCase());
+                if (DESTINATION.name().matches("Room.*"))
+                    System.out.printf("to %s.\n",     DESTINATION.name());
+                else
+                    System.out.printf("to the %s.\n", DESTINATION.name());
+            }
             else
-                lock();
-            return;
+            {
+                System.out.printf("Sorry, the %s doesn\'t unlock the door ",
+                        dirArtifact.name().toLowerCase());
+                if (DESTINATION.name().matches("Room.*"))
+                    System.out.printf("to %s.\n",     DESTINATION.name());
+                else
+                    System.out.printf("to the %s.\n", DESTINATION.name());
+            }
+            return true;
         }
-
-        if (dirArtifact.Match(this.lockPattern))
+        else if (isLocked() && DESTINATION == Place.getPlacebyID(0))
         {
-            if (isLocked())
-                unlock();
-            else
-                lock();
-            System.out.println(DESTINATION.name() + "!\n");
-        } else
-        {
-            System.out.println(dirArtifact.name() + " not applicable when going " + DIRECTION + " from " + SOURCE.name()
-                    + " to " + DESTINATION.name() + "\n");
+            System.out.printf("Sorry, the %s can\'t unlock the door to " +
+                    "nowhere.\n", dirArtifact.name().toLowerCase());
+            return true;
         }
-        return;
+        return false;
     }
 
     public void print()
     {
-        System.out.println("Direction ID:" + D_ID + "Cardinal Direction:" + DIRECTION + "Name of origination Place:"
-                + SOURCE.name() + "Name of target Place:" + DESTINATION.name());
-        return;
+        if (!isLocked())
+            UI.printFormat(String.format("D%-5s%3s to %s",
+                    D_ID, DIRECTION.toAbbreviation(), DESTINATION.name()));
+        else if (lockPattern == 0)
+            UI.printFormat(String.format("D%-5s%3s to %s, locked",
+                    D_ID, DIRECTION.toAbbreviation(), DESTINATION.name()));
+        else
+            UI.printFormat(String.format("D%-5s%3s to %s, locked (%d)",
+                    D_ID, DIRECTION.toAbbreviation(), DESTINATION.name(), lockPattern));
     }
-    
-    
+
     public Place getTo() { return DESTINATION; }
     public boolean isValid() { return !DESTINATION.checkID(0) && !DESTINATION.checkID(1); }
-    
-    public static String matchDirection(String str) {
-        // iterate thru DirType enumerator constants
-        for (dirType dt : dirType.values())         // iterate thru DirTypes :
-            if (str.equals(dt.toString()) || str.equals(dt.toAbbreviation()))
-                return dt.toString().toLowerCase(); //   return match
 
-        return "\'" + str.toLowerCase() + "\'";     // return no match
-    }//end matchDirection()
-    
-    // return true if passed string has valid direction
-    public static boolean isDirection(String str) {
-        // iterate thru DirType enumerator constants
-        for (dirType dt : dirType.values()) // iterate thru DirTypes :
+    public static String matchDirection(String str)
+    {
+        for (dirType dt : dirType.values())
             if (str.equals(dt.toString()) || str.equals(dt.toAbbreviation()))
-                return true;                //   return true
+                return dt.toString().toLowerCase();
 
-        return false;                       // return false
-    }//end isDirection()
+        return "\'" + str.toLowerCase() + "\'";
+    }
+
+    public static boolean isDirection(String str)
+    {
+        for (dirType dt : dirType.values())
+            if (str.equals(dt.toString()) || str.equals(dt.toAbbreviation()))
+                return true;
+
+        return false;
+    }
 }

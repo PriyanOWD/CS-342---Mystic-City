@@ -81,7 +81,6 @@ public class Game {
                 if (c instanceof Player)
                 {
                     currC = c;
-                    System.out.print(c.name + "'s turn");
                     ((Player) c).look(2);     //     display place if player
                 }
                 while (!c.makeMove());        //     make move until "GO"

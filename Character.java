@@ -180,11 +180,6 @@ public void addArtifact(Artifact a){
     inventory.add(a);
 }
 
-public Place getCurrentPlace()
-{
-    return currPlace;
-}
-
 public Artifact getArtifact()             
 {
     if (inventory.size() > 0) 
@@ -193,16 +188,16 @@ public Artifact getArtifact()
         return null;
 }
 
-/* public int getHP(){
-        return HP;
-    }*/
-
 // return character's current place name
-public String   placeName()                { return currPlace.name(); }
-
-public boolean isPlayer(){ return  isPlayer;}   //player vs npc
-public Vector<Artifact> getInventory() {return  inventory;}
-public boolean quit(){ return quit;}//used to quit the game
+public String   placeName()              { return currPlace.name(); }
+// return character's current place
+public Place    getCurrentPlace()        { return currPlace;        }
 // set    character's current place
-public void     setCurrentPlace(Place p)   { currPlace = p;           }
+public void     setCurrentPlace(Place p) { currPlace = p;           }
+// return character name
+public String   name()                   { return name;             }
+// return player vs NPC
+public boolean isPlayer()                {  return  isPlayer;       }
+// return inventory
+public Vector<Artifact> getInventory()   { return  inventory;       }
 }

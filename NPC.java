@@ -19,7 +19,7 @@ public class NPC extends Character {
 
     // for now, NPCs simply utilize the GO command in random directions
     public boolean makeMove() {
-        Move m = dm.getMove(this,currPlace); // get move
+        Move m = dm.getMove(this); // get move
         return m.execute();        // execute move
     }//end makeMove()
 }//end NPC class

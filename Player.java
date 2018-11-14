@@ -37,7 +37,7 @@ public class Player extends Character {
     // get next move from player and execute it, returning false for all
     // move executions except for "GO" (success returns true)
     public boolean makeMove() {
-        Move m = dm.getMove(this,currPlace); // get move
+        Move m = dm.getMove(this); // get move
         return m.execute();        // execute move
     }//end makeMove()
 
@@ -80,7 +80,7 @@ public class Player extends Character {
         for (int i = 0; i < newlines; i++) // # of newlines :
             System.out.printf("\n");       //   print newline
 
-        currPlace.display();           // display current place
+        currPlace.display(this);           // display current place
     }//end look();
 
 
