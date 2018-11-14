@@ -139,33 +139,16 @@ public int getIndexCurrentPlace(){
 
 public abstract boolean makeMove();
 
-public void print(){
-    System.out.println("Player name: " + name + " ID: " + CHARID +
-            "\nDescription: " + description + "\nCurrent Place: " + indexCurrentPlace);
-}
-
 public void display() {
-    // print name + desc
     UI.printFormat(String.format("In your midst is %s.\n%s",
-                   name.replace("The ", "the ").replace("A ", "a "),
-                   description));
+                   name.replace("The ", "the ").replace("A ", "a "), description));
 }
 
-public void getArtifact(Character c, String arti) {	//checks to see if the
-    // artifact
-    // is in the room, then adds to player inventory
-    Artifact a = Place.getPlacebyID(c.indexCurrentPlace).removeArtifactByName(arti);
-
-    if (a == null) {	//if not in room
-        if(isPlayer)
-            System.out.println("Item is not in this room.");
-    }
-    else {
-        inventory.add(a);	//adds to player inventory
-        if(isPlayer)
-            System.out.println(a.name() + " was added to your inventory.");
-    }
+public void print() {
+    UI.printFormat(String.format("C%-5s%s\n%s", CHARID, name,
+                   description.replaceAll("(?m)^", "      ")));
 }
+
 public void removeArtifact(Artifact a) {    //removes
     // artifact from player inventory and adds to place artifacts
     String name = a.name();
@@ -176,6 +159,7 @@ public void removeArtifact(Artifact a) {    //removes
         System.out.println(name + " was dropped in this room.\n");
     }
 }
+
 public void addArtifact(Artifact a){
     inventory.add(a);
 }
