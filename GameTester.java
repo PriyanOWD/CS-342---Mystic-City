@@ -20,10 +20,10 @@ import java.util.Scanner;
 // GameTester class with main() method to run and test game
 public class GameTester {
     public static void main(String[] args) {
-        System.out.printf("CS342 Term Project Part IV\nNames:\t" +
-                          "Shyam Patel\t\t\tspate54\n\t\t"        +
-                          "Joey Voorhees\t\tsvoorh2\n\t\t"        +
-                          "Priyan Sureshkumar\tpsures5\n");
+        System.out.printf("CS342 Term Project Part IV\nNames: "  +
+                          "Shyam Patel         spate54\n       " +
+                          "Joey Voorhees       svoorh2\n       " +
+                          "Priyan Sureshkumar  psures5\n");
 
         String pathname = "";                             // pathname
         int    num      = 0;                              // # of players
