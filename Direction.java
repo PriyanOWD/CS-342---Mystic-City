@@ -1,9 +1,20 @@
+/* CS342 Term Project Part IV: Combination and Extension
+ * Name:   Shyam Patel
+ * NetID:  spate54
+ * Date:   Nov 14, 2018
+ */
 
-//Name: Priyan Sureshkumar
-//NetID: psures5
-//Class that defines the Direction objects.  It holds a two place Objects corresponding to where
-// the player orginates from and where the player is seeking to move on to.
+/* CS342 Term Project Part IV: Combination and Extension
+ * Name:   Joey Voorhees
+ * NetID:  svoorh2
+ * Date:   Nov 14, 2018
+ */
 
+/* CS342 Term Project Part IV: Combination and Extension
+ * Name:   Priyan Sureshkumar
+ * NetID:  psures5
+ * Date:   Nov 14, 2018
+ */
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -11,10 +22,25 @@ public class Direction
 {
     private enum dirType
     {
-        None("None", "None"), N("North", "N"), S("South", "S"), E("East", "E"), W("West", "W"), U("Up", "U"), 
-        D("Down","D"), NE("NorthEast", "NE"), NW("NorthWest", "NW"), SE("SouthEast", "SE"), SW("SouthWest","SW"), 
-        NNE("North-NorthEast", "NNE"), NNW("North-NorthWest", "NNW"), ENE("East-NorthEast", "ENE"), WNW("West-NorthWest", "WNW"),
-        ESE("East-SouthEast","ESE"), WSW("West-SouthWest", "WSW"), SSE("South-SouthEast", "SSE"), SSW("South-SouthWest", "SSW");
+        NONE ("NONE",            "NONE"),
+        N    ("NORTH",           "N"   ),
+        S    ("SOUTH",           "S"   ),
+        E    ("EAST",            "E"   ),
+        W    ("WEST",            "W"   ),
+        U    ("UP",              "U"   ),
+        D    ("DOWN",            "D"   ),
+        NE   ("NORTHEAST",       "NE"  ),
+        NW   ("NORTHWEST",       "NW"  ),
+        SE   ("SOUTHEAST",       "SE"  ),
+        SW   ("SOUTHWEST",       "SW"  ),
+        NNE  ("NORTH-NORTHEAST", "NNE" ),
+        NNW  ("NORTH-NORTHWEST", "NNW" ),
+        ENE  ("EAST-NORTHEAST",  "ENE" ),
+        WNW  ("WEST-NORTHWEST",  "WNW" ),
+        ESE  ("EAST-SOUTHEAST",  "ESE" ),
+        WSW  ("WEST-SOUTHWEST",  "WSW" ),
+        SSE  ("SOUTH-SOUTHEAST", "SSE" ),
+        SSW  ("SOUTH-SOUTHWEST", "SSW" );
 
         private final String text;
         private final String abbreviation;
@@ -58,7 +84,7 @@ public class Direction
         SOURCE = from;
         DESTINATION = to;
         secure = false;
-        DIRECTION = dirType.None;
+        DIRECTION = dirType.NONE;
         lockPattern = 1;
     }
 

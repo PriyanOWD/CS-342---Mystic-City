@@ -1,9 +1,20 @@
+/* CS342 Term Project Part IV: Combination and Extension
+ * Name:   Shyam Patel
+ * NetID:  spate54
+ * Date:   Nov 14, 2018
+ */
 
-//Name: Priyan Sureshkumar
-//NetID: psures5
-//Class that defines the Place objects.  It holds a collection of artifacts and directions and characters relevant to the Place object
-//This Class essentially holds all Objects created for the game's function
+/* CS342 Term Project Part IV: Combination and Extension
+ * Name:   Joey Voorhees
+ * NetID:  svoorh2
+ * Date:   Nov 14, 2018
+ */
 
+/* CS342 Term Project Part IV: Combination and Extension
+ * Name:   Priyan Sureshkumar
+ * NetID:  psures5
+ * Date:   Nov 14, 2018
+ */
 import java.util.*;
 import java.util.regex.Pattern;
 
