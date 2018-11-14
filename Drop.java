@@ -4,18 +4,6 @@
  * Date:   Nov 14, 2018
  */
 
-/* CS342 Term Project Part IV: Combination and Extension
- * Name:   Joey Voorhees
- * NetID:  svoorh2
- * Date:   Nov 14, 2018
- */
-
-/* CS342 Term Project Part IV: Combination and Extension
- * Name:   Priyan Sureshkumar
- * NetID:  psures5
- * Date:   Nov 14, 2018
- */
-
 // Drop abstract class that inherits Move abstract class and utilizes the
 // command design pattern to encapsulate Drop commands (DropNPC and DropPlayer)
 public abstract class Drop extends Move {
