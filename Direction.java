@@ -167,20 +167,16 @@ public class Direction
                 else
                     System.out.printf("You\'ve used the %s to lock the door ",
                             dirArtifact.name().toLowerCase());
-                if (DESTINATION.name().matches("Room.*"))
-                    System.out.printf("to %s.\n",     DESTINATION.name());
-                else
-                    System.out.printf("to the %s.\n", DESTINATION.name());
             }
             else
-            {
                 System.out.printf("Sorry, the %s doesn\'t unlock the door ",
                         dirArtifact.name().toLowerCase());
-                if (DESTINATION.name().matches("Room.*"))
-                    System.out.printf("to %s.\n",     DESTINATION.name());
-                else
-                    System.out.printf("to the %s.\n", DESTINATION.name());
-            }
+
+            if (DESTINATION.name().matches("Room.*"))
+                System.out.printf("to %s.\n",     DESTINATION.name());
+            else
+                System.out.printf("to the %s.\n", DESTINATION.name());
+
             return true;
         }
         else if (isLocked() && DESTINATION == Place.getPlacebyID(0))
