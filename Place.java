@@ -55,7 +55,6 @@ public class Place
         if (!allPlacesMap.containsKey(PID))
             allPlacesMap.put(PID, this);
         sc.close();
-
     }
 
     public boolean checkID(int idToCheck) // Function used to cross check the Place object's ID with value passed
@@ -200,7 +199,6 @@ public class Place
             }
         }
         System.out.println("\n");
-
         return;
     }
 

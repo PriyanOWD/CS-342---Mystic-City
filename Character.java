@@ -13,6 +13,10 @@ public abstract class Character{
     protected Place currPlace;
     protected boolean isPlayer;
     protected boolean quit = false;
+    
+    static{
+        characterTree = new TreeMap<Integer, Character>();
+    }
 
     //scanner constructor, creates the character based off the file by using
     // StringTokenizer to parse each line
@@ -51,37 +55,20 @@ public abstract class Character{
             i++;
         }
         inventory = new Vector<Artifact>();
+        
         if(indexCurrentPlace == 0)
         {
-            Random rand = new Random();
-            boolean escape = false;
-            int random = rand.nextInt(Place.getSizePlaces()) + 1;
-            while(!escape) 
-            {
-                int count = 1;
-                for (Map.Entry<Integer, Place> p : Place.getPlaceDirectory().entrySet()) 
-                {
-                    if (count == random) 
-                    {
-                        if(p.getKey() == 0 || p.getKey() == 1)
-                        {
-                            //should it
-                            // be in a place that it shouldn't be in, redo
-                            // random
-                            random = rand.nextInt(Place.getSizePlaces()) + 1;
-                            break;
-                        }
-                        indexCurrentPlace = p.getKey();
-                        p.getValue().addCharacter(this);
-                        escape = true;
-                        break;
-                    } else ++count;
-                }
-            }
-        }
-        else {
+            indexCurrentPlace = Place.getRandomPlace().getIndex();
             Place.getPlacebyID(indexCurrentPlace).addCharacter(this);
         }
+        else 
+        {
+            Place.getPlacebyID(indexCurrentPlace).addCharacter(this);
+        }
+        
+        currPlace = Place.getPlacebyID(indexCurrentPlace);
+        if (!characterTree.containsKey(CHARID))
+            characterTree.put(CHARID, this);
     }
 
     public Character(int _id, String _name, String _desc){
@@ -130,104 +117,16 @@ public Character(int id, String name, String description, int firstPlace,
     }
     inventory = new Vector<>();
 }
-public static Character getCharacterbyID(int ID){
-    if (characterTree.get(ID) != null){
-        return characterTree.get(ID);
-    }
-    else return null;
+
+public static Character getCharacterbyID(int ID){   
+        return characterTree.get(ID); 
 }
+
 public int getIndexCurrentPlace(){
     return indexCurrentPlace;
 }
 
 public abstract boolean makeMove();
-/*************    
-    public void makeMove(){ //makes the move specified in the Move object
-        Move nextMove = chooser.getMove(this,
-                Place.getPlacebyID(this.indexCurrentPlace)); //actually make
-        // the Move object
-        String s = nextMove.getMoveType().toString();
-        switch (s){
-            case "GO":{//go to a specified place if possible
-                Place next =
-                        Place.getPlacebyID(this.indexCurrentPlace).followDirection(nextMove.getArgument());
-                //next.print();
-                Place.getPlacebyID(this.indexCurrentPlace).removeCharacter(this);
-                next.addCharacter(this);
-                indexCurrentPlace = next.getIndex();
-
-                if( next.getIndex() == 1 || next.getIndex() == 0) { //exits the game if
-                    // the player tries to go here, this is empty room and exit room.
-                    return;
-                }
-                return;
-                }
-            case "QUIT":
-            case "EXIT":{//exits the game
-                if(isPlayer) {
-                    quit = true;
-                    System.out.println("Thank you for playing!");
-                    return;
-                }
-                else{
-                    return;
-                }
-            }
-            case "LOOK":{//displays place information
-                Place.getPlaceByID(this.indexCurrentPlace).print();
-                return;
-            }
-            case "GET":{//tries to get the specified object
-                getArtifact(this, nextMove.getArgument());
-                return;
-            }
-            case "DROP":{//tries to drop the specified object
-                for(Artifact a : inventory) {	//looks through the
-                    // vector if it's there
-                    if(a.name().equalsIgnoreCase(nextMove.getArgument())) {	//if the found,
-                        // removes from inventory
-                        removeArtifact(a);
-                        break;
-                    }
-                }
-                return;
-            }
-            case "USE":{//tries to use the specified object
-                boolean change = false;
-                for(Artifact a : inventory) {	//looks through the vector for the
-                    // artifact
-                    if(a.name().equalsIgnoreCase(nextMove.getArgument())) {
-                        //if found tries to use the artifact on each direction
-                        a.use(this, Place.getPlacebyID(this.indexCurrentPlace));
-                        change = true;
-                        break;
-                    }
-                }
-                if(!change){
-                    System.out.println("No doors could be opened.\n");
-                }
-                return;
-            }
-            case "INVENTORY":
-            case "INVE":{//prints out player inventory
-                if(inventory.size() == 0) {	//if the list is empty the player has
-                    // nothing in the inventory
-                    System.out.println("There is nothing in your inventory.");
-                }
-                else {
-                    for(Artifact a : inventory) {
-                        a.print();
-                    }
-                }
-                return;
-            }
-            default: {//do nothing if no command matches
-                //nothing
-                return;
-            }
-        }
-    }
- *********************/
 
 public void print(){
     System.out.println("Player name: " + name + " ID: " + CHARID +

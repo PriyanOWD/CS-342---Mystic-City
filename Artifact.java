@@ -50,7 +50,7 @@ public class Artifact {
                 Place.getPlacebyID(source).addArtifact(this);//   given  place
             else if (source == 0)                            // source = 0 :
                 Place.getRandomPlace().addArtifact(this);    //   random place
-            else {                                           // source < 0 :
+            else { 
                 Character c = Character.getCharacterbyID(-source);
                 c.addArtifact(this);                         //   character
             }
