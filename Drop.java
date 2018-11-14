@@ -4,6 +4,7 @@
  * Date:   Nov 14, 2018
  */
 
+
 // Drop abstract class that inherits Move abstract class and utilizes the
 // command design pattern to encapsulate Drop commands (DropNPC and DropPlayer)
 public abstract class Drop extends Move {

@@ -1,22 +1,20 @@
 /* CS342 Term Project Part IV: Combination and Extension
- * Name:   Shyam Patel
- * NetID:  spate54
- * Date:   Nov 14, 2018
- */
-
-/* CS342 Term Project Part IV: Combination and Extension
- * Name:   Joey Voorhees
- * NetID:  svoorh2
- * Date:   Nov 14, 2018
- */
-
-/* CS342 Term Project Part IV: Combination and Extension
  * Name:   Priyan Sureshkumar
  * NetID:  psures5
  * Date:   Nov 14, 2018
  */
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Random;
+import java.util.Scanner;
 import java.util.regex.Pattern;
+
 
 public class Place
 {

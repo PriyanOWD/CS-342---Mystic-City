@@ -4,6 +4,7 @@
  * Date:   Nov 14, 2018
  */
 
+
 // Quit class that inherits Move abstract class and, in its execution,
 // is used to quit or exit from the game
 public class Quit extends Move {

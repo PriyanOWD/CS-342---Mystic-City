@@ -4,6 +4,7 @@
  * Date:   Nov 14, 2018
  */
 
+
 // GoNPC class that inherits Go abstract class and, in its execution,
 // is used to allow an NPC to go from its current place to an adjacent place
 public class GoNPC extends Go {

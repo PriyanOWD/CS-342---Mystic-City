@@ -4,6 +4,7 @@
  * Date:   Nov 14, 2018
  */
 
+
 // Get abstract class that inherits Move abstract class and utilizes the
 // command design pattern to encapsulate Get commands (GetNPC and GetPlayer)
 public abstract class Get extends Move {

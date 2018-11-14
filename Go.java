@@ -4,6 +4,7 @@
  * Date:   Nov 14, 2018
  */
 
+
 // Go abstract class that inherits Move abstract class and utilizes the
 // command design pattern to encapsulate Go commands (GoNPC and GoPlayer)
 public abstract class Go extends Move {

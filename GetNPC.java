@@ -4,6 +4,7 @@
  * Date:   Nov 14, 2018
  */
 
+
 // GetNPC class that inherits Get abstract class and, in its execution,
 // is used to allow an NPC to attempt to get an artifacts
 public class GetNPC extends Get {
