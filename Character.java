@@ -99,32 +99,23 @@ public abstract class Character
                        description.replaceAll("(?m)^", "      ")));
     }
 
-    public void removeArtifact(Artifact a)
-    {
-        inventory.remove(a);
-    }
-
-    public void addArtifact(Artifact a)
-    {
-        inventory.add(a);
-    }
-
-    public Artifact getArtifact()
-    {
-        if (inventory.size() > 0)
-            return inventory.get(0);
-        else
-            return null;
-    }
-
-    // return character's current place name
-    public String   placeName()              { return currPlace.name(); }
-    // return character's current place
-    public Place    getCurrentPlace()        { return currPlace;        }
-    // set    character's current place
-    public void     setCurrentPlace(Place p) { currPlace = p;           }
     // return character name
-    public String   name()                   { return name;             }
+    public String   name()                     { return name;             }
+    // return character's current place name
+    public String   placeName()                { return currPlace.name(); }
+    // return character's current place
+    public Place    getCurrentPlace()          { return currPlace;        }
+    // set    character's current place
+    public void     setCurrentPlace(Place p)   { currPlace = p;           }
+    // add artifact to collection of artifacts
+    public void     addArtifact(Artifact a)    { inventory.add(a);        }
+    // remove artifact from collection of artifacts
+    public void     removeArtifact(Artifact a) { inventory.remove(a);     }
+    // return artifact from collection of artifacts
+    public Artifact getArtifact()              {
+        if (inventory.size() > 0) return inventory.get(0);
+        else                      return null;
+    }
     // abstract method : make move
     public abstract boolean makeMove();
 }
