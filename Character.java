@@ -150,10 +150,14 @@ public void print(){
     System.out.println("Player name: " + name + " ID: " + CHARID +
             "\nDescription: " + description + "\nCurrent Place: " + indexCurrentPlace);
 }
-public void display(){
-    System.out.println(name + "'s turn" + "\nCurrent ID: " + CHARID + "\n" +
-            "--------------------------------------------");
+
+public void display() {
+    // print name + desc
+    UI.printFormat(String.format("In your midst is %s.\n%s",
+                   name.replace("The ", "the ").replace("A ", "a "),
+                   description));
 }
+
 public void getArtifact(Character c, String arti) {	//checks to see if the
     // artifact
     // is in the room, then adds to player inventory

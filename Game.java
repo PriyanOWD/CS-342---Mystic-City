@@ -27,7 +27,18 @@ public class Game {
     private int                  ver;                // game version
     private int                  numPlayers;         // # of players
     private ArrayList<Character> characters;         // collection of characters
-
+    
+    static private Character currC = null;
+    
+    static public boolean checkcurrPlayer()
+    {
+        return currC instanceof Player;
+    }
+    
+    static public boolean checkcurrPlayerbyName(String name)
+    {
+        return currC.name.equals(name);
+    }
 
     // constructor for Game class
     public Game(Scanner sc, int num) {
@@ -71,8 +82,11 @@ public class Game {
         for(;;) {                             // infinite loop :
             for (Character c : characters) {  //   iterate thru characters :
                 if (c instanceof Player)
+                {
+                    currC = c;
+                    System.out.print(c.name + "'s turn");
                     ((Player) c).look(2);     //     display place if player
-
+                }
                 while (!c.makeMove());        //     make move until "GO"
             }//end for...
         }//end for(;;)...
@@ -105,7 +119,6 @@ public class Game {
                 allocatePlayers(playerNum);            // allocate remaining
         } catch (Exception e) { e.printStackTrace(); } // exception
     }//end allocateObjects()
-
 
     // allocate remaining players and support pre-4.0 backward compatibility
     private void allocatePlayers(int num) {

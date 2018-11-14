@@ -38,12 +38,18 @@ public class Place
     private final String PNAME;
     private final String PDESCRIPTION;
     private final int PID;
-    private List<Direction> paths = new ArrayList<Direction>();
-    private List<Artifact> placeArtifacts = new ArrayList<Artifact>();
-    private List<Character> placeCharacters = new ArrayList<Character>();
+    private List<Direction> paths;
+    private List<Artifact> placeArtifacts;
+    private List<Character> placeCharacters;
+    private Queue<String> footprints;
 
     public Place(int ID, String name, String description)
     {
+        paths = new ArrayList<Direction>();
+        placeArtifacts = new ArrayList<Artifact>();
+        placeCharacters = new ArrayList<Character>();
+        footprints = new LinkedList<String>();
+        
         PID = ID;
         PNAME = name;
         PDESCRIPTION = description;
@@ -53,6 +59,11 @@ public class Place
 
     public Place(Scanner scn, int ver)
     {
+        paths = new ArrayList<Direction>();
+        placeArtifacts = new ArrayList<Artifact>();
+        placeCharacters = new ArrayList<Character>();
+        footprints = new LinkedList<String>();
+         
         StringBuilder desc = new StringBuilder();
         Scanner sc = new Scanner(CleanLineScanner.gameFileParser(scn, g_delim_Pattern));
 
@@ -201,12 +212,15 @@ public class Place
                 System.out.print(count++ + ":");
                 tmp.display();
             }
-            count = 0;
+            count = 1;
             System.out.println("\nCharacters in " + PNAME + ":");
             for (Character charVar : placeCharacters)
             {
-                System.out.print(count++ + ":");
-                charVar.display();
+                if(!Game.checkcurrPlayerbyName(charVar.name))
+                {
+                    System.out.print(count++ + ":");
+                    charVar.display();
+                }
             }
         }
         System.out.println("\n");
