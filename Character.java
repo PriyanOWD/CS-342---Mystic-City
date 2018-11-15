@@ -25,7 +25,6 @@ public abstract class Character
     protected int currHP;
     protected int maxHP;
     protected int mp;
-    protected String type;
 
     static
     {
@@ -120,6 +119,12 @@ public abstract class Character
     {
         UI.printFormat(String.format("In your midst is %s.\n%s",
                        name.replace("The ", "the ").replace("A ", "a "), description));
+    }
+
+    public void stats()
+    {
+        UI.printFormat(String.format("Attack: %d, Defense: %d, HP: %d/%d, MP: %d\n ",
+                       attack, defense, currHP, maxHP, mp));
     }
 
     public void print()
