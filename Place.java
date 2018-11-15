@@ -18,10 +18,10 @@ import java.util.regex.Pattern;
 public class Place
 {
 
-    private class footPrint
+    protected class footPrint
     {
-        String charName;
-        int remTurns;
+        private String charName;
+        private int remTurns;
         
         footPrint(String name, int turns)
         {
@@ -50,7 +50,7 @@ public class Place
         
         public void display()
         {
-            if(remTurns == 3)
+            if (remTurns >= 2)
             {
                 System.out.println("A fresh pair of tracks is on the floor");
                 System.out.println("You believe it belongs to " + charName);
@@ -103,14 +103,15 @@ public class Place
     }
 
     // Place variables. Final values.
-    private final Pattern g_delim_Pattern = Pattern.compile("\r?\n\r?\n");
-    private final String PNAME;
-    private final String PDESCRIPTION;
-    private final int PID;
-    private List<Direction> paths;
-    private List<Artifact> placeArtifacts;
-    private List<Character> placeCharacters;
-    private Queue<footPrint> footPrints;
+    protected final Pattern g_delim_Pattern = Pattern.compile("\r?\n\r?\n");
+    protected final String PNAME;
+    protected final String PDESCRIPTION;
+    protected final int PID;
+    protected List<Direction> paths;
+    protected List<Artifact> placeArtifacts;
+    protected List<Character> placeCharacters;
+    protected Queue<footPrint> footPrints;
+    protected int footPrintLife;
     
     public void displayFPrints()
     {
@@ -130,10 +131,17 @@ public class Place
     static public void updatePlaces()
     {
         for(Map.Entry<Integer,Place> tuple: allPlacesMap.entrySet())
-           tuple.getValue().updatePrints();
+        {
+           Place p = tuple.getValue();
+           p.updatePrints();
+           if(p instanceof DangerZone)
+              ((DangerZone) p).inflictDMG();
+           if(p instanceof SafeZone)
+               ((SafeZone) p).healAll();
+        }
     }
     
-    private void updatePrints()
+    protected void updatePrints()
     {
             for(footPrint ft: footPrints)
             {
@@ -147,7 +155,8 @@ public class Place
         placeArtifacts = new ArrayList<Artifact>();
         placeCharacters = new ArrayList<Character>();
         footPrints = new LinkedList<footPrint>();
-
+        
+        footPrintLife = 3;
         PID = ID;
         PNAME = name;
         PDESCRIPTION = description;
@@ -164,7 +173,8 @@ public class Place
 
         StringBuilder desc = new StringBuilder();
         Scanner sc = new Scanner(CleanLineScanner.gameFileParser(scn, g_delim_Pattern));
-
+        
+        footPrintLife =3;
         PID = Integer.valueOf(sc.next(("\\d+")));
         PNAME = sc.nextLine().trim();
         sc.nextLine();
@@ -243,7 +253,7 @@ public class Place
 
     public void removeCharacter(Character charVar)
     {
-        footPrints.add(new footPrint(charVar.name, 3));
+        footPrints.add(new footPrint(charVar.name, footPrintLife));
         placeCharacters.remove(charVar);
     }
 
@@ -297,7 +307,7 @@ public class Place
         UI.printDivider(2);                  // print divider
     }
 
-    private void print()
+    protected void print()
     {
         if (name().matches("Room.*"))
             UI.printHeader(String.format("%s", PNAME));

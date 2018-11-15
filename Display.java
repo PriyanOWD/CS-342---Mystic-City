@@ -7,5 +7,8 @@
 
 public class Display
 {
-
+    void worldMSG(String str)
+    {
+        
+    }
 }

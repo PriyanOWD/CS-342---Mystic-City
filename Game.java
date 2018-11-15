@@ -50,7 +50,8 @@ public class Game {
                                                              // allocate :
             new Place(0, "nowhere", "");                     //   nowhere
             new Place(1, "exit",    "");                     //   exit
-            allocateObjects(sc, "PLACES"    );               //   places
+            if(ver > 49)  allocatePlaces(sc);                //   places 
+            else { allocateObjects(sc, "PLACES"    ); }
             allocateObjects(sc, "DIRECTIONS");               //   directions
             if (ver > 39) allocateObjects(sc, "CHARACTERS"); //   characters
             else {
@@ -132,6 +133,22 @@ public class Game {
                 else if (type.equals("FOOD"  )) new Food    (sc, version());
                 else if (type.equals("POTION")) new Potion  (sc, version());
                 else                            new Artifact(sc, version());
+            }//end for...
+        } catch (Exception e) { e.printStackTrace(); } // exception
+    }//end allocateArtifacts()
+    
+    private void allocatePlaces(Scanner sc) {
+        try {
+            Scanner s = new Scanner(CleanLineScanner.getCleanLine(sc));
+            int num   = s.skip("PLACES").nextInt(); // get # of artifacts
+            s.close();                                 // close scanner
+
+            for (int i = 0; i < num; i++) {            // allocate artifacts :
+                String type = CleanLineScanner.getCleanLine(sc);
+                if      (type.equals("DEFAULT" )) new Place   (sc, version());
+                else if (type.equals("DANGERZONE")) new DangerZone  (sc, version());
+                else if (type.equals("SAFEZONE"  )) new SafeZone    (sc, version());
+                else                            new Place (sc, version());
             }//end for...
         } catch (Exception e) { e.printStackTrace(); } // exception
     }//end allocateArtifacts()

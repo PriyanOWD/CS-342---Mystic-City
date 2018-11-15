@@ -4,21 +4,33 @@
  * Date:   Nov 14, 2018
  */
 
+/* CS342 Term Project Part IV: Combination and Extension
+ * Name:   Joey Voorhees
+ * NetID:  svoorh2
+ * Date:   Nov 14, 2018
+ */
 
-// Inspect abstract class that inherits Move abstract class to implement Inspect
-// which commands checks the footprints in each place
+/* CS342 Term Project Part IV: Combination and Extension
+ * Name:   Priyan Sureshkumar
+ * NetID:  psures5
+ * Date:   Nov 14, 2018
+ */
+
+// Get abstract class that inherits Move abstract class to implement Inspect 
+//which commands checks the footprints in each place (GetNPC and GetPlayer)
 public class Inspect extends Move {
-    // private attributes
+    // abstract method : execute "GET" command
+    
     Place charPlace;
-
-
-    // constructor for GoNPC class
-    public Inspect(Place p) { charPlace = p; }
-
-
-    // abstract method : execute "INSPECT" command
-    public boolean execute() {
+    
+    public Inspect(Place p)
+    {
+        charPlace = p;
+    }
+    
+    public boolean execute()
+    {
         charPlace.displayFPrints();
         return false;
     }
-}//end Inspect class
+}//end Get class

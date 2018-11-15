@@ -35,7 +35,7 @@ public class Direction
         private final String text;
         private final String abbreviation;
 
-        private dirType(String text, String abbreviation)
+        dirType(String text, String abbreviation)
         {
             this.text = text;
             this.abbreviation = abbreviation;
