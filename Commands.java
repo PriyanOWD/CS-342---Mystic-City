@@ -16,6 +16,8 @@ public class Commands extends Move {
                        "       \'GET <ARTIFACT>\' : get artifact\n"          +
                        "      \'DROP <ARTIFACT>\' : drop artifact\n"         +
                        "       \'USE <ARTIFACT>\' : use key\n"               +
+                       "     \'EQUIP <ARTIFACT>\' : equip armor or weapon\n" +
+                       "              \'INSPECT\' : display footprints\n"    +
                        "                 \'INVE\' : check inventory\n"       +
                        "       \'GO <DIRECTION>\' : go to direction "        +
                        "(e.g., N, S, E, W, U, D)");
