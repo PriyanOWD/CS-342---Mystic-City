@@ -37,7 +37,7 @@ public class Buy extends Move {
             Market m = (Market) p.currPlace;
             if(m.soldOut())
             {
-                System.out.println("Sorry, everything at " + p.currPlace.name() + " is sold out!.");
+                System.out.println("Sorry, everything at " + p.currPlace.name() + " is sold out!");
                 return false;
             }
             
@@ -45,7 +45,7 @@ public class Buy extends Move {
             Artifact prize = m.winItem(userRoll);
             
             if(prize == null)
-                System.out.println("Sorry, didn't get anything!");
+                System.out.println("Sorry, you guessed the wrong number! Try again.");
             else
             {
                 p.addArtifact(prize);

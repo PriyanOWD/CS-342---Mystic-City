@@ -43,6 +43,10 @@ public class UI implements DecisionMaker {
         else if (a.matches("EQUIP.*"))
             return new Equip((Player) c, a);
 
+        // "CONSUME" command : equip artifact
+        else if (a.matches("EQUIP.*") || a.matches("EAT.*") || a.matches("DRINK.*"))
+            return new Consume((Player) c, a);
+
         // "INVE"    command : display player's possessions
         else if (a.matches(".*INVE.*"))
             return new Inventory((Player) c);
@@ -50,7 +54,8 @@ public class UI implements DecisionMaker {
         // "INSPECT" command : display the footprints in the current Place
         else if (a.matches(".*INSPECT.*"))
             return new Inspect(c.currPlace);
-        
+
+        // "BUY"     command : buy market item
         else if (a.matches(".*BUY.*"))
             return new Buy((Player) c, a);
 
