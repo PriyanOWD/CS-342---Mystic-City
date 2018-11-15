@@ -53,7 +53,8 @@ public class Game {
             if(ver > 49)  allocatePlaces(sc);                //   places 
             else { allocateObjects(sc, "PLACES"    ); }
             allocateObjects(sc, "DIRECTIONS");               //   directions
-            if (ver > 39) allocateObjects(sc, "CHARACTERS"); //   characters
+            if      (ver > 50) allocateCharacters(sc);       //   characters
+            else if (ver > 39) allocateObjects(sc, "CHARACTERS");
             else {
                 if (numPlayers < 1) numPlayers = UI.requestNumPlayers();
                 allocatePlayers(0);                          //   (manual entry)
@@ -118,6 +119,35 @@ public class Game {
         } catch (Exception e) { e.printStackTrace(); } // exception
     }//end allocateObjects()
 
+    
+    // allocate characters according to type (v5.1+)
+    private void allocateCharacters(Scanner sc) {
+        try {
+            Scanner s = new Scanner(CleanLineScanner.getCleanLine(sc));
+            int num   = s.skip("CHARACTERS").nextInt(); // get # of characters
+            s.close();                                  // close scanner
+
+            int playerNum = 0;                          // player #
+            for (int i = 0; i < num; i++) {             // allocate artifacts :
+                String type = CleanLineScanner.getCleanLine(sc);
+                Character c;
+                if      (type.equals("NPC"     ))
+                    c = new NPC     (sc, version());
+                else if (type.equals("ATTACKER"))
+                    c = new Attacker(sc, version(), ++playerNum);
+                else if (type.equals("TANK"    ))
+                    c = new Tank    (sc, version(), ++playerNum);
+                else if (type.equals("HEALER"  ))
+                    c = new Healer  (sc, version(), ++playerNum);
+                else if (type.equals("BRUISER" ))
+                    c = new Bruiser (sc, version(), ++playerNum);
+                else
+                    c = new Player  (sc, version(), ++playerNum);
+                
+                addCharacter(c);                        // add to collection
+            }//end for...
+        } catch (Exception e) { e.printStackTrace(); }  // exception
+    }//end allocateCharacters()
 
     // allocate artifacts according to type (v5.1+)
     private void allocateArtifacts(Scanner sc) {
@@ -131,11 +161,11 @@ public class Game {
                 if      (type.equals("ARMOR" )) new Armor   (sc, version());
                 else if (type.equals("WEAPON")) new Weapon  (sc, version());
                 else if (type.equals("FOOD"  )) new Food    (sc, version());
-                else if (type.equals("POTION")) new Potion  (sc, version());
                 else                            new Artifact(sc, version());
             }//end for...
         } catch (Exception e) { e.printStackTrace(); } // exception
     }//end allocateArtifacts()
+    
     
     private void allocatePlaces(Scanner sc) {
         try {
