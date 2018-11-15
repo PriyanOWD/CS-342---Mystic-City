@@ -290,6 +290,8 @@ public class Place
         UI.printHeader(String.format("PLAYER %d: %s",  // name + player #
                        ((Player) ch).playerNum(), ch.name()));
 
+        ch.stats();
+
         if (name().matches("Room.*"))                  // place is room
             UI.printFormat(String.format("%s, you\'re in %s!\n%s",
                            ch.name().replace("The ", "").replace("A ", ""),
