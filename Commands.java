@@ -18,7 +18,8 @@ public class Commands extends Move {
                        "      \'DROP <ARTIFACT>\' : drop artifact\n"         +
                        "       \'USE <ARTIFACT>\' : use key\n"               +
                        "     \'EQUIP <ARTIFACT>\' : equip armor or weapon\n" +
-                       "   \'BUY <NUMBER (1,5)>\' : Win an Item\n"           +
+                       "   \'CONSUME <ARTIFACT>\' : consume food or potion\n"+
+                       "   \'BUY <NUMBER [1,5]>\' : win a prize\n"           +
                        "              \'INSPECT\' : display footprints\n"    +
                        "                 \'INVE\' : check inventory\n"       +
                        "       \'GO <DIRECTION>\' : go to direction "        +
