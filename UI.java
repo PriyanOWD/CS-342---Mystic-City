@@ -15,43 +15,43 @@ public class UI implements DecisionMaker {
         Scanner sc = KeyboardScanner.getKeyboardScanner(); // keyboard scanner
         String  a  = sc.nextLine().trim().toUpperCase();   // read input arg
 
-        // "QUIT" command : quit game
+        // "QUIT"    command : quit game
         if (a.matches(".*QUIT.*") || a.matches(".*EXIT.*") || a.equals("Q"))
             return new Quit();
 
-        // "COMMANDS"     : display list of commands
+        // "COMMANDS"        : display list of commands
         else if (a.matches(".*COMMANDS.*"))
             return new Commands();
 
-        // "LOOK" command : redisplay current place
+        // "LOOK"    command : redisplay current place
         else if (a.matches(".*LOOK.*"))
             return new Look((Player) c);
 
-        // "GET"  command : get artifact from current place
+        // "GET"     command : get artifact from current place
         else if (a.matches("GET.*"))
             return new GetPlayer((Player) c, a);
 
-        // "DROP" command : drop artifact
+        // "DROP"    command : drop artifact
         else if (a.matches("DROP.*"))
             return new DropPlayer((Player) c, a);
 
-        // "USE"  command : use artifact to unlock door
+        // "USE"     command : use artifact to unlock door
         else if (a.matches("USE.*"))
             return new Use((Player) c, a);
 
-        // "INVE" command : display player's possessions
+        // "INVE"    command : display player's possessions
         else if (a.matches(".*INVE.*"))
             return new Inventory((Player) c);
         
-     // "INSPECT" command : display the footprints in the current Place
+        // "INSPECT" command : display the footprints in the current Place
         else if (a.matches(".*INSPECT.*"))
             return new Inspect(c.currPlace);
 
-        // "GO"   command : go to direction(s)
+        // "GO"      command : go to direction(s)
         else if (a.matches("GO.*") || Direction.isDirection(a))
             return new GoPlayer((Player) c, a);
 
-        // unknown command
+        // unknown   command
         else {
             System.out.printf("Sorry, the command wasn\'t recognized. " +
                               "Try one of the following.\n");
