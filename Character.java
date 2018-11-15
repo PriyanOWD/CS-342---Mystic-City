@@ -20,6 +20,12 @@ public abstract class Character
     protected String description = "";
     protected DecisionMaker dm;
     protected Place currPlace;
+    protected int attack;
+    protected int defense;
+    protected int currHP;
+    protected int maxHP;
+    protected int mp;
+    protected String type;
 
     static
     {
@@ -68,13 +74,32 @@ public abstract class Character
         currPlace.addCharacter(this);
         if (!characterTree.containsKey(CHARID))
             characterTree.put(CHARID, this);
+
+        if (ver > 50) {
+            // new stats here
+            st      = new StringTokenizer(line);
+            attack  = Integer.valueOf(st.nextToken());
+            defense = Integer.valueOf(st.nextToken());
+            currHP  = Integer.valueOf(st.nextToken());
+            maxHP   = Integer.valueOf(st.nextToken());
+            mp      = Integer.valueOf(st.nextToken());
+            line    = in.nextLine();
+            st      = new StringTokenizer(line);
+            type    = st.nextToken();
+        }
     }
 
     public Character(int _id, String _name, String _desc)
     {
-        CHARID = _id;
-        name = _name;
+        CHARID      = _id;
+        name        = _name;
         description = _desc;
+        attack      = 10;
+        defense     = 10;
+        currHP      = 10;
+        maxHP       = 10;
+        mp          = 10;
+        type        = "Default";
 
         inventory = new Vector<Artifact>();
 

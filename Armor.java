@@ -13,13 +13,14 @@ public class Armor extends Artifact {
     private int defense;  // defense denominator
     private int hp;       // health point
     private int mp;       // mana   point
-    private int type;     // type   (0-headpiece,  1-upper body,
-                          //         2-lower body, 3-shoes,      4-accessory)
+    private int type;     // type   (0 for headpiece,  1 for upper-body,
+                          //         2 for lower-body, 3 for shoes,
+                          //         4 for accessory)
 
     // constructor for Armor class
     public Armor(Scanner sc, int ver) {
         super(sc, ver);
-        if (ver < 5) return;                                 // unsupported ver
+        if (ver < 51) return;                                // unsupported ver
         try {
             Scanner s = new Scanner(CleanLineScanner.getCleanLine(sc));
             attack    = s.nextInt();                         // set attack
@@ -30,4 +31,16 @@ public class Armor extends Artifact {
             s.close();                                       // close scanner
         } catch (Exception e) { e.printStackTrace(); }       // exception
     }//end class constructor
+
+
+    // return attack multiplier
+    public int getAtk()   { return attack;  }
+    // return defense denominator
+    public int getDef()   { return defense; }
+    // return max health point
+    public int getMaxHP() { return hp;      }
+    // return mana point
+    public int getMP()    { return mp;      }
+    // return type
+    public int getType()  { return type;    }
 }//end Armor class

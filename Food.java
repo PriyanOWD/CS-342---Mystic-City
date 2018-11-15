@@ -15,7 +15,7 @@ public class Food extends Artifact {
     // constructor for Armor class
     public Food(Scanner sc, int ver) {
         super(sc, ver);
-        if (ver < 5) return;                                 // unsupported ver
+        if (ver < 51) return;                                // unsupported ver
         try {
             Scanner s = new Scanner(CleanLineScanner.getCleanLine(sc));
             hp        = s.nextInt();                         // set hp
