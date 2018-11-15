@@ -14,7 +14,7 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.regex.Pattern;
+
 
 public class Place
 {
@@ -181,69 +181,41 @@ public class Place
             allPlacesMap.put(PID, this);
     }
     
-  public Place(Scanner sc, int ver)
-  {
-    if (ver < 1) return;                           // unsupported version
-    try {
-        
-        footPrintLife = 3;
-        paths = new ArrayList<Direction>();   // allocate directions
-        placeCharacters = new ArrayList<Character>();   // allocate characters
-        placeArtifacts  = new ArrayList<Artifact>();    // allocate artifacts
-        footPrints = new LinkedList<footPrint>();
+      public Place(Scanner sc, int ver)
+      {
+        if (ver < 1) return;                              // unsupported version
+        try {
 
-        Scanner s  = new Scanner(CleanLineScanner.getCleanLine(sc));
-        PID         = s.nextInt();                     // set ID
-        PNAME       = CleanLineScanner.getCleanLine(s); // set name
-        
-        s.close();                                     // close scanner
+            footPrintLife = 3;
+            paths = new ArrayList<Direction>();           // allocate directions
+            placeCharacters = new ArrayList<Character>(); // allocate characters
+            placeArtifacts  = new ArrayList<Artifact>();  // allocate artifacts
+            footPrints      = new LinkedList<footPrint>();// allocate footprints
 
-        s          = new Scanner(CleanLineScanner.getCleanLine(sc));
-        int num    = s.nextInt();                  // get # of lines
-        s.close();                                 // close scanner
+            Scanner s  = new Scanner(CleanLineScanner.getCleanLine(sc));
+            PID         = s.nextInt();                     // set ID
+            PNAME       = CleanLineScanner.getCleanLine(s);// set name
 
-        PDESCRIPTION  = "";
-        for (int i = 0; i < num; i++) {            // set desc :
-            if (i < num - 1)                       //   preceding line
-                PDESCRIPTION += CleanLineScanner.getCleanLine(sc) + "\n";
-            else                                   //   last line
-                PDESCRIPTION += CleanLineScanner.getCleanLine(sc);
-        }
+            s.close();                                    // close scanner
 
-        if (!allPlacesMap.containsKey(PID))               // non-duplicate :
-            allPlacesMap.put(PID, this);                  //   add to collection
-        if (entryPlace == null) entryPlace = this; // set entry place
-        
-    } catch (Exception e) { e.printStackTrace(); } // exception
-    
-}//end primary constructor
+            s          = new Scanner(CleanLineScanner.getCleanLine(sc));
+            int num    = s.nextInt();                     // get # of lines
+            s.close();                                    // close scanner
 
-//    public Place(Scanner scn, int ver)
-//    {
-//        paths = new ArrayList<Direction>();
-//        placeArtifacts = new ArrayList<Artifact>();
-//        placeCharacters = new ArrayList<Character>();
-//        footPrints = new LinkedList<footPrint>();
-//
-//        StringBuilder desc = new StringBuilder();
-//        Scanner sc = new Scanner(CleanLineScanner.gameFileParser(scn, g_delim_Pattern));
-//        
-//        footPrintLife =3;
-//        PID = Integer.valueOf(sc.next(("\\d+")));
-//        PNAME = sc.nextLine().trim();
-//        sc.nextLine();
-//        while (sc.hasNext())
-//            desc.append(sc.nextLine() + "\n");
-//        PDESCRIPTION = desc.toString();
-//        
-//        System.out.println(PDESCRIPTION);
-//
-//        if (!allPlacesMap.containsKey(PID))
-//            allPlacesMap.put(PID, this);
-//        if (entryPlace == null)
-//            entryPlace = this;
-//        sc.close();
-//    }   
+            PDESCRIPTION  = "";
+            for (int i = 0; i < num; i++) {               // set desc :
+                if (i < num - 1)                          //   preceding line
+                    PDESCRIPTION += CleanLineScanner.getCleanLine(sc) + "\n";
+                else                                      //   last line
+                    PDESCRIPTION += CleanLineScanner.getCleanLine(sc);
+            }
+
+            if (!allPlacesMap.containsKey(PID))           // non-duplicate :
+                allPlacesMap.put(PID, this);              //   add to collection
+            if (entryPlace == null) entryPlace = this;    // set entry place
+
+        } catch (Exception e) { e.printStackTrace(); }    // exception
+    }//end primary constructor
     
     public boolean checkID(int idToCheck) // Function used to cross check the Place object's ID with value passed
     { // although it allows a person to just check every number against PID until the return value is true

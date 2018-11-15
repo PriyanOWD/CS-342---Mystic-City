@@ -4,8 +4,6 @@
  * Date:   Nov 14, 2018
  */
 
-import java.util.ArrayList;
-
 
 // Use class that inherits Move abstract class and, in its execution,
 // enables the use of key artifacts to unlock locked directions
@@ -25,31 +23,29 @@ public class Buy extends Move {
     // execute "USE" command : use key artifact from player's collection
     // of artifacts to unlock door
     public boolean execute() {
-        if(! (p.currPlace instanceof Market))
-        {
-            System.out.println("Sorry, " + p.currPlace.name() + " is not a Market. "
-                    + "You may only buy things at a Market");
-            
+        if (!(p.currPlace instanceof Market)) {
+            System.out.printf("Sorry, %s isn\'t a market. " +
+                              "Buy things at a market.\n", p.currPlace.name());
             return false;
         }
-        else
-        {          
+        else {
             Market m = (Market) p.currPlace;
-            if(m.soldOut())
-            {
-                System.out.println("Sorry, everything at " + p.currPlace.name() + " is sold out!");
+            if (m.soldOut()) {
+                System.out.printf("Sorry, everything at the %s is sold out!\n",
+                                  p.currPlace.name());
                 return false;
             }
             
             int userRoll = Integer.valueOf(arg.replace("BUY ", "").trim());
             Artifact prize = m.winItem(userRoll);
             
-            if(prize == null)
-                System.out.println("Sorry, you guessed the wrong number! Try again.");
-            else
-            {
+            if (prize == null)
+                System.out.printf("Sorry, you guessed the wrong number! " +
+                                  "Try again.\n");
+            else {
                 p.addArtifact(prize);
-                System.out.println("Congratulations! You won " + prize.name());
+                System.out.printf("Congratulations! You won the %.\n",
+                                  prize.name().toLowerCase());
             }
             
         }  

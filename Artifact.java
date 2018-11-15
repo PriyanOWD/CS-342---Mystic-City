@@ -46,7 +46,7 @@ public class Artifact {
                     description += CleanLineScanner.getCleanLine(sc);
             }//end for...
 
-            if (ver < 40 || source > 0 && source < 1000)                      // source > 0 :
+            if (ver < 40 || source > 0 && source < 1000)     // source > 0 :
                 Place.getPlacebyID(source).addArtifact(this);//   given  place
             else if (source == 0)                            // source = 0 :
                 Place.getRandomPlace().addArtifact(this);    //   random place
@@ -143,7 +143,7 @@ public class Artifact {
     // print artifact information for use in "GET" and "INVE" commands
     public void inventory(int count) {
         UI.printFormat(String.format(" \n%2d. %s\n    Value:   %d\n    " +
-                        "Weight:  %d kg\n%s", count, name(), value(), weight(),
+                       "Weight:  %d kg\n%s", count, name(), value(), weight(),
                 description().replaceAll("(?m)^", "    ")));
     }//end inventory()
 
@@ -152,18 +152,12 @@ public class Artifact {
     public void print() {
         if (keyPattern == 0) // ID, name, value, weight + desc
             UI.printFormat(String.format("A%-5d%s, value %d, mobility %d\n%s",
-                    ID(), name(), value(), weight(),
-                    description().replaceAll("(?m)^", "      ")));
+                           ID(), name(), value(), weight(),
+                           description().replaceAll("(?m)^", "      ")));
         else                 // +key pattern
             UI.printFormat(String.format("A%-5d%s (%d), value %d, " +
-                            "mobility %d\n%s",
-                    ID(), name(), pattern(), value(), weight(),
-                    description().replaceAll("(?m)^", "      ")));
+                           "mobility %d\n%s",
+                           ID(), name(), pattern(), value(), weight(),
+                           description().replaceAll("(?m)^", "      ")));
     }//end print()
-
-
-    public boolean Match(Integer toMatch)
-    {
-        return keyPattern == toMatch;
-    }
 }//end Artifact class

@@ -50,8 +50,6 @@ public class Game {
             }
             if      (ver > 50) allocateArtifacts(sc);        //   artifacts
             else if (ver > 29) allocateObjects(sc, "ARTIFACTS");
-            
-            //if      (ver > 50) allocateMArtifacts(sc);        //   Market artifacts
 
             System.out.printf("\nWelcome to %s!\n",          // print name
                               name().replace("\t", " ").replace("!", ""));
@@ -137,6 +135,7 @@ public class Game {
         } catch (Exception e) { e.printStackTrace(); }  // exception
     }//end allocateCharacters()
 
+
     // allocate artifacts according to type (v5.1+)
     private void allocateArtifacts(Scanner sc) {
         try {
@@ -153,7 +152,8 @@ public class Game {
             }//end for...
         } catch (Exception e) { e.printStackTrace(); } // exception
     }//end allocateArtifacts()
-    
+
+
     private void allocatePlaces(Scanner sc) {
         try {
             Scanner s = new Scanner(CleanLineScanner.getCleanLine(sc));
@@ -182,7 +182,8 @@ public class Game {
             addCharacter(new Player(num + 100, playerName, "", num));
         }//end loop
     }//end allocatePlayers()
-    
+
+
     private void allocateMArtifacts(Scanner sc) {
         try {
             Scanner s = new Scanner(CleanLineScanner.getCleanLine(sc));
@@ -202,5 +203,4 @@ public class Game {
             }//end for...
         } catch (Exception e) {  System.out.println("Market error");e.printStackTrace(); } // exception
     }//end allocateArtifacts()
-    
 }//end Game class

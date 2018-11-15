@@ -10,10 +10,19 @@ CLASSES = \
 	CleanLineScanner.java \
 	KeyboardScanner.java \
 	Place.java \
+	DangerZone.java \
+	SafeZone.java \
 	Direction.java \
 	Artifact.java \
+	Armor.java \
+	Food.java \
+	Weapon.java \
+	Bruiser.java \
+	Healer.java \
 	Character.java \
 	Player.java \
+	Attacker.java \
+	Tank.java \
 	NPC.java \
 	DecisionMaker.java \
 	UI.java \
@@ -29,10 +38,15 @@ CLASSES = \
 	DropNPC.java \
 	DropPlayer.java \
 	Use.java \
+	Equip.java \
+	Consume.java \
 	Inventory.java \
+	Inspect.java \
 	Go.java \
 	GoPlayer.java \
-	GoNPC.java
+	GoNPC.java \
+	Market.java \
+	Buy.java
 
 default: classes
 

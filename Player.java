@@ -120,7 +120,7 @@ public class Player extends Character
 
         if      (inventory.size() == 0)  // player doesn't possess artifacts
             UI.printFormat(String.format("%s, you currently possess no " +
-                            "artifacts.\nUse the \'GET\' and \'DROP\' "   +
+                            "artifacts.\nUse the \'GET\' and \'DROP\' "  +
                             "commands to pick up and drop artifacts.",
                     name.replace("The ", "").replace("A ", "")));
         else if (inventory.size() == 1)  // player possesses one artifact

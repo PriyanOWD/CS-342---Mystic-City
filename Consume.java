@@ -24,8 +24,8 @@ public class Consume extends Move {
 
     // execute "CONSUME" command : consume artifact from player's collection
     public boolean execute() {
-        if (arg.matches("EAT .*")) {
-            arg = arg.replace("EAT ", "").trim();
+        if (arg.matches("CONSUME .*")) {
+            arg = arg.replace("CONSUME ", "").trim();
             ArrayList<Artifact> matches = p.followArtifact(arg);
 
             if (!matches.isEmpty()) {
@@ -35,15 +35,15 @@ public class Consume extends Move {
                     p.consume(a);                          //   consume artifact
                 }
                 else {                                     // possible matches :
-                    n = UI.requestNumber(matches, "eat");  //   request match #
+                    n = UI.requestNumber(matches, "consume");// request match #
                     Artifact a = matches.get(n - 1);       //   get artifact
                     p.consume(a);                          //   consume artifact
                 }
             }//end if...                                   // no match
             else System.out.printf("Sorry, you don\'t possess the artifact.\n");
         }//end if...                                       // invalid command
-        else System.out.printf("Enter \'EAT\' or \'DRINK\' followed by the " +
-                               "name of the food.\n");
+        else System.out.printf("Enter \'CONSUME\' followed by the name of " +
+                               "the food.\n");
         return false;
     }//end execute()
 }//end Consume class

@@ -1,10 +1,11 @@
-import java.util.Scanner;
-
 /* CS342 Term Project Part IV: Combination and Extension
  * Name:   Priyan Sureshkumar
  * NetID:  psures5
  * Date:   Nov 14, 2018
  */
+
+import java.util.Scanner;
+
 
 public class DangerZone extends Place
 {

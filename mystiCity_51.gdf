@@ -334,7 +334,7 @@ Just an ordinary Chestplate.
 0 30 0 0 1
 
 ARMOR
-12
+0
 13      40  3   0 Metallic Pants
 1
 Tough and hard to break. Also stylish.
@@ -348,42 +348,42 @@ Ordinary Boots. Grandma would have made you some socks for these.
 0 10 0 0 3
 
 ARMOR
-12
+0
 15      10  3   0 Helmet
 1
 Old-Timey Helmet. Looks like it's from the First Galactic War.
 0 15 10 0 0
 
 ARMOR
-12
+105
 16      600 1   0 Ruby Ring
 1
 It's someone's engagement ring.
 0 0 10 30 4
 
 WEAPON
-12
+0
 17      150 2   0 Rooty Tooty Point-n-Shooty
 1
 Guns are overrated.
 15 0 0 10 0
 
 WEAPON
-12
+0
 18      650 10  0 Galactic Soldier's Shield
 1
 Stolen from a prison guard.
 10 30 0 0 1
 
 FOOD
-12
+0
 19      8   1   0 Onion Rings
 1
 Yum! They're crispy and smell fresh.
 5 5
 
 FOOD
-12
+0
 20      45  10  0 Choco Num Nums
 2
 V.B.'s favorite snack. If you give her some, she will follow you

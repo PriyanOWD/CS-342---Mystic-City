@@ -4,6 +4,7 @@
  * Date:   Nov 14, 2018
  */
 
+
 // Look class that inherits Move abstract class and, in its execution,
 // is used to display player's current place
 public class Look extends Move {

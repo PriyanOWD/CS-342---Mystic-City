@@ -44,7 +44,7 @@ public class UI implements DecisionMaker {
             return new Equip((Player) c, a);
 
         // "CONSUME" command : equip artifact
-        else if (a.matches("EQUIP.*") || a.matches("EAT.*") || a.matches("DRINK.*"))
+        else if (a.matches("CONSUME.*"))
             return new Consume((Player) c, a);
 
         // "INVE"    command : display player's possessions
@@ -204,7 +204,4 @@ public class UI implements DecisionMaker {
         for (int i = 0; i < newlines; i++)   // # of newlines :
             System.out.printf("\n");         //   print newline
     }//end printHeader()
-
-
-    
 }
