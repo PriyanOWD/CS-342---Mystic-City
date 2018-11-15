@@ -15,13 +15,81 @@ import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
-
 public class Place
 {
 
+    private class footPrint
+    {
+        String charName;
+        int remTurns;
+        
+        footPrint(String name, int turns)
+        {
+            remTurns = turns;
+            charName = name;
+        }
+        
+        @Override
+        public boolean equals(Object ft)
+        {
+            if(ft instanceof footPrint)
+                return ((footPrint)ft).match(charName); 
+            return false;
+        }
+        
+        public boolean wither()
+        {
+            remTurns--;
+            return remTurns == 0;
+        }
+        
+        public boolean match(String str)
+        {
+            return charName.equals(str);
+        }
+        
+        public void display()
+        {
+            if(remTurns == 3)
+            {
+                System.out.println(charName + "was here recently");
+            }
+            else if (remTurns == 2)
+            {
+                Random rndBool = new Random();
+                System.out.println("A faint trail of footprints line the floor");
+                System.out.print("You somewhat remember who they belong to -> ");
+                for(char ch: charName.toCharArray())
+                {
+                    if( rndBool.nextBoolean() )
+                        System.out.print(ch);
+                    else
+                        System.out.print("_");
+                }
+                System.out.println();
+            }
+            else if (remTurns == 1)
+            {
+                Random rndBool = new Random();
+                System.out.println("A very faint trail of footprints line the floor");
+                System.out.print("You can't really recall who they belong to -> _");
+                for(char ch: charName.substring(1).toCharArray())
+                {
+                    if( rndBool.nextBoolean() )
+                        System.out.print(ch);
+                    else
+                        System.out.print("_");
+                }
+                System.out.println();
+            }
+            else
+                System.out.println("FootPrint decayed");
+        }
+    }
+    
     static final TreeMap<Integer, Place> allPlacesMap;
     static Place entryPlace;
-    // DoubleBraceInitialization??
+    
     static
     {
         allPlacesMap = new TreeMap<Integer, Place>();
@@ -41,14 +109,43 @@ public class Place
     private List<Direction> paths;
     private List<Artifact> placeArtifacts;
     private List<Character> placeCharacters;
-    private Queue<String> footprints;
+    private Queue<footPrint> footPrints;
+    
+    public void displayFPrints()
+    {
+        if(footPrints.size() == 0)
+        {
+            System.out.println("No footprints discovered here");
+            return;
+        }
+        int count = 1;
+        for(footPrint ft: footPrints)
+        {
+            System.out.println(count++ + ":");
+            ft.display();
+        }
+    }
 
+    static public void updatePlaces()
+    {
+        for(Map.Entry<Integer,Place> tuple: allPlacesMap.entrySet())
+           tuple.getValue().updatePrints();
+    }
+    
+    private void updatePrints()
+    {
+            for(footPrint ft: footPrints)
+            {
+                if(ft.wither())
+                    footPrints.remove(ft);
+            }   
+    }
     public Place(int ID, String name, String description)
     {
         paths = new ArrayList<Direction>();
         placeArtifacts = new ArrayList<Artifact>();
         placeCharacters = new ArrayList<Character>();
-        footprints = new LinkedList<String>();
+        footPrints = new LinkedList<footPrint>();
 
         PID = ID;
         PNAME = name;
@@ -62,7 +159,7 @@ public class Place
         paths = new ArrayList<Direction>();
         placeArtifacts = new ArrayList<Artifact>();
         placeCharacters = new ArrayList<Character>();
-        footprints = new LinkedList<String>();
+        footPrints = new LinkedList<footPrint>();
 
         StringBuilder desc = new StringBuilder();
         Scanner sc = new Scanner(CleanLineScanner.gameFileParser(scn, g_delim_Pattern));
@@ -81,6 +178,8 @@ public class Place
         sc.close();
     }
 
+    
+    
     public boolean checkID(int idToCheck) // Function used to cross check the Place object's ID with value passed
     { // although it allows a person to just check every number against PID until the return value is true
         return PID == idToCheck;
@@ -108,8 +207,11 @@ public class Place
         // member
         {
             if (tmp.match(pToGo)) // calls Directions match method to determine what to do
+            {
+                updatePrints();
                 return tmp.follow(); // Always returns first Match found in the places Direction Vector
             // return (result = tmp.follow());
+            }
         }
         return this;
         // return result;

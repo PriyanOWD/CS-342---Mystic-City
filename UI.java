@@ -42,6 +42,10 @@ public class UI implements DecisionMaker {
         // "INVE" command : display player's possessions
         else if (a.matches(".*INVE.*"))
             return new Inventory((Player) c);
+        
+     // "INSPECT" command : display the footprints in the current Place
+        else if (a.matches(".*INSPECT.*"))
+            return new Inspect(c.currPlace);
 
         // "GO"   command : go to direction(s)
         else if (a.matches("GO.*") || Direction.isDirection(a))
