@@ -50,6 +50,8 @@ public class Game {
             }
             if      (ver > 50) allocateArtifacts(sc);        //   artifacts
             else if (ver > 29) allocateObjects(sc, "ARTIFACTS");
+            
+            //if      (ver > 50) allocateMArtifacts(sc);        //   Market artifacts
 
             System.out.printf("\nWelcome to %s!\n",          // print name
                               name().replace("\t", " ").replace("!", ""));
@@ -152,7 +154,6 @@ public class Game {
         } catch (Exception e) { e.printStackTrace(); } // exception
     }//end allocateArtifacts()
     
-    
     private void allocatePlaces(Scanner sc) {
         try {
             Scanner s = new Scanner(CleanLineScanner.getCleanLine(sc));
@@ -164,6 +165,7 @@ public class Game {
                 if      (type.equals("DEFAULT" ))   new Place     (sc, version());
                 else if (type.equals("DANGERZONE")) new DangerZone(sc, version());
                 else if (type.equals("SAFEZONE"  )) new SafeZone  (sc, version());
+                else if (type.equals("MARKET"  ))   new Market  (sc, version());
                 else                                new Place     (sc, version());
             }//end for...
         } catch (Exception e) { e.printStackTrace(); } // exception
@@ -180,4 +182,25 @@ public class Game {
             addCharacter(new Player(num + 100, playerName, "", num));
         }//end loop
     }//end allocatePlayers()
+    
+    private void allocateMArtifacts(Scanner sc) {
+        try {
+            Scanner s = new Scanner(CleanLineScanner.getCleanLine(sc));
+            int num   = s.skip("MARKETITEMS").nextInt(); // get # of Martifacts
+            int mID = Integer.parseInt(sc.nextLine());
+            
+            Market m = Market.getMarketbyID(mID);
+            
+            s.close();                                 // close scanner
+
+            for (int i = 0; i < num; i++) {            // allocate artifacts :
+                String type = CleanLineScanner.getCleanLine(sc);
+                if      (type.equals("ARMOR" )) m.addToInve(new Armor   (sc, version()));
+                else if (type.equals("WEAPON")) m.addToInve(new Weapon  (sc, version()));
+                else if (type.equals("FOOD"  )) m.addToInve(new Food    (sc, version()));
+                else                            m.addToInve(new Artifact(sc, version()));
+            }//end for...
+        } catch (Exception e) {  System.out.println("Market error");e.printStackTrace(); } // exception
+    }//end allocateArtifacts()
+    
 }//end Game class

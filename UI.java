@@ -50,6 +50,9 @@ public class UI implements DecisionMaker {
         // "INSPECT" command : display the footprints in the current Place
         else if (a.matches(".*INSPECT.*"))
             return new Inspect(c.currPlace);
+        
+        else if (a.matches(".*BUY.*"))
+            return new Buy((Player) c, a);
 
         // "GO"      command : go to direction(s)
         else if (a.matches("GO.*") || Direction.isDirection(a))
