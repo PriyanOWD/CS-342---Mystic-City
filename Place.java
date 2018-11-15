@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
@@ -22,10 +23,12 @@ public class Place
     {
         private String charName;
         private int remTurns;
+        private int ttlTurns;
         
         footPrint(String name, int turns)
         {
             remTurns = turns;
+            ttlTurns = turns;
             charName = name;
         }
         
@@ -35,6 +38,11 @@ public class Place
             if(ft instanceof footPrint)
                 return ((footPrint)ft).match(charName); 
             return false;
+        }
+        
+        public boolean equals(footPrint fp)
+        {
+            return this.charName.equals(fp.charName);
         }
         
         public boolean wither()
@@ -50,12 +58,13 @@ public class Place
         
         public void display()
         {
-            if (remTurns >= 2)
+            if (ttlTurns == remTurns )
             {
                 System.out.println("A fresh pair of tracks is on the floor");
                 System.out.println("You believe it belongs to " + charName);
             }
-            else if (remTurns == 2)
+            
+            else if (remTurns > 1)
             {
                 Random rndBool = new Random();
                 System.out.println("A faint trail of footprints line the floor");
@@ -69,6 +78,7 @@ public class Place
                 }
                 System.out.println();
             }
+            
             else if (remTurns == 1)
             {
                 Random rndBool = new Random();
@@ -83,18 +93,21 @@ public class Place
                 }
                 System.out.println();
             }
+            
             else
                 System.out.println("FootPrint decayed");
         }
     }
     
     static final TreeMap<Integer, Place> allPlacesMap;
+    static final Set<Map.Entry<Integer,Place>> allPlacesSet;
     static Place entryPlace;
     
     static
     {
         allPlacesMap = new TreeMap<Integer, Place>();
         entryPlace   = null;
+        allPlacesSet = allPlacesMap.entrySet();
     }
 
     public static Place getPlacebyID(int id)
@@ -130,15 +143,16 @@ public class Place
 
     static public void updatePlaces()
     {
-        for(Map.Entry<Integer,Place> tuple: allPlacesMap.entrySet())
+        for(Map.Entry<Integer,Place> tuple: allPlacesSet)
         {
            Place p = tuple.getValue();
-           p.updatePrints();
-           if(p instanceof DangerZone)
-              ((DangerZone) p).inflictDMG();
-           if(p instanceof SafeZone)
-               ((SafeZone) p).healAll();
+           p.update();
         }
+    }
+    
+    protected void update()
+    {
+        updatePrints();
     }
 
     protected void updatePrints()
@@ -173,6 +187,7 @@ public class Place
     if (ver < 1) return;                           // unsupported version
     try {
         
+        footPrintLife = 3;
         paths = new ArrayList<Direction>();   // allocate directions
         placeCharacters = new ArrayList<Character>();   // allocate characters
         placeArtifacts  = new ArrayList<Artifact>();    // allocate artifacts

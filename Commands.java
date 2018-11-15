@@ -13,10 +13,12 @@ public class Commands extends Move {
         UI.printHeader("COMMANDS"); // print commands header
         UI.printFormat("                 \'QUIT\' : quit game\n"             +
                        "                 \'LOOK\' : display current place\n" +
+                       "              \'INSPECT\' : Check FootPrints\n"      +
                        "       \'GET <ARTIFACT>\' : get artifact\n"          +
                        "      \'DROP <ARTIFACT>\' : drop artifact\n"         +
                        "       \'USE <ARTIFACT>\' : use key\n"               +
                        "     \'EQUIP <ARTIFACT>\' : equip armor or weapon\n" +
+                       "   \'BUY <NUMBER (1,5)>\' : Win an Item\n"           +
                        "              \'INSPECT\' : display footprints\n"    +
                        "                 \'INVE\' : check inventory\n"       +
                        "       \'GO <DIRECTION>\' : go to direction "        +

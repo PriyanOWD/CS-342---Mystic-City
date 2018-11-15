@@ -33,4 +33,11 @@ public class SafeZone extends Place
            }
        }
    }
+   
+   @Override
+   public void update()
+   {
+       super.update();
+       healAll();
+   }
 }

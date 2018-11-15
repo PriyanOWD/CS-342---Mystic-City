@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class DangerZone extends Place
 {
-    private int dmg = 5;
+   private int dmg = 5;
    public DangerZone(Scanner scn, int ver)
    {
        super(scn,ver);
@@ -32,5 +32,12 @@ public class DangerZone extends Place
                System.out.println(PNAME + " reduced " + ch.name + "'s HP to 1!");
            }
        }
+   }
+   
+   @Override
+   public void update()
+   {
+       super.update();
+       inflictDMG();
    }
 }
