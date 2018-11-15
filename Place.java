@@ -50,6 +50,7 @@ public class Place
         
         public void display()
         {
+            if (remTurns >= 2)
             {
                 System.out.println("A fresh pair of tracks is on the floor");
                 System.out.println("You believe it belongs to " + charName);
@@ -133,8 +134,10 @@ public class Place
         {
            Place p = tuple.getValue();
            p.updatePrints();
-           if(p instanceof DangerPlace)
-              ((DangerPlace) p).inflictDMG(); 
+           if(p instanceof DangerZone)
+              ((DangerZone) p).inflictDMG();
+           if(p instanceof SafeZone)
+               ((SafeZone) p).healAll();
         }
     }
     
