@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 
 // Equip class that inherits Move abstract class and, in its execution,
-// enables the use of key artifacts to unlock locked directions
+// enables the equipment of armor and weapon artifacts
 public class Equip extends Move {
     // private attributes
     private Player p;   // player
