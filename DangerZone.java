@@ -8,12 +8,13 @@ import java.util.Scanner;
 
 public class DangerZone extends Place
 {
-    private int dmg;
+    private int dmg = 5;
    public DangerZone(Scanner scn, int ver)
    {
        super(scn,ver);
        footPrintLife = 5;
-       dmg = scn.nextInt();
+       Scanner s = new Scanner(CleanLineScanner.getCleanLine(scn));
+       dmg = s.nextInt();
    }
    
    public void inflictDMG()

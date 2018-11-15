@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /* CS342 Term Project Part IV: Combination and Extension
  * Name:   Priyan Sureshkumar
@@ -8,12 +9,14 @@ import java.util.Scanner;
 
 public class SafeZone extends Place
 {
-    private int val;
+   private int val;
    public SafeZone(Scanner scn, int ver)
    {
        super(scn,ver);
+       
        footPrintLife = 5;
-       val = scn.nextInt();
+       Scanner s = new Scanner(CleanLineScanner.getCleanLine(scn));
+       val = s.nextInt();
    }
    
    public void healAll()
