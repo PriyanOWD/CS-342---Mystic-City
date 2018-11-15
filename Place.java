@@ -116,7 +116,6 @@ public class Place
     }
 
     // Place variables. Final values.
-    protected Pattern g_delim_Pattern = Pattern.compile(".*(\\d).*(\\d)(\\^0-9)*\r?\n");
     protected  String PNAME;
     protected  String PDESCRIPTION;
     protected  int PID;

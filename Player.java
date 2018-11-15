@@ -168,13 +168,18 @@ public class Player extends Character
         }
     }
 
-    public void eat(Artifact art)
+    public void consume(Artifact art)
     {
-        if (art instanceof Food)
+        if (art instanceof Food && inventory.contains(art))
         {
             Food f = (Food) art;
-
+            if (!f.getConsumed())
+                updateStats(attack, defense, f.getMaxHP(), f.getMP(), true);
+            f.setConsumed();
+            inventory.remove(f);
+            System.out.printf("You\'ve consumed the %s.\n", art.name());
         }
+        else System.out.printf("Sorry, the artifact can\'t be consumed.\n");
     }
 
     // Equips an equippable object to the player if the object passed in is
@@ -201,6 +206,7 @@ public class Player extends Character
                         updateStats(a.getAtk(),   a.getDef(),
                                     a.getMaxHP(), a.getMP(),  true);
                         inventory.remove(a);
+                        System.out.printf("You\'ve equipped the %s.\n", a.name());
                         break;
 
                 // upper-body
@@ -217,6 +223,7 @@ public class Player extends Character
                         updateStats(a.getAtk(),   a.getDef(),
                                     a.getMaxHP(), a.getMP(),  true);
                         inventory.remove(a);
+                        System.out.printf("You\'ve equipped the %s.\n", a.name());
                         break;
 
                 // lower-body
@@ -233,6 +240,7 @@ public class Player extends Character
                         updateStats(a.getAtk(),   a.getDef(),
                                     a.getMaxHP(), a.getMP(),  true);
                         inventory.remove(a);
+                        System.out.printf("You\'ve equipped the %s.\n", a.name());
                         break;
 
                 // shoes
@@ -249,6 +257,7 @@ public class Player extends Character
                         updateStats(a.getAtk(),   a.getDef(),
                                     a.getMaxHP(), a.getMP(),  true);
                         inventory.remove(a);
+                        System.out.printf("You\'ve equipped the %s.\n", a.name());
                         break;
 
                 // accessory
@@ -265,6 +274,7 @@ public class Player extends Character
                         updateStats(a.getAtk(),   a.getDef(),
                                     a.getMaxHP(), a.getMP(),  true);
                         inventory.remove(a);
+                        System.out.printf("You\'ve equipped the %s.\n", a.name());
                         break;
             }
         }//end armor equip
@@ -292,6 +302,7 @@ public class Player extends Character
                         updateStats(w.getAtk(),   w.getDef(),
                                     w.getMaxHP(), w.getMP(),  true);
                         inventory.remove(w);
+                        System.out.printf("You\'ve equipped the %s.\n", w.name());
                         break;
 
                 // offhand weapon
@@ -308,11 +319,12 @@ public class Player extends Character
                         updateStats(w.getAtk(),   w.getDef(),
                                     w.getMaxHP(), w.getMP(),  true);
                         inventory.remove(w);
+                        System.out.printf("You\'ve equipped the %s.\n", w.name());
                         break;
             }
         }
 
-        else System.out.printf("This artifact cannot be equipped.\n");
+        else System.out.printf("Sorry, the artifact can\'t be equipped.\n");
     }//end equip
 }//end Player class
 

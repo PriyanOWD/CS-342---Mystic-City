@@ -15,9 +15,10 @@ The main exit ( from the game ) is to the west
 
 MARKET
 78  Annoying Dwarf's Market   //EH
-3
+4
 Welcome to the Annoying Dwarf Market.
-Here you can get items from the Dwarf if you guess the right number between 1 and 5.
+Here you can get items from the Dwarf if you guess the right number
+between 1 and 5.
 There is a door to the south-southeast.
 
 SAFEZONE
@@ -209,7 +210,7 @@ TANK
 12
 59  Josphel Xanian
 2
-Zaphod’s protector, he’s the fastest defender in the universe.
+Zaphod's protector, he's the fastest defender in the universe.
 Ex-Convict from Quad-Phi Galax Prison.
 7 20 30 30 25
 
@@ -217,7 +218,7 @@ HEALER
 12
 47  Zephros Kanadakumi
 2
-Former professor of Interspecies Medicine, he’s the go-to for all your
+Former professor of Interspecies Medicine, he's the go-to for all your
 Health needs. Invented Limb-Replacement Raygun.
 10 10 50 50 100
 
@@ -226,7 +227,7 @@ BRUISER
 88  V.B.
 2
 Not much is known on this bringer of death beyond the fact that she
-Leaves no marks from where she attacks. 
+Leaves no marks from where she attacks.
 20 20 30 30 40
 
 ARTIFACTS   23  // Semi-random artifacts - New ones at the beginning.
@@ -255,7 +256,7 @@ DEFAULT
 1       1000    -1  0   Jewel-encrusted chest   // Too heavy to move!
 4
 The chest is about two feet by 3 feet by 2 feet high.
-It appears to be made of solid gold, encrusted with 
+It appears to be made of solid gold, encrusted with
 diamonds, emeralds, rubies, and sapphires.
 It is also locked, and too heavy to move.
 
@@ -263,7 +264,7 @@ DEFAULT
 23
 2       100  1  0  Golden chalice
 2
-The chalice is about 6 inches high, with a 
+The chalice is about 6 inches high, with a
 finely detailed design in white and yellow gold.
 
 FOOD
@@ -329,7 +330,7 @@ ARMOR
 12
 12      60  3   0 Basic Chestplate
 1
-Just an ordinary Chestplate. 
+Just an ordinary Chestplate.
 0 30 0 0 1
 
 ARMOR
@@ -350,14 +351,14 @@ ARMOR
 12
 15      10  3   0 Helmet
 1
-Old-Timey Helmet. Looks like it’s from the First Galactic War.
+Old-Timey Helmet. Looks like it's from the First Galactic War.
 0 15 10 0 0
 
 ARMOR
 12
 16      600 1   0 Ruby Ring
 1
-It’s someone’s engagement ring.
+It's someone's engagement ring.
 0 0 10 30 4
 
 WEAPON
@@ -369,7 +370,7 @@ Guns are overrated.
 
 WEAPON
 12
-18      650 10  0 Galactic Soldier’s Shield
+18      650 10  0 Galactic Soldier's Shield
 1
 Stolen from a prison guard.
 10 30 0 0 1
@@ -378,13 +379,13 @@ FOOD
 12
 19      8   1   0 Onion Rings
 1
-Yum! They’re crispy and smell fresh.
+Yum! They're crispy and smell fresh.
 5 5
 
 FOOD
 12
 20      45  10  0 Choco Num Nums
 2
-V.B.’s favorite snack. If you give her some, she will follow you
+V.B.'s favorite snack. If you give her some, she will follow you
 Around like a lost puppy.
 30 15
