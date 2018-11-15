@@ -46,14 +46,15 @@ public class Artifact {
                     description += CleanLineScanner.getCleanLine(sc);
             }//end for...
 
-            if (ver < 40 || source > 0)                      // source > 0 :
+            if (ver < 40 || source > 0 && source < 1000)                      // source > 0 :
                 Place.getPlacebyID(source).addArtifact(this);//   given  place
             else if (source == 0)                            // source = 0 :
                 Place.getRandomPlace().addArtifact(this);    //   random place
-            else {
+            else if(source < 1000){
                 Character c = Character.getCharacterbyID(-source);
                 c.addArtifact(this);                         //   character
             }
+            else{}
         } catch (Exception e) { e.printStackTrace(); }       // exception
     }//end class constructor
 
