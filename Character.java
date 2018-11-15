@@ -82,9 +82,6 @@ public abstract class Character
             currHP  = Integer.valueOf(st.nextToken());
             maxHP   = Integer.valueOf(st.nextToken());
             mp      = Integer.valueOf(st.nextToken());
-            line    = in.nextLine();
-            st      = new StringTokenizer(line);
-            type    = st.nextToken();
         }
     }
 
@@ -98,7 +95,6 @@ public abstract class Character
         currHP      = 10;
         maxHP       = 10;
         mp          = 10;
-        type        = "Default";
 
         inventory = new Vector<Artifact>();
 
