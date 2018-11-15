@@ -50,8 +50,8 @@ public class Game {
                                                              // allocate :
             new Place(0, "nowhere", "");                     //   nowhere
             new Place(1, "exit",    "");                     //   exit
-            if(ver > 49)  allocatePlaces(sc);                //   places 
-            else { allocateObjects(sc, "PLACES"    ); }
+            if (ver > 50) allocatePlaces(sc);                //   places
+            else          allocateObjects(sc, "PLACES");
             allocateObjects(sc, "DIRECTIONS");               //   directions
             if      (ver > 50) allocateCharacters(sc);       //   characters
             else if (ver > 39) allocateObjects(sc, "CHARACTERS");
