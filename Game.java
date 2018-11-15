@@ -85,6 +85,7 @@ public class Game {
                 }
                 while (!c.makeMove());        //     make move until "GO"
             }//end for...
+            Place.updatePlaces();
         }//end for(;;)...
     }//end play()
 

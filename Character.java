@@ -79,6 +79,10 @@ public abstract class Character
         inventory = new Vector<Artifact>();
 
         currPlace = Place.getEntryPlace();
+        
+        currPlace.addCharacter(this);
+        if (!characterTree.containsKey(CHARID))
+            characterTree.put(CHARID, this);
     }
 
 
