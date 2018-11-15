@@ -23,11 +23,14 @@ public class SafeZone extends Place
    {
        for(Character ch: placeCharacters)
        {
-           if( (ch.currHP + val) > ch.maxHP)
+           if( (ch.currHP + val) > ch.maxHP) {
                ch.currHP = ch.maxHP;
-           else
+               System.out.println(PNAME + " fully restored " + ch.name + "'s HP!");
+           }
+           else {
                ch.currHP += val;
-           System.out.println(PNAME + " recovered " + val + " health for " + ch.name);
+               System.out.println(PNAME + " recovered " + val + " health for " + ch.name);
+           }
        }
    }
 }

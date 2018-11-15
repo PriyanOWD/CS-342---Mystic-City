@@ -76,6 +76,7 @@ public abstract class Character
 
         if (ver > 50) {
             // new stats here
+            line    = in.nextLine();
             st      = new StringTokenizer(line);
             attack  = Integer.valueOf(st.nextToken());
             defense = Integer.valueOf(st.nextToken());

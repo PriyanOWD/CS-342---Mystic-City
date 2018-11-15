@@ -23,18 +23,7 @@ public class Game {
     private int                  ver;                // game version
     private int                  numPlayers;         // # of players
     private ArrayList<Character> characters;         // collection of characters
-    
-    static private Character currC = null;
-    
-    static public boolean checkcurrPlayer()
-    {
-        return currC instanceof Player;
-    }
-    
-    static public boolean checkcurrPlayerbyName(String name)
-    {
-        return currC.name.equals(name);
-    }
+
 
     // constructor for Game class
     public Game(Scanner sc, int num) {
@@ -81,10 +70,7 @@ public class Game {
         for(;;) {                             // infinite loop :
             for (Character c : characters) {  //   iterate thru characters :
                 if (c instanceof Player)
-                {
-                    currC = c;
                     ((Player) c).look(2);     //     display place if player
-                }
                 while (!c.makeMove());        //     make move until "GO"
             }//end for...
             Place.updatePlaces();
@@ -175,10 +161,10 @@ public class Game {
 
             for (int i = 0; i < num; i++) {            // allocate artifacts :
                 String type = CleanLineScanner.getCleanLine(sc);
-                if      (type.equals("DEFAULT" )) new Place   (sc, version());
-                else if (type.equals("DANGERZONE")) new DangerZone  (sc, version());
-                else if (type.equals("SAFEZONE"  )) new SafeZone    (sc, version());
-                else                            new Place (sc, version());
+                if      (type.equals("DEFAULT" ))   new Place     (sc, version());
+                else if (type.equals("DANGERZONE")) new DangerZone(sc, version());
+                else if (type.equals("SAFEZONE"  )) new SafeZone  (sc, version());
+                else                                new Place     (sc, version());
             }//end for...
         } catch (Exception e) { e.printStackTrace(); } // exception
     }//end allocateArtifacts()

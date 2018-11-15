@@ -140,15 +140,19 @@ public class Place
                ((SafeZone) p).healAll();
         }
     }
-    
+
     protected void updatePrints()
     {
-            for(footPrint ft: footPrints)
-            {
-                if(ft.wither())
-                    footPrints.remove(ft);
-            }   
+        LinkedList<footPrint> toRem = new LinkedList<footPrint>();
+        for(footPrint ft: footPrints)
+        {
+            if(ft.wither())
+                toRem.add(ft);
+        }
+
+        footPrints.removeAll(toRem);
     }
+
     public Place(int ID, String name, String description)
     {
         paths = new ArrayList<Direction>();

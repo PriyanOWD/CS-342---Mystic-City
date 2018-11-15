@@ -22,10 +22,15 @@ public class DangerZone extends Place
        for(Character ch: placeCharacters)
        {
            if(ch.currHP > dmg)
+           {
                ch.currHP -= dmg;
+               System.out.println(PNAME + " inflicted " + dmg + " to " + ch.name);
+           }
            else
+           {
                ch.currHP = 1;
-           System.out.println(PNAME + " inflicted " + dmg + "  to " + ch.name);
+               System.out.println(PNAME + " reduced " + ch.name + "'s HP to 1!");
+           }
        }
    }
 }

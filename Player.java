@@ -168,6 +168,15 @@ public class Player extends Character
         }
     }
 
+    public void eat(Artifact art)
+    {
+        if (art instanceof Food)
+        {
+            Food f = (Food) art;
+
+        }
+    }
+
     // Equips an equippable object to the player if the object passed in is
     // equippable. Else nothing happens. Turn should not be used.
     public void equip(Artifact art)
