@@ -1,4 +1,4 @@
-/* CS342 Term Project Part IV: Combination and Extension
+/* CS342 Term Project Part V: Wrap Up and Graphical User Interface
  *
  * Name:   Shyam Patel
  * NetID:  spate54
@@ -9,7 +9,7 @@
  * Name:   Priyan Sureshkumar
  * NetID:  psures5
  *
- * Date:   Nov 14, 2018
+ * Date:   Dec 6, 2018
  */
 
 import java.util.Scanner;
