@@ -9,12 +9,18 @@ import java.util.Scanner;
 
 
 public class UI implements DecisionMaker {
+    //private static IO printIO;
+    private static StringBuilder output;
+    static{ //printIO = IO.getIO(); 
+            output = new StringBuilder();
+          }
 
     public Move getMove(Character c) {
         System.out.printf(">> ");                          // command prompt
         Scanner sc = KeyboardScanner.getKeyboardScanner(); // keyboard scanner
-        String  a  = sc.nextLine().trim().toUpperCase();   // read input arg
-
+        //String  a  = sc.nextLine().trim().toUpperCase();   // read input arg
+        IO printIO = IO.getIO();
+        String a = printIO.getLine();
         // "QUIT"    command : quit game
         if (a.matches(".*QUIT.*") || a.matches(".*EXIT.*") || a.equals("Q"))
             return new Quit();
@@ -171,23 +177,29 @@ public class UI implements DecisionMaker {
 
     // print formatted header for use in display() and print() methods
     public static void printHeader(String str) {
-        String header = "";                      // header string
+        output.setLength(0);
+        //String header = "";                      // header string
 
         int num = (78 - str.length()) / 2;       // determine # of hashes
         for (int i = 0; i < num; i++)            // # of hashes :
-            header += "#";                       //   add hash to header
+            output.append("#");                      //   add hash to header
 
-        header += " " + str.toUpperCase() + " "; // add str to header
-
-        while (header.length() < 80)             // while len < 80 :
-            header += "#";                       //   add hash to header
-
-        System.out.printf("%s\n", header);       // print header
+        //header += " " + str.toUpperCase() + " "; // add str to header
+        output.append(" ");
+        output.append(str.toUpperCase()); 
+        output.append(" ");
+        while (output.length() < 80)             // while len < 80 :
+            output.append("#");                        //   add hash to header
+        output.append("\n");
+        System.out.printf("%s\n", output.toString());       // print header
+        IO printIO = IO.getIO();
+        printIO.display(output.toString());
     }//end printHeader()
 
 
     // print formatted boxed lines for use in display() and print() methods
     public static void printFormat(String str) {
+        output.setLength(0);
         StringBuilder output = new StringBuilder();
         String lines[] = str.split("\\r?\\n"); // split lines
   
@@ -203,10 +215,17 @@ public class UI implements DecisionMaker {
 
     // print formatted divider for use in display() and print() methods
     public static void printDivider(int newlines) {
+        output.setLength(0);
         String div = "########################################";
         System.out.printf("%s%s", div, div); // print divider
-
+        output.append(div);
+        output.append(div);
         for (int i = 0; i < newlines; i++)   // # of newlines :
+        {    
             System.out.printf("\n");         //   print newline
+            output.append("\n");
+        }
+        IO printIO = IO.getIO();
+        printIO.display(output.toString());
     }//end printHeader()
 }

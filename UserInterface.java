@@ -17,4 +17,5 @@
 public interface UserInterface {
     void display(String message);
     String getLine();
+    void switchCard(String name);
 }//end UserInterface interface

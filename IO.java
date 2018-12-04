@@ -58,6 +58,11 @@ public class IO {
         return ui.getLine();
     }
 
+    public void switchCard(String name)
+    {
+       //((GUI_1)ui).switchCard(name);
+        ui.switchCard(name);
+    }
 
     //
     public void selectInterface(int i) {

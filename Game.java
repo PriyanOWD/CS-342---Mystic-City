@@ -13,7 +13,9 @@
  */
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 
 // Game class to encapsulate attributes and methods for Game object
@@ -21,7 +23,7 @@ public class Game {
     // private attributes
     private String               name;               // game name
     private int                  ver;                // game version
-    private int                  numPlayers;         // # of players
+    public static int            numPlayers;         // # of players
     private ArrayList<Character> characters;         // collection of characters
 
 
@@ -71,7 +73,10 @@ public class Game {
         for(;;) {                             // infinite loop :
             for (Character c : characters) {  //   iterate thru characters :
                 if (c instanceof Player)
+                {
+                    gameIO.switchCard(c.name);
                     ((Player) c).look(2);     //     display place if player
+                }
                 while (!c.makeMove());        //     make move until "GO"
             }//end for...
             Place.updatePlaces();
