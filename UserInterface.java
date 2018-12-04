@@ -13,7 +13,7 @@
  */
 
 
-// UI interface
+// interface for UI classes (e.g., TextInterface, GUI_1, GUI_2 and GUI_3)
 public interface UserInterface {
     void display(String message);
     String getLine();

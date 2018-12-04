@@ -16,21 +16,21 @@
 //
 public class IO {
     // private attributes
-    private static IO ourIO;
     private static final int TEXT;
     private static final int GUI_1;
     private static final int GUI_2;
     private static final int GUI_3;
+    private static IO ourIO;
     private UserInterface ui;
 
 
     // initialize static attribute
     static {
-        ourIO = new IO();
         TEXT  = 0;
         GUI_1 = 1;
         GUI_2 = 2;
         GUI_3 = 3;
+        ourIO = new IO();
     }
 
 
@@ -45,5 +45,23 @@ public class IO {
 
 
     //
+    public void display(String message) {
+        ui.display(message);
+    }
 
+
+    //
+    public String getLine() {
+        return ui.getLine();
+    }
+
+
+    //
+    public void selectInterface(int i) {
+        if      (i == TEXT ) ui = new GUI_1();
+        else if (i == GUI_1) ui = new GUI_1();
+        else if (i == GUI_2) ui = new GUI_1();
+        else if (i == GUI_3) ui = new GUI_1();
+        else                 ui = new GUI_1();
+    }
 }//end IO class
