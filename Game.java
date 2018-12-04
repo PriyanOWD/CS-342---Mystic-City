@@ -67,6 +67,7 @@ public class Game {
 
     // main infinite loop to play game
     public void play() {
+        IO gameIO = IO.getIO();
         for(;;) {                             // infinite loop :
             for (Character c : characters) {  //   iterate thru characters :
                 if (c instanceof Player)

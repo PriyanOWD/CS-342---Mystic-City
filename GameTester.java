@@ -41,8 +41,7 @@ public class GameTester {
             // debugging : print all places, directions, characters + artifacts
             //Place.printAll();
 
-            new GUI_1();
-            //g.play();                                     // play game
+            g.play();                                     // play game
         } catch (FileNotFoundException e) {               // not found
             System.err.printf("\nFile \'%s\' could not be found.\n", pathname);
         } catch (Exception e) { e.printStackTrace(); }    // exception

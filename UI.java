@@ -188,11 +188,16 @@ public class UI implements DecisionMaker {
 
     // print formatted boxed lines for use in display() and print() methods
     public static void printFormat(String str) {
+        StringBuilder output = new StringBuilder();
         String lines[] = str.split("\\r?\\n"); // split lines
+  
         for (String s : lines) {               // print formatted lines
             s = s.substring(0, Math.min(s.length(), 76));
             System.out.printf("%-79s#\n", s.replaceAll("(?m)^", "# "));
+            output.append(String.format("%-79s#\n", s.replaceAll("(?m)^", "# ")));
         }
+        IO printIO = IO.getIO();
+        printIO.display(output.toString());
     }//end printFormat()
 
 

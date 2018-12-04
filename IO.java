@@ -30,17 +30,20 @@ public class IO {
         GUI_1 = 1;
         GUI_2 = 2;
         GUI_3 = 3;
-        ourIO = new IO();
     }
 
 
     // return IO
-    public static IO getIO() { return ourIO; }
+    public static IO getIO() {
+        if(ourIO == null)
+            ourIO = new IO();
+        return ourIO; 
+    }
 
 
     // constructor
     private IO() {
-
+        selectInterface(0);
     }
 
 
