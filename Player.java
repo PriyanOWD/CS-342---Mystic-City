@@ -167,6 +167,23 @@ public class Player extends Character
             mp      -= m;
         }
     }
+    
+    public String getStats()
+    {
+        StringBuilder stats = new StringBuilder();
+        stats.append("Health:");
+        stats.append(Integer.toString(this.currHP));
+        stats.append("/");
+        stats.append(Integer.toString(this.maxHP));
+        stats.append("\n");
+        stats.append("Attack:");
+        stats.append(Integer.toString(this.attack));
+        stats.append("Defense:");
+        stats.append(Integer.toString(this.defense));
+        stats.append("Magic Points:");
+        stats.append(Integer.toString(this.mp));
+        return stats.toString();
+    }
 
     public void consume(Artifact art)
     {

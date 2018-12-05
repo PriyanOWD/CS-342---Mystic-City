@@ -315,6 +315,8 @@ public class Place
 
     public void display(Character ch)
     {
+        IO printIO = IO.getIO();
+        //printIO.display(output.toString());
         UI.printHeader(String.format("PLAYER %d: %s",  // name + player #
                        ((Player) ch).playerNum(), ch.name()));
 

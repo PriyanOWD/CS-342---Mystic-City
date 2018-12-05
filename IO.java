@@ -58,10 +58,10 @@ public class IO {
         return ui.getLine();
     }
 
-    public void switchCard(String name)
+    public void switchCard(String name,Place place)
     {
        //((GUI_1)ui).switchCard(name);
-        ui.switchCard(name);
+        ui.switchCard(name,place);
     }
 
     //

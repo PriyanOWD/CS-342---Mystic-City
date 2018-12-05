@@ -7,12 +7,17 @@
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -41,6 +46,42 @@ public class GUI_1 extends JFrame implements UserInterface {
     private String line;
     private final TreeMap<String, JTextArea> allTextBox;
     private JTextArea currTextBox;
+    //private JPanel bg;
+    BufferedImage backgroundImage;
+    ImageIcon bgIcon;
+    JLabel bg;
+    
+    /*private enum bgType
+    {
+        def ("default",   new BufferedImage   ),
+        DZ  ("DZ",           "N"   ),
+        SZ  ("SZ",           "S"   ),
+        mkt ("market",            "E"   );
+
+        private final String text;
+        private final String abbreviation;
+
+        bgType(String text, BufferedImage img)
+        {
+            this.text = text;
+            this.abbreviation = abbreviation;
+        }
+
+        public String toString()
+        {
+            return text;
+        }
+        public String toAbbreviation()
+        {
+            return abbreviation;
+        }
+
+        public boolean match(String str)
+        {
+            str = str.toLowerCase();
+            return (str.equals(text.toLowerCase()) || str.equals(abbreviation.toLowerCase()));
+        }
+    }*/
     
     
     // lock
@@ -54,85 +95,27 @@ public class GUI_1 extends JFrame implements UserInterface {
     
     // constructor for GUI_1 class
     public GUI_1() { 
-        /*this.setResizable(false);
-        this.setName("MAGICAL GIRL FORCE GO!!! (GUI #1)");
-        this.setSize(2500, 1500);
-        JPanel cards = new JPanel();
-        cards.setSize(2500, 1500);
-        cards.setLayout(new CardLayout());
-        
-        JButton buttonSD = new JButton("Self-Destruct");
-        buttonSD.setBounds(160,430,200,200);
-        buttonSD.setOpaque(false);
-        buttonSD.setContentAreaFilled(false);
-        buttonSD.setBorderPainted(false);
-        
-        JButton buttonN = new JButton("GO N!");
-      buttonN.setBounds(0,0,200,200);
-      buttonN.setOpaque(false);
-      buttonN.setContentAreaFilled(false);
-      buttonN.setBorderPainted(false);
-      buttonN.addActionListener(new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-              line = "GO N";
-              synchronized (syncLock) { syncLock.notifyAll(); }
-          }
-      });
-      
-      buttonN.getModel().addChangeListener(new ChangeListener() {
-          @Override
-          public void stateChanged(ChangeEvent e) {
-              ButtonModel model = (ButtonModel) e.getSource();
-              if (model.isRollover()) {
-                  buttonN.setOpaque(true);
-                  buttonN.setContentAreaFilled(true);
-                  buttonN.setBorderPainted(true);
-                  buttonN.setBackground(Color.GREEN);
-              } else {
-                  buttonN.setOpaque(false);
-                  buttonN.setContentAreaFilled(false);
-                  buttonN.setBorderPainted(false);
+//        try {
+//            backgroundImage = javax.imageio.ImageIO.read(new File("default.jpg"));
+//            bg = new JPanel(new BorderLayout())  {
+//                @Override public void paintComponent(Graphics g) {
+//                    g.drawImage(backgroundImage, 0, 0, null);
+//                }
+//            } ;
+//            setContentPane(bg);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
 
-              }
-          }
-      });
-        
-        textBox = new JTextArea();
-        textBox.setBackground(new Color(106, 103, 102));
-        DefaultCaret caret = (DefaultCaret)textBox.getCaret();
-        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-        JScrollPane scrollPane = new JScrollPane(textBox);
-        scrollPane.setBorder(BorderFactory.createEmptyBorder());
-        scrollPane.setBounds(1000,0,1000,1100);
-        scrollPane.setBackground(new Color(106, 103, 102));
-        textBox.setEditable(false); 
-        Font font = new Font("Courier New", Font.BOLD, 20);
-        textBox.setFont(font);
-        textBox.setForeground(Color.WHITE); 
-
-        JPanel text = new JPanel();
-        JPanel but1 = new JPanel();
-        JPanel but2 = new JPanel();
-        //text.setSize(1000,1100);
-        text.setLayout(null);
-        but1.setLayout(null);
-        but2.setLayout(null);
-        text.add(scrollPane);
-        but1.add(buttonN);
-        but2.add(buttonSD);
-        but1.setVisible(true);
-        but2.setVisible(true);
-        text.setVisible(true);
-        cards.add(text,textName);
-        cards.add(but1,but1Name);
-        cards.add(but2,but2Name);
-        cards.setVisible(true);
-        cards.revalidate();
-        cards.repaint();
-        this.getContentPane().add(cards);
-        this.setVisible(true);
-        //this.setDefaultCloseOperation(EXIT_ON_CLOSE);*/
+        //try{
+        //this.setIconImage(ImageIO.read(new File("default.jpg")));
+        //this.getContentPane().setLayout( new BorderLayout() );
+        //this.setContentPane( contentPane );
+        //this.setIconImage(Toolkit.getDefaultToolkit().getImage("default.jpg"));
+       // }
+       // catch (Exception e){         
+        //}
+        //setContentPane(bg);
         
         allTextBox = new TreeMap<String, JTextArea>();
         Set<Map.Entry<Integer,Character>> allChars = Character.characterTree.entrySet();
@@ -147,6 +130,20 @@ public class GUI_1 extends JFrame implements UserInterface {
         {
             if (tuple.getValue() instanceof Player)
             { 
+                
+                
+                JLabel stats = new JLabel()  {
+                    Player p = (Player)tuple.getValue();
+                    @Override public void paintComponent(Graphics g) {
+                        //setText(p.getStats());
+                        g.drawString(p.getStats(), 20, 20);
+                    }
+                } ;
+                
+                stats.setBounds(600, 1300, 1000, 200);
+                stats.setBackground(new Color(0,100,100));
+                stats.setFont(new Font("Courier New", Font.BOLD, 20));
+                
                 JTextArea textBox = new JTextArea();
                 //textBox.setBounds(1010,0,960,1200);
                 textBox.setBackground(new Color(106, 103, 102));
@@ -210,32 +207,30 @@ public class GUI_1 extends JFrame implements UserInterface {
                 buttonSD.setContentAreaFilled(false);
                 buttonSD.setBorderPainted(false);
                 
-    //            try {
-    //                BufferedImage img = ImageIO.read(new File("TEST.png"));
-    //                this.setContentPane(new JLabel(new ImageIcon(img)));
-    //                this.setBackground(new Color(54, 57, 63));
-    //            } catch (Exception e) { }
-              JPanel card = new JPanel();
-              //JPanel but1 = new JPanel();
-              //JPanel but2 = new JPanel();
-              //text.setSize(1000,1100);
-              card.setLayout(null);
-              //but1.setLayout(null);
-              //but2.setLayout(null);
-              //card.add(textBox);
-              card.add(scrollPane);
-              card.add(buttonN);
-              card.add(buttonSD);
-              card.add(label1);
-              //card.setVisible(true);
-              //but1.setVisible(true);
-              //but2.setVisible(true);
-              System.out.println("nnnn" + tuple.getValue().name);
-              cards.add(card,tuple.getValue().name);
-              //cards.setVisible(true);
+                  JPanel card = new JPanel();
+                  card.setOpaque(false);
+                  card.setLayout(null);
+               
+                  card.add(scrollPane);
+                  card.add(buttonN);
+                  card.add(buttonSD);
+                  card.add(label1);
+                  card.add(stats);
+                  cards.add(card,tuple.getValue().name);
             }
         }
+        
         this.getContentPane().add(cards);
+        try {
+            backgroundImage = javax.imageio.ImageIO.read(new File("default.jpg"));
+            bgIcon = new ImageIcon(backgroundImage);
+            bg =  new JLabel(bgIcon);
+            bg.setOpaque(true);
+            this.add(bg);
+            cards.setOpaque(false);     
+        } 
+        catch (IOException e) {throw new RuntimeException(e);}
+        
         this.setVisible(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         currTextBox = allTextBox.firstEntry().getValue();
@@ -249,29 +244,65 @@ public class GUI_1 extends JFrame implements UserInterface {
         //this.getContentPane().getComponent(0);
     }
     
-    public void switchCard(String name)
+    public void switchCard(String name, Place place)
     {
-        JPanel cards = (JPanel)(this.getContentPane().getComponent(0));
+        JPanel cards = (JPanel)(this.getContentPane().getComponent(0));        
         CardLayout cl = (CardLayout)cards.getLayout();
         //CardLayout cl = (CardLayout)(this.getContentPane().getLayout());
         //System.out.println("aaaaaaaaaaaaaaaaaaa" + name);
         cl.show(cards, name);
+        for(Component c: cards.getComponents())
         currTextBox = allTextBox.get(name);
+        changeBG(place);
         cards.revalidate();
         cards.repaint();
         this.revalidate();
         this.repaint();
     }
-
-
-//    private void testButtonClick() {
-//        testButton.addActionListener(e -> {
-//            synchronized (lock) {
-//                lock.notifyAll();
-//            }
-//        });
-//    }
-
+    
+    private void changeBG( Place place)
+    {
+        BufferedImage img;
+        if(place instanceof Market)
+        {
+            
+            try { //img = ImageIO.read(new File("market.png")); 
+                  //panel.setContentPane(new JLabel(new ImageIcon(img)));
+                 // panel.setBackground(new Color(150,150,150));
+                backgroundImage  = javax.imageio.ImageIO.read(new File("default.jpg"));
+            }
+            catch (Exception e) { } 
+        }
+        else if(place instanceof DangerZone)
+        {
+            try { 
+                backgroundImage  = javax.imageio.ImageIO.read(new File("DZ.png"));
+                bgIcon = new ImageIcon(backgroundImage);
+                bg.setIcon(bgIcon);
+            }
+            catch (Exception e) { } 
+        }
+        else if(place instanceof SafeZone)
+        {
+            try { backgroundImage  = javax.imageio.ImageIO.read(new File("SZ.png"));
+                  bgIcon = new ImageIcon(backgroundImage);
+                  bg.setIcon(bgIcon);
+            }
+            catch (Exception e) { } 
+        }
+        else
+        {
+            try { //img = ImageIO.read(new File("default.jpg")); 
+                  //this.setContentPane(new JLabel(new ImageIcon(img)));
+                 // panel.setBackground(new Color(54, 57, 63));
+                backgroundImage  = javax.imageio.ImageIO.read(new File("default.jpg"));
+            }
+            catch (Exception e) { System.out.println("Image not found");} 
+        } 
+        this.revalidate();
+        this.repaint();
+        
+    }
 
     // get line
     public String getLine() {

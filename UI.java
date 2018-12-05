@@ -17,7 +17,7 @@ public class UI implements DecisionMaker {
 
     public Move getMove(Character c) {
         System.out.printf(">> ");                          // command prompt
-        Scanner sc = KeyboardScanner.getKeyboardScanner(); // keyboard scanner
+        //Scanner sc = KeyboardScanner.getKeyboardScanner(); // keyboard scanner
         //String  a  = sc.nextLine().trim().toUpperCase();   // read input arg
         IO printIO = IO.getIO();
         String a = printIO.getLine();
@@ -192,8 +192,6 @@ public class UI implements DecisionMaker {
             output.append("#");                        //   add hash to header
         output.append("\n");
         System.out.printf("%s\n", output.toString());       // print header
-        IO printIO = IO.getIO();
-        printIO.display(output.toString());
     }//end printHeader()
 
 

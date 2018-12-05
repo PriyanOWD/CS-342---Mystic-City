@@ -34,7 +34,6 @@ public class GoPlayer extends Go {
         prevPlace.removeCharacter(p);                      // remove from place
         p.setCurrentPlace(prevPlace.followDirection(arg)); // update place
         p.getCurrentPlace().addCharacter(p);               // add to place
-
         if (p.reachedExit()) System.exit(0);         // exit if reached exit
 
         else if (p.getCurrentPlace() != prevPlace) { // match found :
