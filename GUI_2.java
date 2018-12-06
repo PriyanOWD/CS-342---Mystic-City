@@ -12,7 +12,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Insets;
 import java.io.File;
@@ -42,8 +41,11 @@ public class GUI_2 extends JFrame implements UserInterface {
     // private attributes
     private String    line;
     private Player    currPlayer;
-    private JTextArea messageBox;
+    private JTextArea message;
+    private JFrame    frame;
     private final TreeMap<String, JTextArea> messages;
+    private final TreeMap<String, JLabel>    attackStats, defenseStats,
+                                             hpStats,     mpStats;
     private final TreeMap<String, JComboBox> getMenus,   dropMenus,    useMenus,
                                              equipMenus, consumeMenus, buyMenus;
     private final TreeMap<String, JButton>   btns_N,   btns_S,   btns_E,
@@ -63,6 +65,10 @@ public class GUI_2 extends JFrame implements UserInterface {
         Set<Map.Entry<Integer,Character>> characters
                      = Character.characterTree.entrySet();
         messages     = new TreeMap<String, JTextArea>();
+        attackStats  = new TreeMap<String, JLabel>();
+        defenseStats = new TreeMap<String, JLabel>();
+        hpStats      = new TreeMap<String, JLabel>();
+        mpStats      = new TreeMap<String, JLabel>();
         getMenus     = new TreeMap<String, JComboBox>();
         dropMenus    = new TreeMap<String, JComboBox>();
         useMenus     = new TreeMap<String, JComboBox>();
@@ -90,11 +96,12 @@ public class GUI_2 extends JFrame implements UserInterface {
 
         try {
             Image img = ImageIO.read(new File("template.png")).getScaledInstance(1200, 800, Image.SCALE_SMOOTH);
-            this.setTitle("MAGICAL GIRL FORCE GO!!! (GUI #2)");
-            this.setSize(1200, 800);
-            this.setResizable(false);
-            this.setBackground(new Color(54, 57, 63));
-            this.setContentPane(new JLabel(new ImageIcon(img)));
+            frame = this;
+            frame.setTitle("MAGICAL GIRL FORCE GO!!! (GUI #2)");
+            frame.setSize(1200, 800);
+            frame.setResizable(false);
+            frame.setBackground(new Color(54, 57, 63));
+            frame.setContentPane(new JLabel(new ImageIcon(img)));
 
             JPanel cards = new JPanel();
             cards.setSize(1200, 800);
@@ -105,119 +112,102 @@ public class GUI_2 extends JFrame implements UserInterface {
                 if (c.getValue() instanceof Player) {
                     currPlayer = (Player) c.getValue();
 
+                    // player name
                     JLabel playerName;
                     playerName = new JLabel(currPlayer.name);
-                    playerName.setToolTipText(currPlayer.description);
                     playerName.setBounds(22, 18, 314, 40);
                     playerName.setForeground(Color.WHITE);
-                    //playerName.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                     playerName.setFont(new Font("Helvetica Neue", Font.BOLD, 30));
+                    playerName.setToolTipText(currPlayer.description);
 
+                    // attack stat
                     JLabel attack = new JLabel("Attack:");
                     attack.setBounds(50, 72, 80, 20);
                     attack.setForeground(new Color(220, 221, 222));
-                    //attack.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                     attack.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
                     attack.setHorizontalAlignment(SwingConstants.RIGHT);
-
-                    JLabel attackStat = new JLabel() {
-                        @Override public void paintComponent(Graphics g) {
-                            g.drawString(String.valueOf(currPlayer.attack), 4, 16);
-                        }
-                    };
-                    attackStat.setBounds(140, 72, 64, 20);
+                    JLabel attackStat = new JLabel();
+                    attackStat.setBounds(144, 72, 64, 20);
                     attackStat.setForeground(new Color(220, 221, 222));
-                    //attackStat.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                     attackStat.setFont(new Font("Helvetica Neue", Font.PLAIN, 17));
+                    attackStats.put(currPlayer.name, attackStat);
 
+                    // defense stat
                     JLabel defense = new JLabel("Defense:");
                     defense.setBounds(50, 92, 80, 20);
                     defense.setForeground(new Color(220, 221, 222));
-                    //defense.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                     defense.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
                     defense.setHorizontalAlignment(SwingConstants.RIGHT);
-
-                    JLabel defenseStat = new JLabel() {
-                        @Override public void paintComponent(Graphics g) {
-                            g.drawString(String.valueOf(currPlayer.defense), 4, 16);
-                        }
-                    };
-                    defenseStat.setBounds(140, 92, 64, 20);
+                    JLabel defenseStat = new JLabel();
+                    defenseStat.setBounds(144, 92, 64, 20);
                     defenseStat.setForeground(new Color(220, 221, 222));
-                    //defenseStat.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                     defenseStat.setFont(new Font("Helvetica Neue", Font.PLAIN, 17));
+                    defenseStats.put(currPlayer.name, defenseStat);
 
+                    // hp stat
                     JLabel hp = new JLabel("HP:");
                     hp.setBounds(50, 112, 80, 20);
                     hp.setForeground(new Color(220, 221, 222));
-                    //hp.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                     hp.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
                     hp.setHorizontalAlignment(SwingConstants.RIGHT);
-
-                    JLabel hpStat = new JLabel() {
-                        @Override public void paintComponent(Graphics g) {
-                            g.drawString(currPlayer.currHP + "/" + currPlayer.maxHP, 4, 16);
-                        }
-                    };
-                    hpStat.setBounds(140, 112, 64, 20);
+                    JLabel hpStat = new JLabel();
+                    hpStat.setBounds(144, 112, 64, 20);
                     hpStat.setForeground(new Color(220, 221, 222));
-                    //hpStat.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                     hpStat.setFont(new Font("Helvetica Neue", Font.PLAIN, 17));
+                    hpStats.put(currPlayer.name, hpStat);
 
+                    // mp stat
                     JLabel mp = new JLabel("MP:");
                     mp.setBounds(50, 132, 80, 20);
                     mp.setForeground(new Color(220, 221, 222));
-                    //mp.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                     mp.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
                     mp.setHorizontalAlignment(SwingConstants.RIGHT);
-
-                    JLabel mpStat = new JLabel() {
-                        @Override public void paintComponent(Graphics g) {
-                            g.drawString(String.valueOf(currPlayer.mp), 4, 16);
-                        }
-                    };
-                    mpStat.setBounds(140, 132, 64, 20);
+                    JLabel mpStat = new JLabel();
+                    mpStat.setBounds(144, 132, 64, 20);
                     mpStat.setForeground(new Color(220, 221, 222));
-                    //mpStat.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                     mpStat.setFont(new Font("Helvetica Neue", Font.PLAIN, 17));
+                    mpStats.put(currPlayer.name, mpStat);
 
-                    messageBox = new JTextArea();
-                    messageBox.setBackground(new Color(47, 49, 54));
-                    messageBox.setForeground(new Color(131, 148, 150));
-                    messageBox.setFont(new Font("Menlo", Font.PLAIN, 15));
-                    messageBox.setEditable(false);
-                    messageBox.setMargin(new Insets(0, 40, 0, 0));
-                    DefaultCaret caret = (DefaultCaret) messageBox.getCaret();
+                    // output message box
+                    message = new JTextArea();
+                    message.setBackground(new Color(47, 49, 54));
+                    message.setForeground(new Color(131, 148, 150));
+                    message.setFont(new Font("Menlo", Font.PLAIN, 15));
+                    message.setEditable(false);
+                    message.setMargin(new Insets(0, 40, 0, 0));
+                    DefaultCaret caret = (DefaultCaret) message.getCaret();
                     caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-                    JScrollPane scrollPane = new JScrollPane(messageBox);
-                    scrollPane.setBounds(359, 22, 818, 659);
-                    scrollPane.setBorder(BorderFactory.createEmptyBorder());
-                    messages.put(currPlayer.name, messageBox);
+                    JScrollPane messagePane = new JScrollPane(message);
+                    messagePane.setBounds(359, 22, 818, 659);
+                    messagePane.setBorder(BorderFactory.createEmptyBorder());
+                    messages.put(currPlayer.name, message);
 
-                    JTextField textBox = new JTextField("Command @" + currPlayer.name);
-                    textBox.setBounds(366, 705, 804, 50);
-                    textBox.setBackground(new Color(72, 75, 81));
-                    textBox.setForeground(new Color(127, 129, 133));
-                    textBox.setFont(new Font("Helvetica Neue", Font.PLAIN, 32));
-                    textBox.setBorder(BorderFactory.createEmptyBorder());
-                    textBox.addFocusListener(new FocusListener() {
+                    // command input box
+                    JTextField entryBox = new JTextField("Command @" + currPlayer.name);
+                    entryBox.setBounds(366, 705, 804, 50);
+                    entryBox.setBackground(new Color(72, 75, 81));
+                    entryBox.setForeground(new Color(127, 129, 133));
+                    entryBox.setFont(new Font("Helvetica Neue", Font.PLAIN, 32));
+                    entryBox.setBorder(BorderFactory.createEmptyBorder());
+                    entryBox.addFocusListener(new FocusListener() {
                         @Override public void focusGained(FocusEvent e) {
-                            textBox.setText("");
-                            textBox.setForeground(new Color(200, 201, 203));
+                            entryBox.setText("");
+                            entryBox.setForeground(new Color(200, 201, 203));
                         }
                         @Override public void focusLost(FocusEvent e) {
-                            textBox.setText("Command @" + currPlayer.name);
-                            textBox.setForeground(new Color(127, 129, 133));
+                            entryBox.setText("Command @" + currPlayer.name);
+                            entryBox.setForeground(new Color(127, 129, 133));
                         }
                     });
-                    textBox.addActionListener(new ActionListener() {
+                    entryBox.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
-                            line = textBox.getText();
-                            textBox.setText("");
+                            line = entryBox.getText();
+                            entryBox.setText("");
                             synchronized(syncLock) { syncLock.notifyAll(); }
                         }
                     });
 
+                    // 'GET' command menu
                     JComboBox getMenu = new JComboBox();
                     getMenu.setBounds(18, 176, 323, 34);
                     getMenu.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
@@ -232,6 +222,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                     });
                     getMenus.put(currPlayer.name, getMenu);
 
+                    // 'DROP' command menu
                     JComboBox dropMenu = new JComboBox();
                     dropMenu.setBounds(18, 210, 323, 34);
                     dropMenu.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
@@ -246,6 +237,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                     });
                     dropMenus.put(currPlayer.name, dropMenu);
 
+                    // 'USE' command menu
                     JComboBox useMenu = new JComboBox();
                     useMenu.setBounds(18, 244, 323, 34);
                     useMenu.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
@@ -260,6 +252,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                     });
                     useMenus.put(currPlayer.name, useMenu);
 
+                    // 'EQUIP' command menu
                     JComboBox equipMenu = new JComboBox();
                     equipMenu.setBounds(18, 278, 323, 34);
                     equipMenu.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
@@ -269,12 +262,14 @@ public class GUI_2 extends JFrame implements UserInterface {
                             line = "EQUIP" + String.valueOf(equipMenu.getSelectedItem()).replaceAll("■", "");
                             synchronized(syncLock) { syncLock.notifyAll(); }
                             try { Thread.sleep(10); } catch (Exception s) { }
+                            updateStats();
                             populateDropMenu();
                             populateEquipMenu();
                         }
                     });
                     equipMenus.put(currPlayer.name, equipMenu);
 
+                    // 'CONSUME' command menu
                     JComboBox consumeMenu = new JComboBox();
                     consumeMenu.setBounds(18, 312, 323, 34);
                     consumeMenu.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
@@ -284,12 +279,14 @@ public class GUI_2 extends JFrame implements UserInterface {
                             line = "CONSUME" + String.valueOf(consumeMenu.getSelectedItem()).replaceAll("■", "");
                             synchronized(syncLock) { syncLock.notifyAll(); }
                             try { Thread.sleep(10); } catch (Exception s) { }
+                            updateStats();
                             populateDropMenu();
                             populateConsumeMenu();
                         }
                     });
                     consumeMenus.put(currPlayer.name, consumeMenu);
 
+                    // 'BUY' command menu
                     JComboBox buyMenu = new JComboBox();
                     buyMenu.setBounds(18, 346, 323, 34);
                     buyMenu.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
@@ -304,6 +301,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                     });
                     buyMenus.put(currPlayer.name, buyMenu);
 
+                    // N direction button
                     JButton btn_N = new JButton("N");
                     btn_N.setBounds(161, 427, 46, 46);
                     btn_N.setFont(new Font("Helvetica Neue", Font.BOLD, 40));
@@ -319,6 +317,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                     });
                     btns_N.put(currPlayer.name, btn_N);
 
+                    // S direction button
                     JButton btn_S = new JButton("S");
                     btn_S.setBounds(161, 725, 46, 46);
                     btn_S.setFont(new Font("Helvetica Neue", Font.BOLD, 40));
@@ -334,6 +333,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                     });
                     btns_S.put(currPlayer.name, btn_S);
 
+                    // E direction button
                     JButton btn_E = new JButton("E");
                     btn_E.setBounds(305, 573, 46, 46);
                     btn_E.setFont(new Font("Helvetica Neue", Font.BOLD, 40));
@@ -349,6 +349,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                     });
                     btns_E.put(currPlayer.name, btn_E);
 
+                    // W direction button
                     JButton btn_W = new JButton("W");
                     btn_W.setBounds(10, 573, 46, 46);
                     btn_W.setFont(new Font("Helvetica Neue", Font.BOLD, 40));
@@ -364,6 +365,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                     });
                     btns_W.put(currPlayer.name, btn_W);
 
+                    // U direction button
                     JButton btn_U = new JButton("U");
                     btn_U.setBounds(121, 725, 46, 46);
                     btn_U.setFont(new Font("Helvetica Neue", Font.BOLD, 40));
@@ -379,6 +381,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                     });
                     btns_U.put(currPlayer.name, btn_U);
 
+                    // D direction button
                     JButton btn_D = new JButton("D");
                     btn_D.setBounds(201, 725, 46, 46);
                     btn_D.setFont(new Font("Helvetica Neue", Font.BOLD, 40));
@@ -394,6 +397,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                     });
                     btns_D.put(currPlayer.name, btn_D);
 
+                    // NE direction button
                     JButton btn_NE = new JButton("NE");
                     btn_NE.setBounds(239, 505, 48, 42);
                     btn_NE.setFont(new Font("Helvetica Neue", Font.BOLD, 25));
@@ -409,6 +413,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                     });
                     btns_NE.put(currPlayer.name, btn_NE);
 
+                    // NW direction button
                     JButton btn_NW = new JButton("NW");
                     btn_NW.setBounds(76, 505, 48, 42);
                     btn_NW.setFont(new Font("Helvetica Neue", Font.BOLD, 25));
@@ -424,6 +429,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                     });
                     btns_NW.put(currPlayer.name, btn_NW);
 
+                    // SE direction button
                     JButton btn_SE = new JButton("SE");
                     btn_SE.setBounds(239, 649, 48, 42);
                     btn_SE.setFont(new Font("Helvetica Neue", Font.BOLD, 25));
@@ -439,6 +445,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                     });
                     btns_SE.put(currPlayer.name, btn_SE);
 
+                    // SW direction button
                     JButton btn_SW = new JButton("SW");
                     btn_SW.setBounds(76, 649, 48, 42);
                     btn_SW.setFont(new Font("Helvetica Neue", Font.BOLD, 25));
@@ -454,6 +461,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                     });
                     btns_SW.put(currPlayer.name, btn_SW);
 
+                    // NNE direction button
                     JButton btn_NNE = new JButton("NNE");
                     btn_NNE.setBounds(206, 506, 30, 26);
                     btn_NNE.setFont(new Font("Helvetica Neue", Font.BOLD, 14));
@@ -469,6 +477,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                     });
                     btns_NNE.put(currPlayer.name, btn_NNE);
 
+                    // NNW direction button
                     JButton btn_NNW = new JButton("NNW");
                     btn_NNW.setBounds(130, 506, 34, 26);
                     btn_NNW.setFont(new Font("Helvetica Neue", Font.BOLD, 14));
@@ -484,6 +493,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                     });
                     btns_NNW.put(currPlayer.name, btn_NNW);
 
+                    // ENE direction button
                     JButton btn_ENE = new JButton("ENE");
                     btn_ENE.setBounds(254, 548, 30, 26);
                     btn_ENE.setFont(new Font("Helvetica Neue", Font.BOLD, 14));
@@ -499,6 +509,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                     });
                     btns_ENE.put(currPlayer.name, btn_ENE);
 
+                    // WNW direction button
                     JButton btn_WNW = new JButton("WNW");
                     btn_WNW.setBounds(76, 548, 36, 26);
                     btn_WNW.setFont(new Font("Helvetica Neue", Font.BOLD, 14));
@@ -514,6 +525,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                     });
                     btns_WNW.put(currPlayer.name, btn_WNW);
 
+                    // ESE direction button
                     JButton btn_ESE = new JButton("ESE");
                     btn_ESE.setBounds(254, 622, 30, 26);
                     btn_ESE.setFont(new Font("Helvetica Neue", Font.BOLD, 14));
@@ -529,6 +541,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                     });
                     btns_ESE.put(currPlayer.name, btn_ESE);
 
+                    // WSW direction button
                     JButton btn_WSW = new JButton("WSW");
                     btn_WSW.setBounds(76, 622, 36, 26);
                     btn_WSW.setFont(new Font("Helvetica Neue", Font.BOLD, 14));
@@ -544,6 +557,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                     });
                     btns_WSW.put(currPlayer.name, btn_WSW);
 
+                    // SSE direction button
                     JButton btn_SSE = new JButton("SSE");
                     btn_SSE.setBounds(206, 665, 30, 26);
                     btn_SSE.setFont(new Font("Helvetica Neue", Font.BOLD, 14));
@@ -559,6 +573,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                     });
                     btns_SSE.put(currPlayer.name, btn_SSE);
 
+                    // SSW direction button
                     JButton btn_SSW = new JButton("SSW");
                     btn_SSW.setBounds(130, 665, 34, 26);
                     btn_SSW.setFont(new Font("Helvetica Neue", Font.BOLD, 14));
@@ -574,11 +589,12 @@ public class GUI_2 extends JFrame implements UserInterface {
                     });
                     btns_SSW.put(currPlayer.name, btn_SSW);
 
+                    // add components to player's card
                     JPanel card = new JPanel();
                     card.setLayout(null);
                     card.setOpaque(false);
-                    card.add(scrollPane);
-                    card.add(textBox);
+                    card.add(messagePane);
+                    card.add(entryBox);
                     card.add(playerName);
                     card.add(attack);
                     card.add(attackStat);
@@ -613,20 +629,21 @@ public class GUI_2 extends JFrame implements UserInterface {
                     card.add(btn_SSE);
                     card.add(btn_SSW);
 
+                    // add player's card to cards collection
                     cards.add(card, c.getValue().name);
                 }//end if...
             }//end for...
 
-            this.getContentPane().add(cards);
-            this.setVisible(true);
-            this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-            messageBox = messages.firstEntry().getValue();
+            frame.getContentPane().add(cards);
+            frame.setVisible(true);
+            frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+            message = messages.firstEntry().getValue();
         } catch (Exception e) { e.printStackTrace(); }
     }//end class constructor
 
 
     // display message
-    public void display(String message) { messageBox.append(message); }
+    public void display(String m) { message.append(m); }
 
 
     // get line
@@ -642,7 +659,7 @@ public class GUI_2 extends JFrame implements UserInterface {
     }//end getLine()
 
 
-    // disable direction buttons
+    // disable all direction buttons
     private void disableAllDirections() {
         String n = currPlayer.name;
 
@@ -738,7 +755,7 @@ public class GUI_2 extends JFrame implements UserInterface {
     }//end disableDirectionButtons()
 
 
-    // enable direction button
+    // enable direction button corresponding to Direction d
     private void enableDirection(Direction d) {
         String n = currPlayer.name;
 
@@ -853,6 +870,15 @@ public class GUI_2 extends JFrame implements UserInterface {
     }//end enableDirectionButton()
 
 
+    private void updateStats() {
+        String n = currPlayer.name;
+        attackStats.get(n).setText(String.valueOf(currPlayer.attack));
+        defenseStats.get(n).setText(String.valueOf(currPlayer.defense));
+        hpStats.get(n).setText(currPlayer.currHP + "/" + currPlayer.maxHP);
+        mpStats.get(n).setText(String.valueOf(currPlayer.mp));
+    }//end updateStats()
+
+
     // populate get menu
     private void populateGetMenu() {
         String n                    = currPlayer.name;
@@ -945,12 +971,37 @@ public class GUI_2 extends JFrame implements UserInterface {
     }//end populateAllMenus()
 
 
+    // check zone + flash window if danger zone
+    private void checkZones() {
+        if (currPlayer.currPlace instanceof DangerZone) {
+            try { Thread.sleep(500); } catch (Exception e) { }
+            frame.setBackground(new Color(128, 20, 21));
+            try { Thread.sleep(150); } catch (Exception e) { }
+            frame.setBackground(new Color(54, 57, 63));
+            try { Thread.sleep(120); } catch (Exception e) { }
+            frame.setBackground(new Color(128, 20, 21));
+            try { Thread.sleep(150); } catch (Exception e) { }
+            frame.setBackground(new Color(54, 57, 63));
+        }
+        else if (currPlayer.currPlace instanceof SafeZone) {
+            try { Thread.sleep(250); } catch (Exception e) { }
+            frame.setBackground(new Color(59, 128, 39));
+            try { Thread.sleep(150); } catch (Exception e) { }
+            frame.setBackground(new Color(54, 57, 63));
+            try { Thread.sleep(120); } catch (Exception e) { }
+            frame.setBackground(new Color(59, 128, 39));
+            try { Thread.sleep(150); } catch (Exception e) { }
+            frame.setBackground(new Color(54, 57, 63));
+        }
+    }//end checkZones()
+
+
     // switch card
     public void switchCard(Player p, Place place) {
         JPanel cards    = (JPanel) this.getContentPane().getComponent(0);
         CardLayout card = (CardLayout) cards.getLayout();
         currPlayer      = p;
-        messageBox      = messages.get(currPlayer.name);
+        message         = messages.get(currPlayer.name);
 
         disableAllDirections();
 
@@ -958,6 +1009,7 @@ public class GUI_2 extends JFrame implements UserInterface {
         for (Direction d : directions)
             enableDirection(d);
 
+        updateStats();
         populateAllMenus();
 
         card.show(cards, currPlayer.name);
@@ -965,5 +1017,7 @@ public class GUI_2 extends JFrame implements UserInterface {
         cards.repaint();
         this.revalidate();
         this.repaint();
+
+        checkZones();
     }//end switchCard()
 }//end GUI_2 class
