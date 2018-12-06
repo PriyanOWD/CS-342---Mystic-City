@@ -16,14 +16,17 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Insets;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -41,6 +44,8 @@ public class GUI_2 extends JFrame implements UserInterface {
     private Player    currPlayer;
     private JTextArea messageBox;
     private final TreeMap<String, JTextArea> messages;
+    private final TreeMap<String, JComboBox> getMenus,   dropMenus,    useMenus,
+                                             equipMenus, consumeMenus;
     private final TreeMap<String, JButton>   btns_N,   btns_S,   btns_E,
                                              btns_W,   btns_U,   btns_D,
                                              btns_NE,  btns_NW,  btns_SE,
@@ -56,26 +61,31 @@ public class GUI_2 extends JFrame implements UserInterface {
     // constructor for GUI_2 class
     public GUI_2() {
         Set<Map.Entry<Integer,Character>> characters
-                 = Character.characterTree.entrySet();
-        messages = new TreeMap<String, JTextArea>();
-        btns_N   = new TreeMap<String, JButton>();
-        btns_S   = new TreeMap<String, JButton>();
-        btns_E   = new TreeMap<String, JButton>();
-        btns_W   = new TreeMap<String, JButton>();
-        btns_U   = new TreeMap<String, JButton>();
-        btns_D   = new TreeMap<String, JButton>();
-        btns_NE  = new TreeMap<String, JButton>();
-        btns_NW  = new TreeMap<String, JButton>();
-        btns_SE  = new TreeMap<String, JButton>();
-        btns_SW  = new TreeMap<String, JButton>();
-        btns_NNE = new TreeMap<String, JButton>();
-        btns_NNW = new TreeMap<String, JButton>();
-        btns_ENE = new TreeMap<String, JButton>();
-        btns_WNW = new TreeMap<String, JButton>();
-        btns_ESE = new TreeMap<String, JButton>();
-        btns_WSW = new TreeMap<String, JButton>();
-        btns_SSE = new TreeMap<String, JButton>();
-        btns_SSW = new TreeMap<String, JButton>();
+                     = Character.characterTree.entrySet();
+        messages     = new TreeMap<String, JTextArea>();
+        getMenus     = new TreeMap<String, JComboBox>();
+        dropMenus    = new TreeMap<String, JComboBox>();
+        useMenus     = new TreeMap<String, JComboBox>();
+        equipMenus   = new TreeMap<String, JComboBox>();
+        consumeMenus = new TreeMap<String, JComboBox>();
+        btns_N       = new TreeMap<String, JButton>();
+        btns_S       = new TreeMap<String, JButton>();
+        btns_E       = new TreeMap<String, JButton>();
+        btns_W       = new TreeMap<String, JButton>();
+        btns_U       = new TreeMap<String, JButton>();
+        btns_D       = new TreeMap<String, JButton>();
+        btns_NE      = new TreeMap<String, JButton>();
+        btns_NW      = new TreeMap<String, JButton>();
+        btns_SE      = new TreeMap<String, JButton>();
+        btns_SW      = new TreeMap<String, JButton>();
+        btns_NNE     = new TreeMap<String, JButton>();
+        btns_NNW     = new TreeMap<String, JButton>();
+        btns_ENE     = new TreeMap<String, JButton>();
+        btns_WNW     = new TreeMap<String, JButton>();
+        btns_ESE     = new TreeMap<String, JButton>();
+        btns_WSW     = new TreeMap<String, JButton>();
+        btns_SSE     = new TreeMap<String, JButton>();
+        btns_SSW     = new TreeMap<String, JButton>();
 
         try {
             Image img = ImageIO.read(new File("TEST.png")).getScaledInstance(1200, 800, Image.SCALE_SMOOTH);
@@ -190,24 +200,92 @@ public class GUI_2 extends JFrame implements UserInterface {
                     textBox.setFont(new Font("Helvetica Neue", Font.PLAIN, 32));
                     textBox.setBorder(BorderFactory.createEmptyBorder());
                     textBox.addFocusListener(new FocusListener() {
-                        @Override
-                        public void focusGained(FocusEvent e) {
+                        @Override public void focusGained(FocusEvent e) {
                             textBox.setText("");
                             textBox.setForeground(new Color(200, 201, 203));
                         }
-                        public void focusLost(FocusEvent e) {
+                        @Override public void focusLost(FocusEvent e) {
                             textBox.setText("Command @" + currPlayer.name);
                             textBox.setForeground(new Color(127, 129, 133));
                         }
                     });
                     textBox.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
+                        @Override public void actionPerformed(ActionEvent e) {
                             line = textBox.getText();
                             textBox.setText("");
                             synchronized(syncLock) { syncLock.notifyAll(); }
                         }
                     });
+
+                    JComboBox getMenu = new JComboBox();
+                    getMenu.setBounds(18, 176, 323, 34);
+                    getMenu.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
+                    //getMenu.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+                    getMenu.addActionListener(new ActionListener() {
+                        @Override public void actionPerformed(ActionEvent e) {
+                            line = "GET" + String.valueOf(getMenu.getSelectedItem()).replaceAll("■", "");
+                            synchronized(syncLock) { syncLock.notifyAll(); }
+                            try { Thread.sleep(10); } catch (Exception s) { }
+                            populateAllMenus();
+                        }
+                    });
+                    getMenus.put(currPlayer.name, getMenu);
+
+                    JComboBox dropMenu = new JComboBox();
+                    dropMenu.setBounds(18, 210, 323, 34);
+                    dropMenu.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
+                    //dropMenu.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+                    dropMenu.addActionListener(new ActionListener() {
+                        @Override public void actionPerformed(ActionEvent e) {
+                            line = "DROP" + String.valueOf(dropMenu.getSelectedItem()).replaceAll("■", "");
+                            synchronized(syncLock) { syncLock.notifyAll(); }
+                            try { Thread.sleep(10); } catch (Exception s) { }
+                            populateAllMenus();
+                        }
+                    });
+                    dropMenus.put(currPlayer.name, dropMenu);
+
+                    JComboBox useMenu = new JComboBox();
+                    useMenu.setBounds(18, 244, 323, 34);
+                    useMenu.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
+                    //useMenu.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+                    useMenu.addActionListener(new ActionListener() {
+                        @Override public void actionPerformed(ActionEvent e) {
+                            line = "USE" + String.valueOf(useMenu.getSelectedItem()).replaceAll("■", "");
+                            synchronized(syncLock) { syncLock.notifyAll(); }
+                            try { Thread.sleep(10); } catch (Exception s) { }
+                            populateAllMenus();
+                        }
+                    });
+                    useMenus.put(currPlayer.name, useMenu);
+
+                    JComboBox equipMenu = new JComboBox();
+                    equipMenu.setBounds(18, 278, 323, 34);
+                    equipMenu.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
+                    //equipMenu.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+                    equipMenu.addActionListener(new ActionListener() {
+                        @Override public void actionPerformed(ActionEvent e) {
+                            line = "EQUIP" + String.valueOf(equipMenu.getSelectedItem()).replaceAll("■", "");
+                            synchronized(syncLock) { syncLock.notifyAll(); }
+                            try { Thread.sleep(10); } catch (Exception s) { }
+                            populateAllMenus();
+                        }
+                    });
+                    equipMenus.put(currPlayer.name, equipMenu);
+
+                    JComboBox consumeMenu = new JComboBox();
+                    consumeMenu.setBounds(18, 312, 323, 34);
+                    consumeMenu.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
+                    //consumeMenu.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+                    consumeMenu.addActionListener(new ActionListener() {
+                        @Override public void actionPerformed(ActionEvent e) {
+                            line = "CONSUME" + String.valueOf(consumeMenu.getSelectedItem()).replaceAll("■", "");
+                            synchronized(syncLock) { syncLock.notifyAll(); }
+                            try { Thread.sleep(10); } catch (Exception s) { }
+                            populateAllMenus();
+                        }
+                    });
+                    consumeMenus.put(currPlayer.name, consumeMenu);
 
                     JButton btn_N = new JButton("N");
                     btn_N.setBounds(161, 427, 46, 46);
@@ -529,6 +607,11 @@ public class GUI_2 extends JFrame implements UserInterface {
                     card.add(hpStat);
                     card.add(mp);
                     card.add(mpStat);
+                    card.add(getMenu);
+                    card.add(dropMenu);
+                    card.add(useMenu);
+                    card.add(equipMenu);
+                    card.add(consumeMenu);
                     card.add(btn_N);
                     card.add(btn_S);
                     card.add(btn_E);
@@ -578,7 +661,9 @@ public class GUI_2 extends JFrame implements UserInterface {
 
 
     // disable direction buttons
-    public void disableAllDirectionButtons(String n) {
+    private void disableAllDirections() {
+        String n = currPlayer.name;
+
         btns_N.get(n).setEnabled(false);
         btns_N.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         btns_N.get(n).setForeground(new Color(60, 65, 72));
@@ -654,98 +739,178 @@ public class GUI_2 extends JFrame implements UserInterface {
 
 
     // enable direction button
-    public void enableDirectionButton(String d, String n) {
-        if      (d.equals("NORTH")) {
+    private void enableDirection(String dir) {
+        String n = currPlayer.name;
+
+        if      (dir.equals("NORTH")) {
             btns_N.get(n).setEnabled(true);
             btns_N.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_N.get(n).setForeground(Color.WHITE);
         }
-        else if (d.equals("SOUTH")) {
+        else if (dir.equals("SOUTH")) {
             btns_S.get(n).setEnabled(true);
             btns_S.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_S.get(n).setForeground(Color.WHITE);
         }
-        else if (d.equals("EAST")) {
+        else if (dir.equals("EAST")) {
             btns_E.get(n).setEnabled(true);
             btns_E.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_E.get(n).setForeground(Color.WHITE);
         }
-        else if (d.equals("WEST")) {
+        else if (dir.equals("WEST")) {
             btns_W.get(n).setEnabled(true);
             btns_W.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_W.get(n).setForeground(Color.WHITE);
         }
-        else if (d.equals("UP")) {
+        else if (dir.equals("UP")) {
             btns_U.get(n).setEnabled(true);
             btns_U.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_U.get(n).setForeground(Color.WHITE);
         }
-        else if (d.equals("DOWN")) {
+        else if (dir.equals("DOWN")) {
             btns_D.get(n).setEnabled(true);
             btns_D.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_D.get(n).setForeground(Color.WHITE);
         }
-        else if (d.equals("NORTHEAST")) {
+        else if (dir.equals("NORTHEAST")) {
             btns_NE.get(n).setEnabled(true);
             btns_NE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_NE.get(n).setForeground(Color.WHITE);
         }
-        else if (d.equals("NORTHWEST")) {
+        else if (dir.equals("NORTHWEST")) {
             btns_NW.get(n).setEnabled(true);
             btns_NW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_NW.get(n).setForeground(Color.WHITE);
         }
-        else if (d.equals("SOUTHEAST")) {
+        else if (dir.equals("SOUTHEAST")) {
             btns_SE.get(n).setEnabled(true);
             btns_SE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_SE.get(n).setForeground(Color.WHITE);
         }
-        else if (d.equals("SOUTHWEST")) {
+        else if (dir.equals("SOUTHWEST")) {
             btns_SW.get(n).setEnabled(true);
             btns_SW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_SW.get(n).setForeground(Color.WHITE);
         }
-        else if (d.equals("NORTH-NORTHEAST")) {
+        else if (dir.equals("NORTH-NORTHEAST")) {
             btns_NNE.get(n).setEnabled(true);
             btns_NNE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_NNE.get(n).setForeground(Color.WHITE);
         }
-        else if (d.equals("NORTH-NORTHWEST")) {
+        else if (dir.equals("NORTH-NORTHWEST")) {
             btns_NNW.get(n).setEnabled(true);
             btns_NNW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_NNW.get(n).setForeground(Color.WHITE);
         }
-        else if (d.equals("EAST-NORTHEAST")) {
+        else if (dir.equals("EAST-NORTHEAST")) {
             btns_ENE.get(n).setEnabled(true);
             btns_ENE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_ENE.get(n).setForeground(Color.WHITE);
         }
-        else if (d.equals("WEST-NORTHWEST")) {
+        else if (dir.equals("WEST-NORTHWEST")) {
             btns_WNW.get(n).setEnabled(true);
             btns_WNW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_WNW.get(n).setForeground(Color.WHITE);
         }
-        else if (d.equals("EAST-SOUTHEAST")) {
+        else if (dir.equals("EAST-SOUTHEAST")) {
             btns_ESE.get(n).setEnabled(true);
             btns_ESE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_ESE.get(n).setForeground(Color.WHITE);
         }
-        else if (d.equals("WEST-SOUTHWEST")) {
+        else if (dir.equals("WEST-SOUTHWEST")) {
             btns_WSW.get(n).setEnabled(true);
             btns_WSW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_WSW.get(n).setForeground(Color.WHITE);
         }
-        else if (d.equals("SOUTH-SOUTHEAST")) {
+        else if (dir.equals("SOUTH-SOUTHEAST")) {
             btns_SSE.get(n).setEnabled(true);
             btns_SSE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_SSE.get(n).setForeground(Color.WHITE);
         }
-        else if (d.equals("SOUTH-SOUTHWEST")) {
+        else if (dir.equals("SOUTH-SOUTHWEST")) {
             btns_SSW.get(n).setEnabled(true);
             btns_SSW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_SSW.get(n).setForeground(Color.WHITE);
         }
     }//end enableDirectionButton()
+
+
+    // populate get menu
+    private void populateGetMenu() {
+        String n                    = currPlayer.name;
+        List<Artifact>    artifacts = currPlayer.currPlace.placeArtifacts;
+        ArrayList<String> names     = new ArrayList<String>();
+        names.add("GET");
+        for (Artifact a : artifacts)
+            names.add("■ " + a.name().toUpperCase());
+
+        getMenus.get(n).setModel(new DefaultComboBoxModel(names.toArray()));
+    }//end populateGetMenu()
+
+
+    // populate drop menu
+    private void populateDropMenu() {
+        String n                    = currPlayer.name;
+        List<Artifact>    artifacts = currPlayer.inventory;
+        ArrayList<String> names     = new ArrayList<String>();
+        names.add("DROP");
+        for (Artifact a : artifacts)
+            names.add("■ " + a.name().toUpperCase());
+
+        dropMenus.get(n).setModel(new DefaultComboBoxModel(names.toArray()));
+    }//end populateDropMenu()
+
+
+    // populate use menu
+    private void populateUseMenu() {
+        String n                    = currPlayer.name;
+        List<Artifact>    artifacts = currPlayer.inventory;
+        ArrayList<String> names     = new ArrayList<String>();
+        names.add("USE");
+        for (Artifact a : artifacts)
+            if (a.pattern() > 0)
+                names.add("■ " + a.name().toUpperCase());
+
+        useMenus.get(n).setModel(new DefaultComboBoxModel(names.toArray()));
+    }//end populateUseMenu()
+
+
+    // populate equip menu
+    private void populateEquipMenu() {
+        String n                    = currPlayer.name;
+        List<Artifact>    artifacts = currPlayer.inventory;
+        ArrayList<String> names     = new ArrayList<String>();
+        names.add("EQUIP");
+        for (Artifact a : artifacts)
+            if (a instanceof Armor || a instanceof Weapon)
+                names.add("■ " + a.name().toUpperCase());
+
+        equipMenus.get(n).setModel(new DefaultComboBoxModel(names.toArray()));
+    }//end populateEquipMenu()
+
+
+    // populate consume menu
+    private void populateConsumeMenu() {
+        String n                    = currPlayer.name;
+        List<Artifact>    artifacts = currPlayer.inventory;
+        ArrayList<String> names     = new ArrayList<String>();
+        names.add("CONSUME");
+        for (Artifact a : artifacts)
+            if (a instanceof Food)
+                names.add("■ " + a.name().toUpperCase());
+
+        consumeMenus.get(n).setModel(new DefaultComboBoxModel(names.toArray()));
+    }//end populateConsumeMenu()
+
+
+    // populate all menus
+    private void populateAllMenus() {
+        populateGetMenu();
+        populateDropMenu();
+        populateUseMenu();
+        populateEquipMenu();
+        populateConsumeMenu();
+    }//end populateAllMenus()
 
 
     // switch card
@@ -755,11 +920,13 @@ public class GUI_2 extends JFrame implements UserInterface {
         currPlayer      = p;
         messageBox      = messages.get(currPlayer.name);
 
-        disableAllDirectionButtons(currPlayer.name);
+        disableAllDirections();
 
         List<Direction> directions = place.paths;
         for (Direction d : directions)
-            enableDirectionButton(d.toString(), currPlayer.name);
+            enableDirection(d.toString());
+
+        populateAllMenus();
 
         card.show(cards, currPlayer.name);
         cards.revalidate();

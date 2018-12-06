@@ -70,7 +70,7 @@ public class Artifact {
     // return artifact weight
     public int     weight()      { return mobility;     }
     // return artifact key pattern
-    private int    pattern()     { return keyPattern;   }
+    public int     pattern()     { return keyPattern;   }
     // return true if artifact is movable
     public boolean isMovable()   { return weight() > 0; }
 

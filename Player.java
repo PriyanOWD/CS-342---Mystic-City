@@ -202,7 +202,7 @@ public class Player extends Character
                 updateStats(attack, defense, f.getMaxHP(), f.getMP(), true);
             f.setConsumed();
             inventory.remove(f);
-            printIO.display(String.format("You\'ve consumed the %s.\n", art.name()));
+            printIO.display(String.format("You\'ve consumed the %s.\n", art.name().toLowerCase()));
         }
         else printIO.display("Sorry, the artifact can\'t be consumed.\n");
     }
@@ -232,7 +232,7 @@ public class Player extends Character
                         updateStats(a.getAtk(),   a.getDef(),
                                     a.getMaxHP(), a.getMP(),  true);
                         inventory.remove(a);
-                        printIO.display(String.format("You\'ve equipped the %s.\n", a.name()));
+                        printIO.display(String.format("You\'ve equipped the %s.\n", a.name().toLowerCase()));
                         break;
 
                 // upper-body
@@ -249,7 +249,7 @@ public class Player extends Character
                         updateStats(a.getAtk(),   a.getDef(),
                                     a.getMaxHP(), a.getMP(),  true);
                         inventory.remove(a);
-                        printIO.display(String.format("You\'ve equipped the %s.\n", a.name()));
+                        printIO.display(String.format("You\'ve equipped the %s.\n", a.name().toLowerCase()));
                         break;
 
                 // lower-body
@@ -266,7 +266,7 @@ public class Player extends Character
                         updateStats(a.getAtk(),   a.getDef(),
                                     a.getMaxHP(), a.getMP(),  true);
                         inventory.remove(a);
-                        printIO.display(String.format("You\'ve equipped the %s.\n", a.name()));
+                        printIO.display(String.format("You\'ve equipped the %s.\n", a.name().toLowerCase()));
                         break;
 
                 // shoes
@@ -283,7 +283,7 @@ public class Player extends Character
                         updateStats(a.getAtk(),   a.getDef(),
                                     a.getMaxHP(), a.getMP(),  true);
                         inventory.remove(a);
-                        printIO.display(String.format("You\'ve equipped the %s.\n", a.name()));
+                        printIO.display(String.format("You\'ve equipped the %s.\n", a.name().toLowerCase()));
                         break;
 
                 // accessory
@@ -300,7 +300,7 @@ public class Player extends Character
                         updateStats(a.getAtk(),   a.getDef(),
                                     a.getMaxHP(), a.getMP(),  true);
                         inventory.remove(a);
-                        printIO.display(String.format("You\'ve equipped the %s.\n", a.name()));
+                        printIO.display(String.format("You\'ve equipped the %s.\n", a.name().toLowerCase()));
                         break;
             }
         }//end armor equip
@@ -328,7 +328,7 @@ public class Player extends Character
                         updateStats(w.getAtk(),   w.getDef(),
                                     w.getMaxHP(), w.getMP(),  true);
                         inventory.remove(w);
-                        printIO.display(String.format("You\'ve equipped the %s.\n", w.name()));
+                        printIO.display(String.format("You\'ve equipped the %s.\n", w.name().toLowerCase()));
                         break;
 
                 // offhand weapon
@@ -345,7 +345,7 @@ public class Player extends Character
                         updateStats(w.getAtk(),   w.getDef(),
                                     w.getMaxHP(), w.getMP(),  true);
                         inventory.remove(w);
-                        printIO.display(String.format("You\'ve equipped the %s.\n", w.name()));
+                        printIO.display(String.format("You\'ve equipped the %s.\n", w.name().toLowerCase()));
                         break;
             }
         }

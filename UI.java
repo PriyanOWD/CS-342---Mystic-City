@@ -149,27 +149,6 @@ public class UI implements DecisionMaker {
     }//end requestNumber()
 
 
-    // prompt user if they would like to view their inventory
-    // for use in "GET" command
-    public static void promptInventory(Player p) {
-        IO printIO = IO.getIO();
-        for (;;) {
-            printIO.display("Would you like to view your inventory (yes/no)?\n");
-            String response = "";
-            try {
-                Scanner s = new Scanner(printIO.getLine().trim());// read input
-                if (s.hasNext()) response = s.next();           // get response
-                s.close();                                      // close scanner
-                if      (response.equalsIgnoreCase("yes") ||    // return yes
-                         response.equalsIgnoreCase("y"  )) { p.inve(); return; }
-                else if (response.equalsIgnoreCase("no" ) ||
-                         response.equalsIgnoreCase("n"  ) ||    // return no
-                         response.length() == 0)           {           return; }
-            } catch (Exception e) { e.printStackTrace(); }      // exception
-        }//end for (;;)...
-    }//end promptInventory()
-
-
     // print formatted header for use in display() and print() methods
     public static void printHeader(String str) {
         output.setLength(0);

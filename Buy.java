@@ -25,7 +25,7 @@ public class Buy extends Move {
     public boolean execute() {
         IO printIO = IO.getIO();
         if (!(p.currPlace instanceof Market)) {
-            printIO.display(String.format("Sorry, %s isn\'t a market. " +
+            printIO.display(String.format("Sorry, the %s isn\'t a market. " +
                             "Buy things at a market.\n", p.currPlace.name()));
             return false;
         }

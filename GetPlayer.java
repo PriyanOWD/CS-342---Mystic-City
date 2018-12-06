@@ -41,7 +41,6 @@ public class GetPlayer extends Get {
                 p.addArtifact(a);                // add to possessions
                 printIO.display(String.format("You now possess the %s.\n",
                                 a.name().toLowerCase()));
-                UI.promptInventory(p);           // prompt inventory
             }//end if...                         // no match
             else printIO.display("Sorry, the artifact wasn\'t found or is " +
                                  "locked.\n");
