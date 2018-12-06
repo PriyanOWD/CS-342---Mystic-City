@@ -116,9 +116,9 @@ public class Place
     }
 
     // Place variables. Final values.
-    protected  String PNAME;
-    protected  String PDESCRIPTION;
-    protected  int PID;
+    protected String PNAME;
+    protected String PDESCRIPTION;
+    protected int PID;
     protected List<Direction> paths;
     protected List<Artifact> placeArtifacts;
     protected List<Character> placeCharacters;
@@ -193,8 +193,8 @@ public class Place
             footPrints      = new LinkedList<footPrint>();// allocate footprints
 
             Scanner s  = new Scanner(CleanLineScanner.getCleanLine(sc));
-            PID         = s.nextInt();                     // set ID
-            PNAME       = CleanLineScanner.getCleanLine(s);// set name
+            PID        = s.nextInt();                     // set ID
+            PNAME      = CleanLineScanner.getCleanLine(s);// set name
 
             s.close();                                    // close scanner
 
@@ -249,7 +249,8 @@ public class Place
             // return (result = tmp.follow());
             }
         }
-        System.out.printf("Sorry, can't go %s.\n", Direction.matchDirection(pToGo));
+        IO printIO = IO.getIO();
+        printIO.display(String.format("Sorry, can't go %s.\n", Direction.matchDirection(pToGo)));
         return this;
         // return result;
     }
@@ -315,12 +316,11 @@ public class Place
 
     public void display(Character ch)
     {
-        IO printIO = IO.getIO();
-        //printIO.display(output.toString());
-        UI.printHeader(String.format("PLAYER %d: %s",  // name + player #
-                       ((Player) ch).playerNum(), ch.name()));
-
-        ch.stats();
+//        UI.printHeader(String.format("PLAYER %d: %s",  // name + player #
+//                       ((Player) ch).playerNum(), ch.name()));
+//
+//        ch.stats();
+        UI.printDivider(1);
 
         if (name().matches("Room.*"))                  // place is room
             UI.printFormat(String.format("%s, you\'re in %s!\n%s",

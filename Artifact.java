@@ -110,18 +110,19 @@ public class Artifact {
 
     // use artifact
     public void use(Place currPlace) {
+        IO printIO = IO.getIO();
         if (pattern() > 0) {                            // key artifact :
             if (!currPlace.useKey(this)) {              //   can't use :
                 if (currPlace.name().matches("Room.*")) //     place is room
-                    System.out.printf("Sorry, there are no locked doors " +
-                            "in %s.\n",     currPlace.name());
+                    printIO.display(String.format("Sorry, there are no " +
+                            "locked doors in %s.\n",     currPlace.name()));
                 else                                    //     place isn't room
-                    System.out.printf("Sorry, there are no locked doors " +
-                            "in the %s.\n", currPlace.name());
+                    printIO.display(String.format("Sorry, there are no " +
+                            "locked doors in the %s.\n", currPlace.name()));
             }//end if...
         }//end if...                                    // non-key artifact :
-        else System.out.printf("Sorry, the %s is not a key.\n",
-                name().toLowerCase());
+        else printIO.display(String.format("Sorry, the %s is not a key.\n",
+                             name().toLowerCase()));
     }//end use()
 
 
@@ -144,7 +145,7 @@ public class Artifact {
     public void inventory(int count) {
         UI.printFormat(String.format(" \n%2d. %s\n    Value:   %d\n    " +
                        "Weight:  %d kg\n%s", count, name(), value(), weight(),
-                description().replaceAll("(?m)^", "    ")));
+                       description().replaceAll("(?m)^", "    ")));
     }//end inventory()
 
 

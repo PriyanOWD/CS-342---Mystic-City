@@ -10,7 +10,8 @@
 public class Commands extends Move {
     // execute "COMMANDS" command : display all commands used in the game
     public boolean execute() {
-        System.out.printf("\n");    // newline
+        IO printIO = IO.getIO();
+        printIO.display("\n");      // newline
         UI.printHeader("COMMANDS"); // print commands header
         UI.printFormat("                 \'QUIT\' : quit game\n"             +
                        "                 \'LOOK\' : display current place\n" +

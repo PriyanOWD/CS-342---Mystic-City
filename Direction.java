@@ -145,44 +145,46 @@ public class Direction
         if (!isLocked())
             return DESTINATION;
         else {
+            IO printIO = IO.getIO();
             if (DESTINATION == Place.getPlacebyID(0))
-                System.out.printf("Sorry, the door to nowhere is locked forever.\n");
+                printIO.display("Sorry, the door to nowhere is locked forever.\n");
             else if (DESTINATION.name().matches("Room.*"))
-                System.out.printf("Sorry, the door to %s is locked.\n", DESTINATION.name());
+                printIO.display(String.format("Sorry, the door to %s is locked.\n", DESTINATION.name()));
             else
-                System.out.printf("Sorry, the door to the %s is locked.\n", DESTINATION.name());
+                printIO.display(String.format("Sorry, the door to the %s is locked.\n", DESTINATION.name()));
         }
         return SOURCE;
     }
 
     public boolean useKey(Artifact dirArtifact)
     {
+        IO printIO = IO.getIO();
         if (lockPattern != 0)
         {
             if (dirArtifact.matchKey(lockPattern))
             {
                 if (toggle())
-                    System.out.printf("You\'ve used the %s to unlock the door ",
-                            dirArtifact.name().toLowerCase());
+                    printIO.display(String.format("You\'ve used the %s to unlock the door ",
+                                    dirArtifact.name().toLowerCase()));
                 else
-                    System.out.printf("You\'ve used the %s to lock the door ",
-                            dirArtifact.name().toLowerCase());
+                    printIO.display(String.format("You\'ve used the %s to lock the door ",
+                                    dirArtifact.name().toLowerCase()));
             }
             else
-                System.out.printf("Sorry, the %s doesn\'t unlock the door ",
-                        dirArtifact.name().toLowerCase());
+                printIO.display(String.format("Sorry, the %s doesn\'t unlock the door ",
+                                dirArtifact.name().toLowerCase()));
 
             if (DESTINATION.name().matches("Room.*"))
-                System.out.printf("to %s.\n",     DESTINATION.name());
+                printIO.display(String.format("to %s.\n", DESTINATION.name()));
             else
-                System.out.printf("to the %s.\n", DESTINATION.name());
+                printIO.display(String.format("to the %s.\n", DESTINATION.name()));
 
             return true;
         }
         else if (isLocked() && DESTINATION == Place.getPlacebyID(0))
         {
-            System.out.printf("Sorry, the %s can\'t unlock the door " +
-                    "to nowhere.\n", dirArtifact.name().toLowerCase());
+            printIO.display(String.format("Sorry, the %s can\'t unlock the door to nowhere.\n",
+                    dirArtifact.name().toLowerCase()));
             return true;
         }
         return false;

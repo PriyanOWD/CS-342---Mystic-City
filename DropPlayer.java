@@ -25,6 +25,7 @@ public class DropPlayer extends Drop {
     // execute "DROP" command : drop artifact from player's collection
     // of artifacts into current place
     public boolean execute() {
+        IO printIO = IO.getIO();
         if (arg.matches("DROP .*")) {
             arg = arg.replace("DROP ", "").trim();
             ArrayList<Artifact> matches = p.followArtifact(arg);
@@ -37,13 +38,13 @@ public class DropPlayer extends Drop {
                 Artifact a = matches.get(n - 1);    // get artifact
                 p.removeArtifact(a);                // remove from possessions
                 p.getCurrentPlace().addArtifact(a); // add to place
-                System.out.printf("You\'ve dropped the %s.\n",
-                        a.name().toLowerCase());
+                printIO.display(String.format("You\'ve dropped the %s.\n",
+                                a.name().toLowerCase()));
             }//end if...                            // no match
-            else System.out.printf("Sorry, you don\'t possess the artifact.\n");
+            else printIO.display("Sorry, you don\'t possess the artifact.\n");
         }//end if...                                // invalid command
-        else System.out.printf("Enter \'DROP\' followed by the name of " +
-                "the artifact.\n");
+        else printIO.display("Enter \'DROP\' followed by the name of " +
+                             "the artifact.\n");
         return false;
     }//end execute()
 }//end DropPlayer class

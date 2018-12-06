@@ -9,18 +9,15 @@ import java.util.Scanner;
 
 
 public class UI implements DecisionMaker {
-    //private static IO printIO;
+    // private attribute
     private static StringBuilder output;
-    static{ //printIO = IO.getIO(); 
-            output = new StringBuilder();
-          }
+    static { output = new StringBuilder(); }
 
     public Move getMove(Character c) {
-        System.out.printf(">> ");                          // command prompt
-        //Scanner sc = KeyboardScanner.getKeyboardScanner(); // keyboard scanner
-        //String  a  = sc.nextLine().trim().toUpperCase();   // read input arg
         IO printIO = IO.getIO();
-        String a = printIO.getLine();
+        printIO.display("Please enter your next command.\n");
+        String a   = printIO.getLine().toUpperCase();
+
         // "QUIT"    command : quit game
         if (a.matches(".*QUIT.*") || a.matches(".*EXIT.*") || a.equals("Q"))
             return new Quit();
@@ -71,8 +68,8 @@ public class UI implements DecisionMaker {
 
         // unknown command
         else {
-            System.out.printf("Sorry, the command wasn\'t recognized. " +
-                              "Try one of the following.\n");
+            printIO.display("Sorry, the command wasn\'t recognized. " +
+                            "Try one of the following.\n");
             return new Commands();
         }
     }//end getMove()
@@ -135,16 +132,16 @@ public class UI implements DecisionMaker {
     // request match number for potential matched Artifact objects
     // for use in "GET", "DROP" and "USE" commands
     public static int requestNumber(ArrayList<Artifact> matches, String str) {
+        IO printIO = IO.getIO();
         for (;;) {
             int n = 0;
             for (Artifact a : matches)                          // print matches
-                System.out.printf("Enter \'%d\' to %s the %s.\n",
-                                  ++n, str, a.name().toLowerCase());
-            System.out.printf(">> ");                           // request #
+                printIO.display(String.format("Enter \'%d\' to %s the %s.\n",
+                                ++n, str, a.name().toLowerCase()));
             n = 0;
             try {
-                Scanner sc = KeyboardScanner.getKeyboardScanner();
-                Scanner s  = new Scanner(sc.nextLine().trim()); // read input
+                //Scanner sc = KeyboardScanner.getKeyboardScanner();
+                Scanner s = new Scanner(printIO.getLine().trim());// read input
                 if (s.hasNextInt()) n = s.nextInt();            // get #
                 s.close();                                      // close scanner
                 if (n > 0 && n <= matches.size()) return n;     // return #
@@ -156,13 +153,12 @@ public class UI implements DecisionMaker {
     // prompt user if they would like to view their inventory
     // for use in "GET" command
     public static void promptInventory(Player p) {
+        IO printIO = IO.getIO();
         for (;;) {
-            System.out.printf("Would you like to view your inventory " +
-                              "(yes/no)?\n>> ");                // request y/n
+            printIO.display("Would you like to view your inventory (yes/no)?\n");
             String response = "";
             try {
-                Scanner sc = KeyboardScanner.getKeyboardScanner();
-                Scanner s  = new Scanner(sc.nextLine().trim()); // read input
+                Scanner s = new Scanner(printIO.getLine().trim());// read input
                 if (s.hasNext()) response = s.next();           // get response
                 s.close();                                      // close scanner
                 if      (response.equalsIgnoreCase("yes") ||    // return yes
@@ -178,20 +174,22 @@ public class UI implements DecisionMaker {
     // print formatted header for use in display() and print() methods
     public static void printHeader(String str) {
         output.setLength(0);
-        //String header = "";                      // header string
 
-        int num = (78 - str.length()) / 2;       // determine # of hashes
-        for (int i = 0; i < num; i++)            // # of hashes :
-            output.append("#");                      //   add hash to header
-
-        //header += " " + str.toUpperCase() + " "; // add str to header
-        output.append(" ");
-        output.append(str.toUpperCase()); 
-        output.append(" ");
-        while (output.length() < 80)             // while len < 80 :
+        int num = (78 - str.length()) / 2;             // determine # of hashes
+        for (int i = 0; i < num; i++)                  // # of hashes :
             output.append("#");                        //   add hash to header
+
+        output.append(" ");
+        output.append(str.toUpperCase());
+        output.append(" ");
+
+        while (output.length() < 80)                   // while len < 80 :
+            output.append("#");                        //   add hash to header
+
         output.append("\n");
-        System.out.printf("%s\n", output.toString());       // print header
+
+        IO printIO = IO.getIO();
+        printIO.display(output.toString());            // print header
     }//end printHeader()
 
 
@@ -199,31 +197,29 @@ public class UI implements DecisionMaker {
     public static void printFormat(String str) {
         output.setLength(0);
         StringBuilder output = new StringBuilder();
-        String lines[] = str.split("\\r?\\n"); // split lines
+        String lines[] = str.split("\\r?\\n");  // split lines
   
-        for (String s : lines) {               // print formatted lines
+        for (String s : lines) {                // append formatted lines
             s = s.substring(0, Math.min(s.length(), 76));
-            System.out.printf("%-79s#\n", s.replaceAll("(?m)^", "# "));
             output.append(String.format("%-79s#\n", s.replaceAll("(?m)^", "# ")));
         }
+
         IO printIO = IO.getIO();
-        printIO.display(output.toString());
+        printIO.display(output.toString());     // print formatted output
     }//end printFormat()
 
 
     // print formatted divider for use in display() and print() methods
     public static void printDivider(int newlines) {
-        output.setLength(0);
         String div = "########################################";
-        System.out.printf("%s%s", div, div); // print divider
+        output.setLength(0);
         output.append(div);
         output.append(div);
-        for (int i = 0; i < newlines; i++)   // # of newlines :
-        {    
-            System.out.printf("\n");         //   print newline
-            output.append("\n");
-        }
+
+        for (int i = 0; i < newlines; i++)    // # of newlines :
+            output.append("\n");              //   append
+
         IO printIO = IO.getIO();
-        printIO.display(output.toString());
+        printIO.display(output.toString());   // print divider
     }//end printHeader()
 }

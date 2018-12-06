@@ -22,9 +22,10 @@ public class GoPlayer extends Go {
 
     // execute "GO" command : go to given direction
     public boolean execute() {
+        IO printIO = IO.getIO();
         if (arg.equals("GO")) {                      // no directions
-            System.out.printf("Enter \'GO\' followed by the direction " +
-                              "(e.g., N, S, E, W, U, D).\n");
+            printIO.display("Enter \'GO\' followed by the " +
+                            "direction (e.g., N, S, E, W, U, D).\n");
             return false;
         }
         else if (arg.matches("GO .*"))               // starts with "GO" :
@@ -38,11 +39,12 @@ public class GoPlayer extends Go {
 
         else if (p.getCurrentPlace() != prevPlace) { // match found :
             if (p.placeName().matches("Room.*"))     //   place is room
-                System.out.printf("Headed %s to %s...\n",
-                                  Direction.matchDirection(arg), p.placeName());
+                printIO.display(String.format("Headed %s to %s...\n",
+                                Direction.matchDirection(arg), p.placeName()));
             else                                     //   place isn't room
-                System.out.printf("Headed %s to the %s...\n",
-                                  Direction.matchDirection(arg), p.placeName());
+                printIO.display(String.format("Headed %s to the %s...\n",
+                                Direction.matchDirection(arg), p.placeName()));
+            try { Thread.sleep(1500); } catch (Exception e) { }
             return true;
         }//end else if...
         return false;

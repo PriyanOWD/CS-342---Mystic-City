@@ -104,8 +104,9 @@ public class Player extends Character
 
     // display current place for use in "LOOK" command
     public void look(int newlines) {
+        IO printIO = IO.getIO();
         for (int i = 0; i < newlines; i++) // # of newlines :
-            System.out.printf("\n");       //   print newline
+            printIO.display("\n");         //   print newline
 
         currPlace.display(this);           // display current place
     }//end look();
@@ -115,8 +116,9 @@ public class Player extends Character
     // "INVE" and "GET" commands
     public void inve()
     {
-        System.out.printf("\n");
-        UI.printHeader(String.format("%s's Inventory", name));
+        IO printIO = IO.getIO();
+        printIO.display("\n");
+        UI.printDivider(1);
 
         if      (inventory.size() == 0)  // player doesn't possess artifacts
             UI.printFormat(String.format("%s, you currently possess no " +
@@ -147,6 +149,7 @@ public class Player extends Character
         UI.printDivider(2);
     }
 
+
     public void updateStats(int a, int d, int mh, int m, boolean isEquip)
     {
         if (isEquip)
@@ -167,26 +170,29 @@ public class Player extends Character
             mp      -= m;
         }
     }
-    
+
+
     public String getStats()
     {
         StringBuilder stats = new StringBuilder();
         stats.append("Health:");
-        stats.append(Integer.toString(this.currHP));
+        stats.append(currHP);
         stats.append("/");
-        stats.append(Integer.toString(this.maxHP));
+        stats.append(maxHP);
         stats.append("\n");
         stats.append("Attack:");
-        stats.append(Integer.toString(this.attack));
+        stats.append(attack);
         stats.append("Defense:");
-        stats.append(Integer.toString(this.defense));
+        stats.append(defense);
         stats.append("Magic Points:");
-        stats.append(Integer.toString(this.mp));
+        stats.append(mp);
         return stats.toString();
     }
 
+
     public void consume(Artifact art)
     {
+        IO printIO = IO.getIO();
         if (art instanceof Food && inventory.contains(art))
         {
             Food f = (Food) art;
@@ -194,15 +200,16 @@ public class Player extends Character
                 updateStats(attack, defense, f.getMaxHP(), f.getMP(), true);
             f.setConsumed();
             inventory.remove(f);
-            System.out.printf("You\'ve consumed the %s.\n", art.name());
+            printIO.display(String.format("You\'ve consumed the %s.\n", art.name()));
         }
-        else System.out.printf("Sorry, the artifact can\'t be consumed.\n");
+        else printIO.display("Sorry, the artifact can\'t be consumed.\n");
     }
 
     // Equips an equippable object to the player if the object passed in is
     // equippable. Else nothing happens. Turn should not be used.
     public void equip(Artifact art)
     {
+        IO printIO = IO.getIO();
         if (art instanceof Armor)
         {
             Armor a  = (Armor) art;
@@ -223,7 +230,7 @@ public class Player extends Character
                         updateStats(a.getAtk(),   a.getDef(),
                                     a.getMaxHP(), a.getMP(),  true);
                         inventory.remove(a);
-                        System.out.printf("You\'ve equipped the %s.\n", a.name());
+                        printIO.display(String.format("You\'ve equipped the %s.\n", a.name()));
                         break;
 
                 // upper-body
@@ -240,7 +247,7 @@ public class Player extends Character
                         updateStats(a.getAtk(),   a.getDef(),
                                     a.getMaxHP(), a.getMP(),  true);
                         inventory.remove(a);
-                        System.out.printf("You\'ve equipped the %s.\n", a.name());
+                        printIO.display(String.format("You\'ve equipped the %s.\n", a.name()));
                         break;
 
                 // lower-body
@@ -257,7 +264,7 @@ public class Player extends Character
                         updateStats(a.getAtk(),   a.getDef(),
                                     a.getMaxHP(), a.getMP(),  true);
                         inventory.remove(a);
-                        System.out.printf("You\'ve equipped the %s.\n", a.name());
+                        printIO.display(String.format("You\'ve equipped the %s.\n", a.name()));
                         break;
 
                 // shoes
@@ -274,7 +281,7 @@ public class Player extends Character
                         updateStats(a.getAtk(),   a.getDef(),
                                     a.getMaxHP(), a.getMP(),  true);
                         inventory.remove(a);
-                        System.out.printf("You\'ve equipped the %s.\n", a.name());
+                        printIO.display(String.format("You\'ve equipped the %s.\n", a.name()));
                         break;
 
                 // accessory
@@ -291,7 +298,7 @@ public class Player extends Character
                         updateStats(a.getAtk(),   a.getDef(),
                                     a.getMaxHP(), a.getMP(),  true);
                         inventory.remove(a);
-                        System.out.printf("You\'ve equipped the %s.\n", a.name());
+                        printIO.display(String.format("You\'ve equipped the %s.\n", a.name()));
                         break;
             }
         }//end armor equip
@@ -319,7 +326,7 @@ public class Player extends Character
                         updateStats(w.getAtk(),   w.getDef(),
                                     w.getMaxHP(), w.getMP(),  true);
                         inventory.remove(w);
-                        System.out.printf("You\'ve equipped the %s.\n", w.name());
+                        printIO.display(String.format("You\'ve equipped the %s.\n", w.name()));
                         break;
 
                 // offhand weapon
@@ -336,12 +343,11 @@ public class Player extends Character
                         updateStats(w.getAtk(),   w.getDef(),
                                     w.getMaxHP(), w.getMP(),  true);
                         inventory.remove(w);
-                        System.out.printf("You\'ve equipped the %s.\n", w.name());
+                        printIO.display(String.format("You\'ve equipped the %s.\n", w.name()));
                         break;
             }
         }
 
-        else System.out.printf("Sorry, the artifact can\'t be equipped.\n");
+        else printIO.display("Sorry, the artifact can\'t be equipped.\n");
     }//end equip
 }//end Player class
-

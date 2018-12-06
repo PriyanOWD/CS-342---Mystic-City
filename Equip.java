@@ -25,6 +25,7 @@ public class Equip extends Move {
     // execute "EQUIP" command : equip artifact from player's collection
     // of artifacts (armor or weapon)
     public boolean execute() {
+        IO printIO = IO.getIO();
         if (arg.matches("EQUIP .*")) {
             arg = arg.replace("EQUIP ", "").trim();
             ArrayList<Artifact> matches = p.followArtifact(arg);
@@ -41,10 +42,10 @@ public class Equip extends Move {
                     p.equip(a);                            //   equip artifact
                 }
             }//end if...                                   // no match
-            else System.out.printf("Sorry, you don\'t possess the artifact.\n");
+            else printIO.display("Sorry, you don\'t possess the artifact.\n");
         }//end if...                                       // invalid command
-        else System.out.printf("Enter \'EQUIP\' followed by the name of " +
-                               "the armor or weapon.\n");
+        else printIO.display("Enter \'EQUIP\' followed by the name of " +
+                             "the armor or weapon.\n");
         return false;
     }//end execute()
 }//end Equip class

@@ -20,8 +20,8 @@ import java.util.Scanner;
 // GameTester class with main() method to run and test game
 public class GameTester {
     public static void main(String[] args) {
-        System.out.printf("CS342 Term Project Part IV\n"   +
-                          "GROUP 48:\n"   +
+        System.out.printf("CS342 Term Project Part V\n"    +
+                          "GROUP 48:\n"                    +
                           "Shyam Patel        (spate54)\n" +
                           "Joey Voorhees      (svoorh2)\n" +
                           "Priyan Sureshkumar (psures5)\n");

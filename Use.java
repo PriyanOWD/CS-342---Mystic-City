@@ -25,6 +25,7 @@ public class Use extends Move {
     // execute "USE" command : use key artifact from player's collection
     // of artifacts to unlock door
     public boolean execute() {
+        IO printIO = IO.getIO();
         if (arg.matches("USE .*")) {
             arg = arg.replace("USE ", "").trim();
             ArrayList<Artifact> matches = p.followArtifact(arg);
@@ -41,10 +42,9 @@ public class Use extends Move {
                     a.use(p.getCurrentPlace());           //   use artifact
                 }
             }//end if...                                  // no match
-            else System.out.printf("Sorry, you don\'t possess the artifact.\n");
+            else printIO.display("Sorry, you don\'t possess the artifact.\n");
         }//end if...                                      // invalid command
-        else System.out.printf("Enter \'USE\' followed by the name of " +
-                               "the key.\n");
+        else printIO.display("Enter \'USE\' followed by the name of the key.\n");
         return false;
     }//end execute()
 }//end Use class

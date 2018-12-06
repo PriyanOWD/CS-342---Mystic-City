@@ -72,8 +72,7 @@ public class Game {
         IO gameIO = IO.getIO();
         for(;;) {                             // infinite loop :
             for (Character c : characters) {  //   iterate thru characters :
-                if (c instanceof Player)
-                {
+                if (c instanceof Player) {
                     gameIO.switchCard(c.name,c.currPlace);
                     ((Player) c).look(2);     //     display place if player
                 }
@@ -163,15 +162,15 @@ public class Game {
     private void allocatePlaces(Scanner sc) {
         try {
             Scanner s = new Scanner(CleanLineScanner.getCleanLine(sc));
-            int num   = s.skip("PLACES").nextInt(); // get # of artifacts
+            int num   = s.skip("PLACES").nextInt();    // get # of artifacts
             s.close();                                 // close scanner
 
             for (int i = 0; i < num; i++) {            // allocate artifacts :
                 String type = CleanLineScanner.getCleanLine(sc);
-                if      (type.equals("DEFAULT" ))   new Place     (sc, version());
+                if      (type.equals("DEFAULT"   )) new Place     (sc, version());
                 else if (type.equals("DANGERZONE")) new DangerZone(sc, version());
                 else if (type.equals("SAFEZONE"  )) new SafeZone  (sc, version());
-                else if (type.equals("MARKET"  ))   new Market  (sc, version());
+                else if (type.equals("MARKET"    )) new Market    (sc, version());
                 else                                new Place     (sc, version());
             }//end for...
         } catch (Exception e) { e.printStackTrace(); } // exception

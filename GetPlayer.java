@@ -25,6 +25,7 @@ public class GetPlayer extends Get {
     // execute "GET" command : get artifact from player's current place and
     // store it in player's collection of artifacts
     public boolean execute() {
+        IO printIO = IO.getIO();
         if (arg.matches("GET .*")) {
             arg = arg.replace("GET ", "").trim();
             Place currPlace = p.getCurrentPlace();
@@ -38,15 +39,15 @@ public class GetPlayer extends Get {
                 Artifact a = matches.get(n - 1); // get artifact
                 currPlace.removeArtifact(a);     // remove from place
                 p.addArtifact(a);                // add to possessions
-                System.out.printf("You now possess the %s.\n",
-                                  a.name().toLowerCase());
+                printIO.display(String.format("You now possess the %s.\n",
+                                a.name().toLowerCase()));
                 UI.promptInventory(p);           // prompt inventory
             }//end if...                         // no match
-            else System.out.printf("Sorry, the artifact wasn\'t found " +
-                                   "or is locked.\n");
+            else printIO.display("Sorry, the artifact wasn\'t found or is " +
+                                 "locked.\n");
         }//end if...                             // invalid command
-        else System.out.printf("Enter \'GET\' followed by the name of " +
-                               "the artifact.\n");
+        else printIO.display("Enter \'GET\' followed by the name of the " +
+                             "artifact.\n");
         return false;
     }//end execute()
 }//end GetPlayer class

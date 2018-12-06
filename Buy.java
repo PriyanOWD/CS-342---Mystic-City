@@ -23,16 +23,17 @@ public class Buy extends Move {
     // execute "USE" command : use key artifact from player's collection
     // of artifacts to unlock door
     public boolean execute() {
+        IO printIO = IO.getIO();
         if (!(p.currPlace instanceof Market)) {
-            System.out.printf("Sorry, %s isn\'t a market. " +
-                              "Buy things at a market.\n", p.currPlace.name());
+            printIO.display(String.format("Sorry, %s isn\'t a market. " +
+                            "Buy things at a market.\n", p.currPlace.name()));
             return false;
         }
         else {
             Market m = (Market) p.currPlace;
             if (m.soldOut()) {
-                System.out.printf("Sorry, everything at the %s is sold out!\n",
-                                  p.currPlace.name());
+                printIO.display(String.format("Sorry, everything at the %s is sold out!\n",
+                                p.currPlace.name()));
                 return false;
             }
             
@@ -40,12 +41,12 @@ public class Buy extends Move {
             Artifact prize = m.winItem(userRoll);
             
             if (prize == null)
-                System.out.printf("Sorry, you guessed the wrong number! " +
-                                  "Try again.\n");
+                printIO.display("Sorry, you guessed the wrong number! " +
+                                "Try again.\n");
             else {
                 p.addArtifact(prize);
-                System.out.printf("Congratulations! You won the %.\n",
-                                  prize.name().toLowerCase());
+                printIO.display(String.format("Congratulations! You won the %.\n",
+                                prize.name().toLowerCase()));
             }
             
         }  
