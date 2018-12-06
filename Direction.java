@@ -228,4 +228,9 @@ public class Direction
     {
         return DIRECTION.toString();
     }
+
+    public String destinationName()
+    {
+        return DESTINATION.PNAME.toUpperCase();
+    }
 }

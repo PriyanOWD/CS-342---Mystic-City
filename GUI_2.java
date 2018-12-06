@@ -255,7 +255,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                             line = "USE" + String.valueOf(useMenu.getSelectedItem()).replaceAll("■", "");
                             synchronized(syncLock) { syncLock.notifyAll(); }
                             try { Thread.sleep(10); } catch (Exception s) { }
-                            populateAllMenus();
+                            populateUseMenu();
                         }
                     });
                     useMenus.put(currPlayer.name, useMenu);
@@ -269,7 +269,8 @@ public class GUI_2 extends JFrame implements UserInterface {
                             line = "EQUIP" + String.valueOf(equipMenu.getSelectedItem()).replaceAll("■", "");
                             synchronized(syncLock) { syncLock.notifyAll(); }
                             try { Thread.sleep(10); } catch (Exception s) { }
-                            populateAllMenus();
+                            populateDropMenu();
+                            populateEquipMenu();
                         }
                     });
                     equipMenus.put(currPlayer.name, equipMenu);
@@ -283,7 +284,8 @@ public class GUI_2 extends JFrame implements UserInterface {
                             line = "CONSUME" + String.valueOf(consumeMenu.getSelectedItem()).replaceAll("■", "");
                             synchronized(syncLock) { syncLock.notifyAll(); }
                             try { Thread.sleep(10); } catch (Exception s) { }
-                            populateAllMenus();
+                            populateDropMenu();
+                            populateConsumeMenu();
                         }
                     });
                     consumeMenus.put(currPlayer.name, consumeMenu);
@@ -297,7 +299,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                             line = "BUY" + String.valueOf(buyMenu.getSelectedItem()).replaceAll("■", "");
                             synchronized(syncLock) { syncLock.notifyAll(); }
                             try { Thread.sleep(10); } catch (Exception s) { }
-                            populateAllMenus();
+                            populateBuyMenu();
                         }
                     });
                     buyMenus.put(currPlayer.name, buyMenu);
@@ -309,8 +311,6 @@ public class GUI_2 extends JFrame implements UserInterface {
                     btn_N.setBorder(BorderFactory.createEmptyBorder());
                     btn_N.setOpaque(false);
                     btn_N.setContentAreaFilled(false);
-                    btn_N.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    btn_N.setToolTipText("NORTH");
                     btn_N.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
                             line = "GO N";
@@ -326,8 +326,6 @@ public class GUI_2 extends JFrame implements UserInterface {
                     btn_S.setBorder(BorderFactory.createEmptyBorder());
                     btn_S.setOpaque(false);
                     btn_S.setContentAreaFilled(false);
-                    btn_S.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    btn_S.setToolTipText("SOUTH");
                     btn_S.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
                             line = "GO S";
@@ -343,8 +341,6 @@ public class GUI_2 extends JFrame implements UserInterface {
                     btn_E.setBorder(BorderFactory.createEmptyBorder());
                     btn_E.setOpaque(false);
                     btn_E.setContentAreaFilled(false);
-                    btn_E.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    btn_E.setToolTipText("EAST");
                     btn_E.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
                             line = "GO E";
@@ -360,8 +356,6 @@ public class GUI_2 extends JFrame implements UserInterface {
                     btn_W.setBorder(BorderFactory.createEmptyBorder());
                     btn_W.setOpaque(false);
                     btn_W.setContentAreaFilled(false);
-                    btn_W.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    btn_W.setToolTipText("WEST");
                     btn_W.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
                             line = "GO W";
@@ -377,8 +371,6 @@ public class GUI_2 extends JFrame implements UserInterface {
                     btn_U.setBorder(BorderFactory.createEmptyBorder());
                     btn_U.setOpaque(false);
                     btn_U.setContentAreaFilled(false);
-                    btn_U.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    btn_U.setToolTipText("UP");
                     btn_U.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
                             line = "GO U";
@@ -394,8 +386,6 @@ public class GUI_2 extends JFrame implements UserInterface {
                     btn_D.setBorder(BorderFactory.createEmptyBorder());
                     btn_D.setOpaque(false);
                     btn_D.setContentAreaFilled(false);
-                    btn_D.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    btn_D.setToolTipText("DOWN");
                     btn_D.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
                             line = "GO D";
@@ -411,8 +401,6 @@ public class GUI_2 extends JFrame implements UserInterface {
                     btn_NE.setBorder(BorderFactory.createEmptyBorder());
                     btn_NE.setOpaque(false);
                     btn_NE.setContentAreaFilled(false);
-                    btn_NE.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    btn_NE.setToolTipText("NORTHEAST");
                     btn_NE.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
                             line = "GO NE";
@@ -428,8 +416,6 @@ public class GUI_2 extends JFrame implements UserInterface {
                     btn_NW.setBorder(BorderFactory.createEmptyBorder());
                     btn_NW.setOpaque(false);
                     btn_NW.setContentAreaFilled(false);
-                    btn_NW.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    btn_NW.setToolTipText("NORTHWEST");
                     btn_NW.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
                             line = "GO NW";
@@ -445,8 +431,6 @@ public class GUI_2 extends JFrame implements UserInterface {
                     btn_SE.setBorder(BorderFactory.createEmptyBorder());
                     btn_SE.setOpaque(false);
                     btn_SE.setContentAreaFilled(false);
-                    btn_SE.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    btn_SE.setToolTipText("SOUTHEAST");
                     btn_SE.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
                             line = "GO SE";
@@ -462,8 +446,6 @@ public class GUI_2 extends JFrame implements UserInterface {
                     btn_SW.setBorder(BorderFactory.createEmptyBorder());
                     btn_SW.setOpaque(false);
                     btn_SW.setContentAreaFilled(false);
-                    btn_SW.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    btn_SW.setToolTipText("SOUTHWEST");
                     btn_SW.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
                             line = "GO SW";
@@ -479,8 +461,6 @@ public class GUI_2 extends JFrame implements UserInterface {
                     btn_NNE.setBorder(BorderFactory.createEmptyBorder());
                     btn_NNE.setOpaque(false);
                     btn_NNE.setContentAreaFilled(false);
-                    btn_NNE.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    btn_NNE.setToolTipText("NORTH-NORTHEAST");
                     btn_NNE.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
                             line = "GO NNE";
@@ -496,8 +476,6 @@ public class GUI_2 extends JFrame implements UserInterface {
                     btn_NNW.setBorder(BorderFactory.createEmptyBorder());
                     btn_NNW.setOpaque(false);
                     btn_NNW.setContentAreaFilled(false);
-                    btn_NNW.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    btn_NNW.setToolTipText("NORTH-NORTHWEST");
                     btn_NNW.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
                             line = "GO NNW";
@@ -513,8 +491,6 @@ public class GUI_2 extends JFrame implements UserInterface {
                     btn_ENE.setBorder(BorderFactory.createEmptyBorder());
                     btn_ENE.setOpaque(false);
                     btn_ENE.setContentAreaFilled(false);
-                    btn_ENE.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    btn_ENE.setToolTipText("EAST-NORTHEAST");
                     btn_ENE.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
                             line = "GO ENE";
@@ -530,8 +506,6 @@ public class GUI_2 extends JFrame implements UserInterface {
                     btn_WNW.setBorder(BorderFactory.createEmptyBorder());
                     btn_WNW.setOpaque(false);
                     btn_WNW.setContentAreaFilled(false);
-                    btn_WNW.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    btn_WNW.setToolTipText("WEST-NORTHWEST");
                     btn_WNW.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
                             line = "GO WNW";
@@ -547,8 +521,6 @@ public class GUI_2 extends JFrame implements UserInterface {
                     btn_ESE.setBorder(BorderFactory.createEmptyBorder());
                     btn_ESE.setOpaque(false);
                     btn_ESE.setContentAreaFilled(false);
-                    btn_ESE.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    btn_ESE.setToolTipText("EAST-SOUTHEAST");
                     btn_ESE.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
                             line = "GO ESE";
@@ -564,8 +536,6 @@ public class GUI_2 extends JFrame implements UserInterface {
                     btn_WSW.setBorder(BorderFactory.createEmptyBorder());
                     btn_WSW.setOpaque(false);
                     btn_WSW.setContentAreaFilled(false);
-                    btn_WSW.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    btn_WSW.setToolTipText("WEST-SOUTHWEST");
                     btn_WSW.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
                             line = "GO WSW";
@@ -581,8 +551,6 @@ public class GUI_2 extends JFrame implements UserInterface {
                     btn_SSE.setBorder(BorderFactory.createEmptyBorder());
                     btn_SSE.setOpaque(false);
                     btn_SSE.setContentAreaFilled(false);
-                    btn_SSE.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    btn_SSE.setToolTipText("SOUTH-SOUTHEAST");
                     btn_SSE.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
                             line = "GO SSE";
@@ -598,8 +566,6 @@ public class GUI_2 extends JFrame implements UserInterface {
                     btn_SSW.setBorder(BorderFactory.createEmptyBorder());
                     btn_SSW.setOpaque(false);
                     btn_SSW.setContentAreaFilled(false);
-                    btn_SSW.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    btn_SSW.setToolTipText("SOUTH-SOUTHWEST");
                     btn_SSW.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
                             line = "GO SSW";
@@ -683,170 +649,206 @@ public class GUI_2 extends JFrame implements UserInterface {
         btns_N.get(n).setEnabled(false);
         btns_N.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         btns_N.get(n).setForeground(new Color(60, 65, 72));
+        btns_N.get(n).setToolTipText("");
 
         btns_S.get(n).setEnabled(false);
         btns_S.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         btns_S.get(n).setForeground(new Color(60, 65, 72));
+        btns_S.get(n).setToolTipText("");
 
         btns_E.get(n).setEnabled(false);
         btns_E.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         btns_E.get(n).setForeground(new Color(60, 65, 72));
+        btns_E.get(n).setToolTipText("");
 
         btns_W.get(n).setEnabled(false);
         btns_W.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         btns_W.get(n).setForeground(new Color(60, 65, 72));
+        btns_W.get(n).setToolTipText("");
 
         btns_U.get(n).setEnabled(false);
         btns_U.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         btns_U.get(n).setForeground(new Color(60, 65, 72));
+        btns_U.get(n).setToolTipText("");
 
         btns_D.get(n).setEnabled(false);
         btns_D.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         btns_D.get(n).setForeground(new Color(60, 65, 72));
+        btns_D.get(n).setToolTipText("");
 
         btns_NE.get(n).setEnabled(false);
         btns_NE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         btns_NE.get(n).setForeground(new Color(60, 65, 72));
+        btns_NE.get(n).setToolTipText("");
 
         btns_NW.get(n).setEnabled(false);
         btns_NW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         btns_NW.get(n).setForeground(new Color(60, 65, 72));
+        btns_NW.get(n).setToolTipText("");
 
         btns_SE.get(n).setEnabled(false);
         btns_SE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         btns_SE.get(n).setForeground(new Color(60, 65, 72));
+        btns_SE.get(n).setToolTipText("");
 
         btns_SW.get(n).setEnabled(false);
         btns_SW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         btns_SW.get(n).setForeground(new Color(60, 65, 72));
+        btns_SW.get(n).setToolTipText("");
 
         btns_NNE.get(n).setEnabled(false);
         btns_NNE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         btns_NNE.get(n).setForeground(new Color(60, 65, 72));
+        btns_NNE.get(n).setToolTipText("");
 
         btns_NNW.get(n).setEnabled(false);
         btns_NNW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         btns_NNW.get(n).setForeground(new Color(60, 65, 72));
+        btns_NNW.get(n).setToolTipText("");
 
         btns_ENE.get(n).setEnabled(false);
         btns_ENE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         btns_ENE.get(n).setForeground(new Color(60, 65, 72));
+        btns_ENE.get(n).setToolTipText("");
 
         btns_WNW.get(n).setEnabled(false);
         btns_WNW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         btns_WNW.get(n).setForeground(new Color(60, 65, 72));
+        btns_WNW.get(n).setToolTipText("");
 
         btns_ESE.get(n).setEnabled(false);
         btns_ESE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         btns_ESE.get(n).setForeground(new Color(60, 65, 72));
+        btns_ESE.get(n).setToolTipText("");
 
         btns_WSW.get(n).setEnabled(false);
         btns_WSW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         btns_WSW.get(n).setForeground(new Color(60, 65, 72));
+        btns_WSW.get(n).setToolTipText("");
 
         btns_SSE.get(n).setEnabled(false);
         btns_SSE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         btns_SSE.get(n).setForeground(new Color(60, 65, 72));
+        btns_SSE.get(n).setToolTipText("");
 
         btns_SSW.get(n).setEnabled(false);
         btns_SSW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         btns_SSW.get(n).setForeground(new Color(60, 65, 72));
+        btns_SSW.get(n).setToolTipText("");
     }//end disableDirectionButtons()
 
 
     // enable direction button
-    private void enableDirection(String dir) {
+    private void enableDirection(Direction d) {
         String n = currPlayer.name;
 
-        if      (dir.equals("NORTH")) {
+        if      (d.toString().equals("NORTH")) {
             btns_N.get(n).setEnabled(true);
             btns_N.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_N.get(n).setForeground(Color.WHITE);
+            btns_N.get(n).setToolTipText("NORTH TO " + d.destinationName());
         }
-        else if (dir.equals("SOUTH")) {
+        else if (d.toString().equals("SOUTH")) {
             btns_S.get(n).setEnabled(true);
             btns_S.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_S.get(n).setForeground(Color.WHITE);
+            btns_S.get(n).setToolTipText("SOUTH TO " + d.destinationName());
         }
-        else if (dir.equals("EAST")) {
+        else if (d.toString().equals("EAST")) {
             btns_E.get(n).setEnabled(true);
             btns_E.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_E.get(n).setForeground(Color.WHITE);
+            btns_E.get(n).setToolTipText("EAST TO " + d.destinationName());
         }
-        else if (dir.equals("WEST")) {
+        else if (d.toString().equals("WEST")) {
             btns_W.get(n).setEnabled(true);
             btns_W.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_W.get(n).setForeground(Color.WHITE);
+            btns_W.get(n).setToolTipText("WEST TO " + d.destinationName());
         }
-        else if (dir.equals("UP")) {
+        else if (d.toString().equals("UP")) {
             btns_U.get(n).setEnabled(true);
             btns_U.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_U.get(n).setForeground(Color.WHITE);
+            btns_U.get(n).setToolTipText("UP TO " + d.destinationName());
         }
-        else if (dir.equals("DOWN")) {
+        else if (d.toString().equals("DOWN")) {
             btns_D.get(n).setEnabled(true);
             btns_D.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_D.get(n).setForeground(Color.WHITE);
+            btns_D.get(n).setToolTipText("DOWN TO " + d.destinationName());
         }
-        else if (dir.equals("NORTHEAST")) {
+        else if (d.toString().equals("NORTHEAST")) {
             btns_NE.get(n).setEnabled(true);
             btns_NE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_NE.get(n).setForeground(Color.WHITE);
+            btns_NE.get(n).setToolTipText("NORTHEAST TO " + d.destinationName());
         }
-        else if (dir.equals("NORTHWEST")) {
+        else if (d.toString().equals("NORTHWEST")) {
             btns_NW.get(n).setEnabled(true);
             btns_NW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_NW.get(n).setForeground(Color.WHITE);
+            btns_NW.get(n).setToolTipText("NORTHWEST TO " + d.destinationName());
         }
-        else if (dir.equals("SOUTHEAST")) {
+        else if (d.toString().equals("SOUTHEAST")) {
             btns_SE.get(n).setEnabled(true);
             btns_SE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_SE.get(n).setForeground(Color.WHITE);
+            btns_SE.get(n).setToolTipText("SOUTHEAST TO " + d.destinationName());
         }
-        else if (dir.equals("SOUTHWEST")) {
+        else if (d.toString().equals("SOUTHWEST")) {
             btns_SW.get(n).setEnabled(true);
             btns_SW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_SW.get(n).setForeground(Color.WHITE);
+            btns_SW.get(n).setToolTipText("SOUTHWEST TO " + d.destinationName());
         }
-        else if (dir.equals("NORTH-NORTHEAST")) {
+        else if (d.toString().equals("NORTH-NORTHEAST")) {
             btns_NNE.get(n).setEnabled(true);
             btns_NNE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_NNE.get(n).setForeground(Color.WHITE);
+            btns_NNE.get(n).setToolTipText("NORTH-NORTHEAST TO " + d.destinationName());
         }
-        else if (dir.equals("NORTH-NORTHWEST")) {
+        else if (d.toString().equals("NORTH-NORTHWEST")) {
             btns_NNW.get(n).setEnabled(true);
             btns_NNW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_NNW.get(n).setForeground(Color.WHITE);
+            btns_NNW.get(n).setToolTipText("NORTH-NORTHWEST TO " + d.destinationName());
         }
-        else if (dir.equals("EAST-NORTHEAST")) {
+        else if (d.toString().equals("EAST-NORTHEAST")) {
             btns_ENE.get(n).setEnabled(true);
             btns_ENE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_ENE.get(n).setForeground(Color.WHITE);
+            btns_ENE.get(n).setToolTipText("EAST-NORTHEAST TO " + d.destinationName());
         }
-        else if (dir.equals("WEST-NORTHWEST")) {
+        else if (d.toString().equals("WEST-NORTHWEST")) {
             btns_WNW.get(n).setEnabled(true);
             btns_WNW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_WNW.get(n).setForeground(Color.WHITE);
+            btns_WNW.get(n).setToolTipText("WEST-NORTHWEST TO " + d.destinationName());
         }
-        else if (dir.equals("EAST-SOUTHEAST")) {
+        else if (d.toString().equals("EAST-SOUTHEAST")) {
             btns_ESE.get(n).setEnabled(true);
             btns_ESE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_ESE.get(n).setForeground(Color.WHITE);
+            btns_ESE.get(n).setToolTipText("EAST-SOUTHEAST TO " + d.destinationName());
         }
-        else if (dir.equals("WEST-SOUTHWEST")) {
+        else if (d.toString().equals("WEST-SOUTHWEST")) {
             btns_WSW.get(n).setEnabled(true);
             btns_WSW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_WSW.get(n).setForeground(Color.WHITE);
+            btns_WSW.get(n).setToolTipText("WEST-SOUTHWEST TO " + d.destinationName());
         }
-        else if (dir.equals("SOUTH-SOUTHEAST")) {
+        else if (d.toString().equals("SOUTH-SOUTHEAST")) {
             btns_SSE.get(n).setEnabled(true);
             btns_SSE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_SSE.get(n).setForeground(Color.WHITE);
+            btns_SSE.get(n).setToolTipText("SOUTH-SOUTHEAST TO " + d.destinationName());
         }
-        else if (dir.equals("SOUTH-SOUTHWEST")) {
+        else if (d.toString().equals("SOUTH-SOUTHWEST")) {
             btns_SSW.get(n).setEnabled(true);
             btns_SSW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_SSW.get(n).setForeground(Color.WHITE);
+            btns_SSW.get(n).setToolTipText("SOUTH-SOUTHWEST TO " + d.destinationName());
         }
     }//end enableDirectionButton()
 
@@ -954,7 +956,7 @@ public class GUI_2 extends JFrame implements UserInterface {
 
         List<Direction> directions = place.paths;
         for (Direction d : directions)
-            enableDirection(d.toString());
+            enableDirection(d);
 
         populateAllMenus();
 
