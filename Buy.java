@@ -48,8 +48,7 @@ public class Buy extends Move {
                 printIO.display(String.format("Congratulations! You won the %.\n",
                                 prize.name().toLowerCase()));
             }
-            
-        }  
+        }
         return false;
     }//end execute()
 }//end Use class

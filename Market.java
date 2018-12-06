@@ -57,8 +57,9 @@ public class Market extends Place
    {
        if(!active)
        {
-          System.out.println("Unfortunately, The market is closed"); 
-          return null;
+           IO printIO = IO.getIO();
+           printIO.display("Unfortunately, the market is closed!");
+           return null;
        }
        
        Random rand = new Random();
@@ -105,7 +106,7 @@ public class Market extends Place
                else if (type.equals("FOOD"  )) m.addToInve(new Food    (sc, ver));
                else                            m.addToInve(new Artifact(sc, ver));
            }//end for...
-       } catch (Exception e) {  System.out.println("Market error");e.printStackTrace(); } // exception
+       } catch (Exception e) { e.printStackTrace(); } // exception
    }//end allocateArtifacts()
    
    

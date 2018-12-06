@@ -44,7 +44,7 @@ public class GoPlayer extends Go {
             else                                     //   place isn't room
                 printIO.display(String.format("Headed %s to the %s...\n",
                                 Direction.matchDirection(arg), p.placeName()));
-            try { Thread.sleep(1500); } catch (Exception e) { }
+            try { Thread.sleep(1200); } catch (Exception e) { }
             return true;
         }//end else if...
         return false;
