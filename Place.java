@@ -341,10 +341,7 @@ public class Place
 
     protected void print()
     {
-        if (name().matches("Room.*"))
-            UI.printHeader(String.format("%s", PNAME));
-        else
-            UI.printHeader(String.format("%s (P%d)", PNAME, PID));
+        UI.printDivider(1);
 
         UI.printFormat(String.format("%s", PDESCRIPTION));
 

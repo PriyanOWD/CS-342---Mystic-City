@@ -11,8 +11,8 @@ public class Commands extends Move {
     // execute "COMMANDS" command : display all commands used in the game
     public boolean execute() {
         IO printIO = IO.getIO();
-        printIO.display("\n");      // newline
-        UI.printHeader("COMMANDS"); // print commands header
+        printIO.display("\n");    // newline
+        UI.printDivider(1);       // print divider
         UI.printFormat("                 \'QUIT\' : quit game\n"             +
                        "                 \'LOOK\' : display current place\n" +
                        "              \'INSPECT\' : check footprints\n"      +
@@ -24,9 +24,10 @@ public class Commands extends Move {
                        "   \'BUY <NUMBER [1,5]>\' : win a prize\n"           +
                        "              \'INSPECT\' : display footprints\n"    +
                        "                 \'INVE\' : check inventory\n"       +
+                       "                \'STATS\' : check stats\n"           +
                        "       \'GO <DIRECTION>\' : go to direction "        +
                        "(e.g., N, S, E, W, U, D)");
-        UI.printDivider(2);         // print divider
+        UI.printDivider(2);       // print divider
         return false;
     }//end execute()
 }//end Commands class

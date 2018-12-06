@@ -53,6 +53,10 @@ public class UI implements DecisionMaker {
         else if (a.matches(".*INVE.*"))
             return new Inventory((Player) c);
 
+        // "STATS"   command : display player's stats
+        else if (a.matches(".*STAT.*"))
+            return new Stats((Player) c);
+
         // "INSPECT" command : display the footprints in the current Place
         else if (a.matches(".*INSPECT.*"))
             return new Inspect(c.currPlace);
@@ -147,28 +151,6 @@ public class UI implements DecisionMaker {
             } catch (Exception e) { e.printStackTrace(); }      // exception
         }//end for (;;)...
     }//end requestNumber()
-
-
-    // print formatted header for use in display() and print() methods
-    public static void printHeader(String str) {
-        output.setLength(0);
-
-        int num = (78 - str.length()) / 2;             // determine # of hashes
-        for (int i = 0; i < num; i++)                  // # of hashes :
-            output.append("#");                        //   add hash to header
-
-        output.append(" ");
-        output.append(str.toUpperCase());
-        output.append(" ");
-
-        while (output.length() < 80)                   // while len < 80 :
-            output.append("#");                        //   add hash to header
-
-        output.append("\n");
-
-        IO printIO = IO.getIO();
-        printIO.display(output.toString());            // print header
-    }//end printHeader()
 
 
     // print formatted boxed lines for use in display() and print() methods

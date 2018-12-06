@@ -120,8 +120,12 @@ public abstract class Character
 
     public void stats()
     {
-        UI.printFormat(String.format("Attack: %d, Defense: %d, HP: %d/%d, MP: %d\n ",
+        IO printIO = IO.getIO();
+        printIO.display("\n");
+        UI.printDivider(1);
+        UI.printFormat(String.format("Attack: %d, Defense: %d, HP: %d/%d, MP: %d",
                        attack, defense, currHP, maxHP, mp));
+        UI.printDivider(2);
     }
 
     public void print()
