@@ -118,52 +118,52 @@ public class GUI_2 extends JFrame implements UserInterface {
                     playerName.setBounds(22, 18, 314, 40);
                     playerName.setForeground(Color.WHITE);
                     playerName.setFont(new Font("Helvetica Neue", Font.BOLD, 30));
-                    playerName.setToolTipText(currPlayer.description);
+                    playerName.setToolTipText(currPlayer.description.toUpperCase());
 
                     // attack stat
                     JLabel attack = new JLabel("Attack:");
-                    attack.setBounds(50, 72, 80, 20);
+                    attack.setBounds(30, 72, 110, 20);
                     attack.setForeground(new Color(220, 221, 222));
                     attack.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
                     attack.setHorizontalAlignment(SwingConstants.RIGHT);
                     JLabel attackStat = new JLabel();
-                    attackStat.setBounds(144, 72, 64, 20);
+                    attackStat.setBounds(148, 72, 178, 20);
                     attackStat.setForeground(new Color(220, 221, 222));
                     attackStat.setFont(new Font("Helvetica Neue", Font.PLAIN, 17));
                     attackStats.put(currPlayer.name, attackStat);
 
                     // defense stat
                     JLabel defense = new JLabel("Defense:");
-                    defense.setBounds(50, 92, 80, 20);
+                    defense.setBounds(30, 92, 110, 20);
                     defense.setForeground(new Color(220, 221, 222));
                     defense.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
                     defense.setHorizontalAlignment(SwingConstants.RIGHT);
                     JLabel defenseStat = new JLabel();
-                    defenseStat.setBounds(144, 92, 64, 20);
+                    defenseStat.setBounds(148, 92, 178, 20);
                     defenseStat.setForeground(new Color(220, 221, 222));
                     defenseStat.setFont(new Font("Helvetica Neue", Font.PLAIN, 17));
                     defenseStats.put(currPlayer.name, defenseStat);
 
                     // hp stat
                     JLabel hp = new JLabel("HP:");
-                    hp.setBounds(50, 112, 80, 20);
+                    hp.setBounds(30, 112, 110, 20);
                     hp.setForeground(new Color(220, 221, 222));
                     hp.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
                     hp.setHorizontalAlignment(SwingConstants.RIGHT);
                     JLabel hpStat = new JLabel();
-                    hpStat.setBounds(144, 112, 64, 20);
+                    hpStat.setBounds(148, 112, 178, 20);
                     hpStat.setForeground(new Color(220, 221, 222));
                     hpStat.setFont(new Font("Helvetica Neue", Font.PLAIN, 17));
                     hpStats.put(currPlayer.name, hpStat);
 
                     // mp stat
                     JLabel mp = new JLabel("MP:");
-                    mp.setBounds(50, 132, 80, 20);
+                    mp.setBounds(30, 132, 110, 20);
                     mp.setForeground(new Color(220, 221, 222));
                     mp.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
                     mp.setHorizontalAlignment(SwingConstants.RIGHT);
                     JLabel mpStat = new JLabel();
-                    mpStat.setBounds(144, 132, 64, 20);
+                    mpStat.setBounds(148, 132, 178, 20);
                     mpStat.setForeground(new Color(220, 221, 222));
                     mpStat.setFont(new Font("Helvetica Neue", Font.PLAIN, 17));
                     mpStats.put(currPlayer.name, mpStat);
@@ -211,7 +211,6 @@ public class GUI_2 extends JFrame implements UserInterface {
                     JComboBox getMenu = new JComboBox();
                     getMenu.setBounds(18, 176, 323, 34);
                     getMenu.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
-                    //getMenu.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                     getMenu.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
                             line = "GET" + String.valueOf(getMenu.getSelectedItem()).replaceAll("■", "");
@@ -226,7 +225,6 @@ public class GUI_2 extends JFrame implements UserInterface {
                     JComboBox dropMenu = new JComboBox();
                     dropMenu.setBounds(18, 210, 323, 34);
                     dropMenu.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
-                    //dropMenu.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                     dropMenu.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
                             line = "DROP" + String.valueOf(dropMenu.getSelectedItem()).replaceAll("■", "");
@@ -241,7 +239,6 @@ public class GUI_2 extends JFrame implements UserInterface {
                     JComboBox useMenu = new JComboBox();
                     useMenu.setBounds(18, 244, 323, 34);
                     useMenu.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
-                    //useMenu.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                     useMenu.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
                             line = "USE" + String.valueOf(useMenu.getSelectedItem()).replaceAll("■", "");
@@ -256,7 +253,6 @@ public class GUI_2 extends JFrame implements UserInterface {
                     JComboBox equipMenu = new JComboBox();
                     equipMenu.setBounds(18, 278, 323, 34);
                     equipMenu.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
-                    //equipMenu.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                     equipMenu.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
                             line = "EQUIP" + String.valueOf(equipMenu.getSelectedItem()).replaceAll("■", "");
@@ -273,7 +269,6 @@ public class GUI_2 extends JFrame implements UserInterface {
                     JComboBox consumeMenu = new JComboBox();
                     consumeMenu.setBounds(18, 312, 323, 34);
                     consumeMenu.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
-                    //consumeMenu.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                     consumeMenu.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
                             line = "CONSUME" + String.valueOf(consumeMenu.getSelectedItem()).replaceAll("■", "");
@@ -290,7 +285,6 @@ public class GUI_2 extends JFrame implements UserInterface {
                     JComboBox buyMenu = new JComboBox();
                     buyMenu.setBounds(18, 346, 323, 34);
                     buyMenu.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
-                    //buyMenu.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                     buyMenu.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
                             line = "BUY" + String.valueOf(buyMenu.getSelectedItem()).replaceAll("■", "");
@@ -300,6 +294,40 @@ public class GUI_2 extends JFrame implements UserInterface {
                         }
                     });
                     buyMenus.put(currPlayer.name, buyMenu);
+
+                    // 'INVE' command button
+                    JButton btn_inve = new JButton("INVENTORY");
+                    btn_inve.setBounds(24, 388, 140, 28);
+                    btn_inve.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
+                    btn_inve.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                    btn_inve.setForeground(Color.WHITE);
+                    btn_inve.setBorder(BorderFactory.createEmptyBorder());
+                    btn_inve.setOpaque(false);
+                    btn_inve.setContentAreaFilled(false);
+                    btn_inve.setToolTipText("VIEW INVENTORY");
+                    btn_inve.addActionListener(new ActionListener() {
+                        @Override public void actionPerformed(ActionEvent e) {
+                            line = "INVE";
+                            synchronized(syncLock) { syncLock.notifyAll(); }
+                        }
+                    });
+
+                    // 'INSPECT' command button
+                    JButton btn_insp = new JButton("INSPECT");
+                    btn_insp.setBounds(181, 388, 120, 28);
+                    btn_insp.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
+                    btn_insp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                    btn_insp.setForeground(Color.WHITE);
+                    btn_insp.setBorder(BorderFactory.createEmptyBorder());
+                    btn_insp.setOpaque(false);
+                    btn_insp.setContentAreaFilled(false);
+                    btn_insp.setToolTipText("INSPECT FOOTPRINTS");
+                    btn_insp.addActionListener(new ActionListener() {
+                        @Override public void actionPerformed(ActionEvent e) {
+                            line = "INSPECT";
+                            synchronized(syncLock) { syncLock.notifyAll(); }
+                        }
+                    });
 
                     // N direction button
                     JButton btn_N = new JButton("N");
@@ -610,6 +638,8 @@ public class GUI_2 extends JFrame implements UserInterface {
                     card.add(equipMenu);
                     card.add(consumeMenu);
                     card.add(buyMenu);
+                    card.add(btn_inve);
+                    card.add(btn_insp);
                     card.add(btn_N);
                     card.add(btn_S);
                     card.add(btn_E);
@@ -885,10 +915,22 @@ public class GUI_2 extends JFrame implements UserInterface {
         List<Artifact>    artifacts = currPlayer.currPlace.placeArtifacts;
         ArrayList<String> names     = new ArrayList<String>();
         names.add("GET");
+
         for (Artifact a : artifacts)
             names.add("■ " + a.name().toUpperCase());
 
         getMenus.get(n).setModel(new DefaultComboBoxModel(names.toArray()));
+
+        if (getMenus.get(n).getItemCount() > 1) {
+            getMenus.get(n).setEnabled(true);
+            getMenus.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            getMenus.get(n).setToolTipText("GET ARTIFACT");
+        }
+        else {
+            getMenus.get(n).setEnabled(false);
+            getMenus.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            getMenus.get(n).setToolTipText("");
+        }
     }//end populateGetMenu()
 
 
@@ -898,10 +940,22 @@ public class GUI_2 extends JFrame implements UserInterface {
         List<Artifact>    artifacts = currPlayer.inventory;
         ArrayList<String> names     = new ArrayList<String>();
         names.add("DROP");
+
         for (Artifact a : artifacts)
             names.add("■ " + a.name().toUpperCase());
 
         dropMenus.get(n).setModel(new DefaultComboBoxModel(names.toArray()));
+
+        if (dropMenus.get(n).getItemCount() > 1) {
+            dropMenus.get(n).setEnabled(true);
+            dropMenus.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            dropMenus.get(n).setToolTipText("DROP ARTIFACT");
+        }
+        else {
+            dropMenus.get(n).setEnabled(false);
+            dropMenus.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            dropMenus.get(n).setToolTipText("");
+        }
     }//end populateDropMenu()
 
 
@@ -911,11 +965,23 @@ public class GUI_2 extends JFrame implements UserInterface {
         List<Artifact>    artifacts = currPlayer.inventory;
         ArrayList<String> names     = new ArrayList<String>();
         names.add("USE");
+
         for (Artifact a : artifacts)
             if (a.pattern() > 0)
                 names.add("■ " + a.name().toUpperCase());
 
         useMenus.get(n).setModel(new DefaultComboBoxModel(names.toArray()));
+
+        if (useMenus.get(n).getItemCount() > 1) {
+            useMenus.get(n).setEnabled(true);
+            useMenus.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            useMenus.get(n).setToolTipText("USE KEY");
+        }
+        else {
+            useMenus.get(n).setEnabled(false);
+            useMenus.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            useMenus.get(n).setToolTipText("");
+        }
     }//end populateUseMenu()
 
 
@@ -925,11 +991,23 @@ public class GUI_2 extends JFrame implements UserInterface {
         List<Artifact>    artifacts = currPlayer.inventory;
         ArrayList<String> names     = new ArrayList<String>();
         names.add("EQUIP");
+
         for (Artifact a : artifacts)
             if (a instanceof Armor || a instanceof Weapon)
                 names.add("■ " + a.name().toUpperCase());
 
         equipMenus.get(n).setModel(new DefaultComboBoxModel(names.toArray()));
+
+        if (equipMenus.get(n).getItemCount() > 1) {
+            equipMenus.get(n).setEnabled(true);
+            equipMenus.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            equipMenus.get(n).setToolTipText("EQUIP ARMOR OR WEAPON");
+        }
+        else {
+            equipMenus.get(n).setEnabled(false);
+            equipMenus.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            equipMenus.get(n).setToolTipText("");
+        }
     }//end populateEquipMenu()
 
 
@@ -939,11 +1017,23 @@ public class GUI_2 extends JFrame implements UserInterface {
         List<Artifact>    artifacts = currPlayer.inventory;
         ArrayList<String> names     = new ArrayList<String>();
         names.add("CONSUME");
+
         for (Artifact a : artifacts)
             if (a instanceof Food)
                 names.add("■ " + a.name().toUpperCase());
 
         consumeMenus.get(n).setModel(new DefaultComboBoxModel(names.toArray()));
+
+        if (consumeMenus.get(n).getItemCount() > 1) {
+            consumeMenus.get(n).setEnabled(true);
+            consumeMenus.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            consumeMenus.get(n).setToolTipText("CONSUME FOOD");
+        }
+        else {
+            consumeMenus.get(n).setEnabled(false);
+            consumeMenus.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            consumeMenus.get(n).setToolTipText("");
+        }
     }//end populateConsumeMenu()
 
 
@@ -957,6 +1047,17 @@ public class GUI_2 extends JFrame implements UserInterface {
             names.add("■ " + i);
 
         buyMenus.get(n).setModel(new DefaultComboBoxModel(names.toArray()));
+
+        if (currPlayer.currPlace instanceof Market) {
+            buyMenus.get(n).setEnabled(true);
+            buyMenus.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            buyMenus.get(n).setToolTipText("BUY MARKET PRIZE");
+        }
+        else {
+            buyMenus.get(n).setEnabled(false);
+            buyMenus.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            buyMenus.get(n).setToolTipText("");
+        }
     }//end populateConsumeMenu()
 
 
