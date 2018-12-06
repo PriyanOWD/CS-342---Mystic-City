@@ -73,7 +73,7 @@ public class Game {
         for(;;) {                             // infinite loop :
             for (Character c : characters) {  //   iterate thru characters :
                 if (c instanceof Player) {
-                    gameIO.switchCard(c.name,c.currPlace);
+                    gameIO.switchCard((Player) c, c.currPlace);
                     ((Player) c).look(2);     //     display place if player
                 }
                 while (!c.makeMove());        //     make move until "GO"

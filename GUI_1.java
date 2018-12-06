@@ -50,6 +50,7 @@ public class GUI_1 extends JFrame implements UserInterface {
     BufferedImage backgroundImage;
     ImageIcon bgIcon;
     JLabel bg;
+    private Player currPlayer;
     
     /*private enum bgType
     {
@@ -243,23 +244,24 @@ public class GUI_1 extends JFrame implements UserInterface {
         currTextBox.append(message);
         //this.getContentPane().getComponent(0);
     }
-    
-    public void switchCard(String name, Place place)
+
+    public void switchCard(Player p, Place place)
     {
-        JPanel cards = (JPanel)(this.getContentPane().getComponent(0));        
+        currPlayer = p;
+        JPanel cards = (JPanel)(this.getContentPane().getComponent(0));
         CardLayout cl = (CardLayout)cards.getLayout();
         //CardLayout cl = (CardLayout)(this.getContentPane().getLayout());
         //System.out.println("aaaaaaaaaaaaaaaaaaa" + name);
-        cl.show(cards, name);
+        cl.show(cards, currPlayer.name);
         for(Component c: cards.getComponents())
-        currTextBox = allTextBox.get(name);
+            currTextBox = allTextBox.get(currPlayer.name);
         changeBG(place);
         cards.revalidate();
         cards.repaint();
         this.revalidate();
         this.repaint();
     }
-    
+
     private void changeBG( Place place)
     {
         BufferedImage img;

@@ -25,13 +25,13 @@ public class IO {
 
 
     // constructor
-    private IO()                              { selectInterface(GUI_2); }
+    private IO()                               { selectInterface(GUI_2); }
     // display
-    public void display(String message)       { ui.display(message);    }
+    public void display(String message)        { ui.display(message);    }
     // get line
-    public String getLine()                   { return ui.getLine();    }
+    public String getLine()                    { return ui.getLine();    }
     // switch card
-    public void switchCard(String n, Place p) { ui.switchCard(n, p);    }
+    public void switchCard(Player pl, Place p) { ui.switchCard(pl, p);    }
 
 
     // return IO instance

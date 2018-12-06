@@ -10,6 +10,8 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -76,13 +78,12 @@ public class GUI_2 extends JFrame implements UserInterface {
                     //playerName.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                     playerName.setFont(new Font("Helvetica Neue", Font.BOLD, 30));
 
-                    JLabel attack = new JLabel();
+                    JLabel attack = new JLabel("Attack:");
                     attack.setBounds(50, 72, 80, 20);
                     attack.setForeground(new Color(220, 221, 222));
                     //attack.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                     attack.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
                     attack.setHorizontalAlignment(SwingConstants.RIGHT);
-                    attack.setText("Attack:");
 
                     JLabel attackStat = new JLabel() {
                         @Override public void paintComponent(Graphics g) {
@@ -94,13 +95,12 @@ public class GUI_2 extends JFrame implements UserInterface {
                     //attackStat.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                     attackStat.setFont(new Font("Helvetica Neue", Font.PLAIN, 17));
 
-                    JLabel defense = new JLabel();
+                    JLabel defense = new JLabel("Defense:");
                     defense.setBounds(50, 92, 80, 20);
                     defense.setForeground(new Color(220, 221, 222));
                     //defense.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                     defense.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
                     defense.setHorizontalAlignment(SwingConstants.RIGHT);
-                    defense.setText("Defense:");
 
                     JLabel defenseStat = new JLabel() {
                         Player p = (Player) c.getValue();
@@ -113,13 +113,12 @@ public class GUI_2 extends JFrame implements UserInterface {
                     //defenseStat.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                     defenseStat.setFont(new Font("Helvetica Neue", Font.PLAIN, 17));
 
-                    JLabel hp = new JLabel();
+                    JLabel hp = new JLabel("HP:");
                     hp.setBounds(50, 112, 80, 20);
                     hp.setForeground(new Color(220, 221, 222));
                     //hp.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                     hp.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
                     hp.setHorizontalAlignment(SwingConstants.RIGHT);
-                    hp.setText("HP:");
 
                     JLabel hpStat = new JLabel() {
                         Player p = (Player) c.getValue();
@@ -132,13 +131,12 @@ public class GUI_2 extends JFrame implements UserInterface {
                     //hpStat.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                     hpStat.setFont(new Font("Helvetica Neue", Font.PLAIN, 17));
 
-                    JLabel mp = new JLabel();
+                    JLabel mp = new JLabel("MP:");
                     mp.setBounds(50, 132, 80, 20);
                     mp.setForeground(new Color(220, 221, 222));
                     //mp.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                     mp.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
                     mp.setHorizontalAlignment(SwingConstants.RIGHT);
-                    mp.setText("MP:");
 
                     JLabel mpStat = new JLabel() {
                         Player p = (Player) c.getValue();
@@ -164,12 +162,23 @@ public class GUI_2 extends JFrame implements UserInterface {
                     scrollPane.setBorder(BorderFactory.createEmptyBorder());
                     messages.put(c.getValue().name, messageBox);
 
-                    JTextField textBox = new JTextField();
+                    JTextField textBox = new JTextField("Command @" + currPlayer.name);
                     textBox.setBounds(366, 705, 804, 50);
                     textBox.setBackground(new Color(72, 75, 81));
-                    textBox.setForeground(new Color(200, 201, 203));
+                    textBox.setForeground(new Color(127, 129, 133));
                     textBox.setFont(new Font("Helvetica Neue", Font.PLAIN, 32));
                     textBox.setBorder(BorderFactory.createEmptyBorder());
+                    textBox.addFocusListener(new FocusListener() {
+                        @Override
+                        public void focusGained(FocusEvent e) {
+                            textBox.setText("");
+                            textBox.setForeground(new Color(200, 201, 203));
+                        }
+                        public void focusLost(FocusEvent e) {
+                            textBox.setText("Command @" + currPlayer.name);
+                            textBox.setForeground(new Color(127, 129, 133));
+                        }
+                    });
                     textBox.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -496,13 +505,14 @@ public class GUI_2 extends JFrame implements UserInterface {
 
 
     // switch card
-    public void switchCard(String name, Place place) {
+    public void switchCard(Player p, Place place) {
+        currPlayer = p;
         JPanel cards = (JPanel) this.getContentPane().getComponent(0);
         CardLayout card = (CardLayout) cards.getLayout();
-        card.show(cards, name);
+        card.show(cards, currPlayer.name);
 
         for (Component c : cards.getComponents())
-            messageBox = messages.get(name);
+            messageBox = messages.get(currPlayer.name);
 
         cards.revalidate();
         cards.repaint();

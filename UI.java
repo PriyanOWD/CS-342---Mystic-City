@@ -15,7 +15,6 @@ public class UI implements DecisionMaker {
 
     public Move getMove(Character c) {
         IO printIO = IO.getIO();
-        printIO.display("Please enter your next command.\n");
         String a   = printIO.getLine().toUpperCase();
 
         // "QUIT"    command : quit game
