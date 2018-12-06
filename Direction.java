@@ -223,4 +223,9 @@ public class Direction
 
         return false;
     }
+
+    public String toString()
+    {
+        return DIRECTION.toString();
+    }
 }

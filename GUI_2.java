@@ -6,7 +6,6 @@
 
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +16,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Insets;
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -37,10 +37,16 @@ import javax.swing.text.DefaultCaret;
 // graphics user interface #2 that inherits JFrame
 public class GUI_2 extends JFrame implements UserInterface {
     // private attributes
-    private String                           line;
-    private JTextArea                        messageBox;
+    private Player    currPlayer;
+    private String    line;
+    private JTextArea messageBox;
+    private final TreeMap<String, JButton>   btns_N,   btns_S,   btns_E,
+                                             btns_W,   btns_U,   btns_D,
+                                             btns_NE,  btns_NW,  btns_SE,
+                                             btns_SW,  btns_NNE, btns_NNW,
+                                             btns_ENE, btns_WNW, btns_ESE,
+                                             btns_WSW, btns_SSE, btns_SSW;
     private final TreeMap<String, JTextArea> messages;
-    private Player                           currPlayer;
 
 
     // lock
@@ -52,6 +58,24 @@ public class GUI_2 extends JFrame implements UserInterface {
         Set<Map.Entry<Integer,Character>> characters
                  = Character.characterTree.entrySet();
         messages = new TreeMap<String, JTextArea>();
+        btns_N   = new TreeMap<String, JButton>();
+        btns_S   = new TreeMap<String, JButton>();
+        btns_E   = new TreeMap<String, JButton>();
+        btns_W   = new TreeMap<String, JButton>();
+        btns_U   = new TreeMap<String, JButton>();
+        btns_D   = new TreeMap<String, JButton>();
+        btns_NE  = new TreeMap<String, JButton>();
+        btns_NW  = new TreeMap<String, JButton>();
+        btns_SE  = new TreeMap<String, JButton>();
+        btns_SW  = new TreeMap<String, JButton>();
+        btns_NNE = new TreeMap<String, JButton>();
+        btns_NNW = new TreeMap<String, JButton>();
+        btns_ENE = new TreeMap<String, JButton>();
+        btns_WNW = new TreeMap<String, JButton>();
+        btns_ESE = new TreeMap<String, JButton>();
+        btns_WSW = new TreeMap<String, JButton>();
+        btns_SSE = new TreeMap<String, JButton>();
+        btns_SSW = new TreeMap<String, JButton>();
 
         try {
             Image img = ImageIO.read(new File("TEST.png")).getScaledInstance(1200, 800, Image.SCALE_SMOOTH);
@@ -103,9 +127,8 @@ public class GUI_2 extends JFrame implements UserInterface {
                     defense.setHorizontalAlignment(SwingConstants.RIGHT);
 
                     JLabel defenseStat = new JLabel() {
-                        Player p = (Player) c.getValue();
                         @Override public void paintComponent(Graphics g) {
-                            g.drawString(String.valueOf(p.defense), 4, 16);
+                            g.drawString(String.valueOf(currPlayer.defense), 4, 16);
                         }
                     };
                     defenseStat.setBounds(140, 92, 64, 20);
@@ -121,9 +144,8 @@ public class GUI_2 extends JFrame implements UserInterface {
                     hp.setHorizontalAlignment(SwingConstants.RIGHT);
 
                     JLabel hpStat = new JLabel() {
-                        Player p = (Player) c.getValue();
                         @Override public void paintComponent(Graphics g) {
-                            g.drawString(p.currHP + "/" +p.maxHP, 4, 16);
+                            g.drawString(currPlayer.currHP + "/" + currPlayer.maxHP, 4, 16);
                         }
                     };
                     hpStat.setBounds(140, 112, 64, 20);
@@ -139,9 +161,8 @@ public class GUI_2 extends JFrame implements UserInterface {
                     mp.setHorizontalAlignment(SwingConstants.RIGHT);
 
                     JLabel mpStat = new JLabel() {
-                        Player p = (Player) c.getValue();
                         @Override public void paintComponent(Graphics g) {
-                            g.drawString(String.valueOf(p.mp), 4, 16);
+                            g.drawString(String.valueOf(currPlayer.mp), 4, 16);
                         }
                     };
                     mpStat.setBounds(140, 132, 64, 20);
@@ -160,7 +181,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                     JScrollPane scrollPane = new JScrollPane(messageBox);
                     scrollPane.setBounds(359, 22, 818, 659);
                     scrollPane.setBorder(BorderFactory.createEmptyBorder());
-                    messages.put(c.getValue().name, messageBox);
+                    messages.put(currPlayer.name, messageBox);
 
                     JTextField textBox = new JTextField("Command @" + currPlayer.name);
                     textBox.setBounds(366, 705, 804, 50);
@@ -203,6 +224,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                             synchronized(syncLock) { syncLock.notifyAll(); }
                         }
                     });
+                    btns_N.put(currPlayer.name, btn_N);
 
                     JButton btn_S = new JButton("S");
                     btn_S.setBounds(161, 725, 46, 46);
@@ -219,6 +241,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                             synchronized(syncLock) { syncLock.notifyAll(); }
                         }
                     });
+                    btns_S.put(currPlayer.name, btn_S);
 
                     JButton btn_E = new JButton("E");
                     btn_E.setBounds(305, 573, 46, 46);
@@ -235,6 +258,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                             synchronized(syncLock) { syncLock.notifyAll(); }
                         }
                     });
+                    btns_E.put(currPlayer.name, btn_E);
 
                     JButton btn_W = new JButton("W");
                     btn_W.setBounds(10, 573, 46, 46);
@@ -251,6 +275,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                             synchronized(syncLock) { syncLock.notifyAll(); }
                         }
                     });
+                    btns_W.put(currPlayer.name, btn_W);
 
                     JButton btn_NE = new JButton("NE");
                     btn_NE.setBounds(239, 505, 48, 42);
@@ -267,6 +292,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                             synchronized(syncLock) { syncLock.notifyAll(); }
                         }
                     });
+                    btns_NE.put(currPlayer.name, btn_NE);
 
                     JButton btn_NW = new JButton("NW");
                     btn_NW.setBounds(76, 505, 48, 42);
@@ -283,6 +309,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                             synchronized(syncLock) { syncLock.notifyAll(); }
                         }
                     });
+                    btns_NW.put(currPlayer.name, btn_NW);
 
                     JButton btn_SE = new JButton("SE");
                     btn_SE.setBounds(239, 649, 48, 42);
@@ -299,6 +326,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                             synchronized(syncLock) { syncLock.notifyAll(); }
                         }
                     });
+                    btns_SE.put(currPlayer.name, btn_SE);
 
                     JButton btn_SW = new JButton("SW");
                     btn_SW.setBounds(76, 649, 48, 42);
@@ -315,6 +343,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                             synchronized(syncLock) { syncLock.notifyAll(); }
                         }
                     });
+                    btns_SW.put(currPlayer.name, btn_SW);
 
                     JButton btn_NNE = new JButton("NNE");
                     btn_NNE.setBounds(206, 506, 30, 26);
@@ -331,6 +360,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                             synchronized(syncLock) { syncLock.notifyAll(); }
                         }
                     });
+                    btns_NNE.put(currPlayer.name, btn_NNE);
 
                     JButton btn_NNW = new JButton("NNW");
                     btn_NNW.setBounds(130, 506, 34, 26);
@@ -347,6 +377,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                             synchronized(syncLock) { syncLock.notifyAll(); }
                         }
                     });
+                    btns_NNW.put(currPlayer.name, btn_NNW);
 
                     JButton btn_ENE = new JButton("ENE");
                     btn_ENE.setBounds(254, 548, 30, 26);
@@ -363,6 +394,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                             synchronized(syncLock) { syncLock.notifyAll(); }
                         }
                     });
+                    btns_ENE.put(currPlayer.name, btn_ENE);
 
                     JButton btn_WNW = new JButton("WNW");
                     btn_WNW.setBounds(76, 548, 36, 26);
@@ -379,6 +411,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                             synchronized(syncLock) { syncLock.notifyAll(); }
                         }
                     });
+                    btns_WNW.put(currPlayer.name, btn_WNW);
 
                     JButton btn_ESE = new JButton("ESE");
                     btn_ESE.setBounds(254, 622, 30, 26);
@@ -395,6 +428,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                             synchronized(syncLock) { syncLock.notifyAll(); }
                         }
                     });
+                    btns_ESE.put(currPlayer.name, btn_ESE);
 
                     JButton btn_WSW = new JButton("WSW");
                     btn_WSW.setBounds(76, 622, 36, 26);
@@ -411,6 +445,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                             synchronized(syncLock) { syncLock.notifyAll(); }
                         }
                     });
+                    btns_WSW.put(currPlayer.name, btn_WSW);
 
                     JButton btn_SSE = new JButton("SSE");
                     btn_SSE.setBounds(206, 665, 30, 26);
@@ -427,6 +462,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                             synchronized(syncLock) { syncLock.notifyAll(); }
                         }
                     });
+                    btns_SSE.put(currPlayer.name, btn_SSE);
 
                     JButton btn_SSW = new JButton("SSW");
                     btn_SSW.setBounds(130, 665, 34, 26);
@@ -443,6 +479,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                             synchronized(syncLock) { syncLock.notifyAll(); }
                         }
                     });
+                    btns_SSW.put(currPlayer.name, btn_SSW);
 
                     JPanel card = new JPanel();
                     card.setLayout(null);
@@ -504,16 +541,173 @@ public class GUI_2 extends JFrame implements UserInterface {
     }//end getLine()
 
 
+    // disable direction buttons
+    public void disableAllDirectionButtons(String n) {
+        btns_N.get(n).setEnabled(false);
+        btns_N.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        btns_N.get(n).setForeground(new Color(60, 65, 72));
+
+        btns_S.get(n).setEnabled(false);
+        btns_S.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        btns_S.get(n).setForeground(new Color(60, 65, 72));
+
+        btns_E.get(n).setEnabled(false);
+        btns_E.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        btns_E.get(n).setForeground(new Color(60, 65, 72));
+
+        btns_W.get(n).setEnabled(false);
+        btns_W.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        btns_W.get(n).setForeground(new Color(60, 65, 72));
+
+        btns_NE.get(n).setEnabled(false);
+        btns_NE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        btns_NE.get(n).setForeground(new Color(60, 65, 72));
+
+        btns_NW.get(n).setEnabled(false);
+        btns_NW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        btns_NW.get(n).setForeground(new Color(60, 65, 72));
+
+        btns_SE.get(n).setEnabled(false);
+        btns_SE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        btns_SE.get(n).setForeground(new Color(60, 65, 72));
+
+        btns_SW.get(n).setEnabled(false);
+        btns_SW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        btns_SW.get(n).setForeground(new Color(60, 65, 72));
+
+        btns_NNE.get(n).setEnabled(false);
+        btns_NNE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        btns_NNE.get(n).setForeground(new Color(60, 65, 72));
+
+        btns_NNW.get(n).setEnabled(false);
+        btns_NNW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        btns_NNW.get(n).setForeground(new Color(60, 65, 72));
+
+        btns_ENE.get(n).setEnabled(false);
+        btns_ENE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        btns_ENE.get(n).setForeground(new Color(60, 65, 72));
+
+        btns_WNW.get(n).setEnabled(false);
+        btns_WNW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        btns_WNW.get(n).setForeground(new Color(60, 65, 72));
+
+        btns_ESE.get(n).setEnabled(false);
+        btns_ESE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        btns_ESE.get(n).setForeground(new Color(60, 65, 72));
+
+        btns_WSW.get(n).setEnabled(false);
+        btns_WSW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        btns_WSW.get(n).setForeground(new Color(60, 65, 72));
+
+        btns_SSE.get(n).setEnabled(false);
+        btns_SSE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        btns_SSE.get(n).setForeground(new Color(60, 65, 72));
+
+        btns_SSW.get(n).setEnabled(false);
+        btns_SSW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        btns_SSW.get(n).setForeground(new Color(60, 65, 72));
+    }//end disableDirectionButtons()
+
+
+    // enable direction button
+    public void enableDirectionButton(String d, String n) {
+        if      (d.equals("NORTH")) {
+            btns_N.get(n).setEnabled(true);
+            btns_N.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            btns_N.get(n).setForeground(Color.WHITE);
+        }
+        else if (d.equals("SOUTH")) {
+            btns_S.get(n).setEnabled(true);
+            btns_S.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            btns_S.get(n).setForeground(Color.WHITE);
+        }
+        else if (d.equals("EAST")) {
+            btns_E.get(n).setEnabled(true);
+            btns_E.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            btns_E.get(n).setForeground(Color.WHITE);
+        }
+        else if (d.equals("WEST")) {
+            btns_W.get(n).setEnabled(true);
+            btns_W.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            btns_W.get(n).setForeground(Color.WHITE);
+        }
+        else if (d.equals("NORTHEAST")) {
+            btns_NE.get(n).setEnabled(true);
+            btns_NE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            btns_NE.get(n).setForeground(Color.WHITE);
+        }
+        else if (d.equals("NORTHWEST")) {
+            btns_NW.get(n).setEnabled(true);
+            btns_NW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            btns_NW.get(n).setForeground(Color.WHITE);
+        }
+        else if (d.equals("SOUTHEAST")) {
+            btns_SE.get(n).setEnabled(true);
+            btns_SE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            btns_SE.get(n).setForeground(Color.WHITE);
+        }
+        else if (d.equals("SOUTHWEST")) {
+            btns_SW.get(n).setEnabled(true);
+            btns_SW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            btns_SW.get(n).setForeground(Color.WHITE);
+        }
+        else if (d.equals("NORTH-NORTHEAST")) {
+            btns_NNE.get(n).setEnabled(true);
+            btns_NNE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            btns_NNE.get(n).setForeground(Color.WHITE);
+        }
+        else if (d.equals("NORTH-NORTHWEST")) {
+            btns_NNW.get(n).setEnabled(true);
+            btns_NNW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            btns_NNW.get(n).setForeground(Color.WHITE);
+        }
+        else if (d.equals("EAST-NORTHEAST")) {
+            btns_ENE.get(n).setEnabled(true);
+            btns_ENE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            btns_ENE.get(n).setForeground(Color.WHITE);
+        }
+        else if (d.equals("WEST-NORTHWEST")) {
+            btns_WNW.get(n).setEnabled(true);
+            btns_WNW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            btns_WNW.get(n).setForeground(Color.WHITE);
+        }
+        else if (d.equals("EAST-SOUTHEAST")) {
+            btns_ESE.get(n).setEnabled(true);
+            btns_ESE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            btns_ESE.get(n).setForeground(Color.WHITE);
+        }
+        else if (d.equals("WEST-SOUTHWEST")) {
+            btns_WSW.get(n).setEnabled(true);
+            btns_WSW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            btns_WSW.get(n).setForeground(Color.WHITE);
+        }
+        else if (d.equals("SOUTH-SOUTHEAST")) {
+            btns_SSE.get(n).setEnabled(true);
+            btns_SSE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            btns_SSE.get(n).setForeground(Color.WHITE);
+        }
+        else if (d.equals("SOUTH-SOUTHWEST")) {
+            btns_SSW.get(n).setEnabled(true);
+            btns_SSW.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            btns_SSW.get(n).setForeground(Color.WHITE);
+        }
+    }//end enableDirectionButton()
+
+
     // switch card
     public void switchCard(Player p, Place place) {
-        currPlayer = p;
-        JPanel cards = (JPanel) this.getContentPane().getComponent(0);
+        JPanel cards    = (JPanel) this.getContentPane().getComponent(0);
         CardLayout card = (CardLayout) cards.getLayout();
+        currPlayer      = p;
+        messageBox      = messages.get(currPlayer.name);
+
+        disableAllDirectionButtons(currPlayer.name);
+
+        List<Direction> directions = place.paths;
+        for (Direction d : directions)
+            enableDirectionButton(d.toString(), currPlayer.name);
+
         card.show(cards, currPlayer.name);
-
-        for (Component c : cards.getComponents())
-            messageBox = messages.get(currPlayer.name);
-
         cards.revalidate();
         cards.repaint();
         this.revalidate();

@@ -95,7 +95,9 @@ public class Player extends Character
     public boolean reachedExit()
     {
         if (currPlace == Place.getPlacebyID(1)) {
-            System.out.printf("You've reached the exit. Thanks for playing!\n");
+            IO printIO = IO.getIO();
+            printIO.display("You've reached the exit. Thanks for playing!\n");
+            try { Thread.sleep(1500); } catch (Exception e) { }
             return true; // reached
         }
         return false;    // not reached
