@@ -118,6 +118,8 @@ public class Player extends Character
     // "INVE" and "GET" commands
     public void inve()
     {
+        IO printIO = IO.getIO();
+        printIO.display("\n");
         UI.printDivider(1);
 
         if      (inventory.size() == 0)  // player doesn't possess artifacts
