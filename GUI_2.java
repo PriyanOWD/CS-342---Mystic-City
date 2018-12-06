@@ -277,6 +277,40 @@ public class GUI_2 extends JFrame implements UserInterface {
                     });
                     btns_W.put(currPlayer.name, btn_W);
 
+                    JButton btn_U = new JButton("U");
+                    btn_U.setBounds(121, 725, 46, 46);
+                    btn_U.setFont(new Font("Helvetica Neue", Font.BOLD, 40));
+                    btn_U.setForeground(Color.WHITE);
+                    btn_U.setBorder(BorderFactory.createEmptyBorder());
+                    btn_U.setOpaque(false);
+                    btn_U.setContentAreaFilled(false);
+                    btn_U.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                    btn_U.setToolTipText("UP");
+                    btn_U.addActionListener(new ActionListener() {
+                        @Override public void actionPerformed(ActionEvent e) {
+                            line = "GO U";
+                            synchronized(syncLock) { syncLock.notifyAll(); }
+                        }
+                    });
+                    btns_U.put(currPlayer.name, btn_U);
+
+                    JButton btn_D = new JButton("D");
+                    btn_D.setBounds(201, 725, 46, 46);
+                    btn_D.setFont(new Font("Helvetica Neue", Font.BOLD, 40));
+                    btn_D.setForeground(Color.WHITE);
+                    btn_D.setBorder(BorderFactory.createEmptyBorder());
+                    btn_D.setOpaque(false);
+                    btn_D.setContentAreaFilled(false);
+                    btn_D.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                    btn_D.setToolTipText("DOWN");
+                    btn_D.addActionListener(new ActionListener() {
+                        @Override public void actionPerformed(ActionEvent e) {
+                            line = "GO D";
+                            synchronized(syncLock) { syncLock.notifyAll(); }
+                        }
+                    });
+                    btns_D.put(currPlayer.name, btn_D);
+
                     JButton btn_NE = new JButton("NE");
                     btn_NE.setBounds(239, 505, 48, 42);
                     btn_NE.setFont(new Font("Helvetica Neue", Font.BOLD, 25));
@@ -499,6 +533,8 @@ public class GUI_2 extends JFrame implements UserInterface {
                     card.add(btn_S);
                     card.add(btn_E);
                     card.add(btn_W);
+                    card.add(btn_U);
+                    card.add(btn_D);
                     card.add(btn_NE);
                     card.add(btn_NW);
                     card.add(btn_SE);
@@ -558,6 +594,14 @@ public class GUI_2 extends JFrame implements UserInterface {
         btns_W.get(n).setEnabled(false);
         btns_W.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         btns_W.get(n).setForeground(new Color(60, 65, 72));
+
+        btns_U.get(n).setEnabled(false);
+        btns_U.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        btns_U.get(n).setForeground(new Color(60, 65, 72));
+
+        btns_D.get(n).setEnabled(false);
+        btns_D.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        btns_D.get(n).setForeground(new Color(60, 65, 72));
 
         btns_NE.get(n).setEnabled(false);
         btns_NE.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -630,6 +674,16 @@ public class GUI_2 extends JFrame implements UserInterface {
             btns_W.get(n).setEnabled(true);
             btns_W.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             btns_W.get(n).setForeground(Color.WHITE);
+        }
+        else if (d.equals("UP")) {
+            btns_U.get(n).setEnabled(true);
+            btns_U.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            btns_U.get(n).setForeground(Color.WHITE);
+        }
+        else if (d.equals("DOWN")) {
+            btns_D.get(n).setEnabled(true);
+            btns_D.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            btns_D.get(n).setForeground(Color.WHITE);
         }
         else if (d.equals("NORTHEAST")) {
             btns_NE.get(n).setEnabled(true);
