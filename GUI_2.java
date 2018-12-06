@@ -88,7 +88,7 @@ public class GUI_2 extends JFrame implements UserInterface {
         btns_SSW     = new TreeMap<String, JButton>();
 
         try {
-            Image img = ImageIO.read(new File("TEST.png")).getScaledInstance(1200, 800, Image.SCALE_SMOOTH);
+            Image img = ImageIO.read(new File("template.png")).getScaledInstance(1200, 800, Image.SCALE_SMOOTH);
             this.setTitle("MAGICAL GIRL FORCE GO!!! (GUI #2)");
             this.setSize(1200, 800);
             this.setResizable(false);
