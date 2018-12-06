@@ -37,16 +37,16 @@ import javax.swing.text.DefaultCaret;
 // graphics user interface #2 that inherits JFrame
 public class GUI_2 extends JFrame implements UserInterface {
     // private attributes
-    private Player    currPlayer;
     private String    line;
+    private Player    currPlayer;
     private JTextArea messageBox;
+    private final TreeMap<String, JTextArea> messages;
     private final TreeMap<String, JButton>   btns_N,   btns_S,   btns_E,
                                              btns_W,   btns_U,   btns_D,
                                              btns_NE,  btns_NW,  btns_SE,
                                              btns_SW,  btns_NNE, btns_NNW,
                                              btns_ENE, btns_WNW, btns_ESE,
                                              btns_WSW, btns_SSE, btns_SSW;
-    private final TreeMap<String, JTextArea> messages;
 
 
     // lock
