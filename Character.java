@@ -120,8 +120,6 @@ public abstract class Character
 
     public void stats()
     {
-        IO printIO = IO.getIO();
-        printIO.display("\n");
         UI.printDivider(1);
         UI.printFormat(String.format("Attack: %d, Defense: %d, HP: %d/%d, MP: %d",
                        attack, defense, currHP, maxHP, mp));
