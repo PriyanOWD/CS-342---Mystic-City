@@ -18,6 +18,8 @@ public class GoNPC extends Go {
 
     // execute "GO" command : go to random direction
     public boolean execute() {
+        IO printIO = IO.getIO();
+
         // remove NPC from current place
         n.getCurrentPlace().removeCharacter(n);
 
@@ -27,6 +29,14 @@ public class GoNPC extends Go {
         // add NPC to current place
         n.getCurrentPlace().addCharacter(n);
 
+        if (n.getCurrentPlace().name().matches("Room.*"))  // place is room
+            printIO.display(String.format("%s has moved to %s.\n",
+                    n.name(), n.getCurrentPlace().name()));
+        else                                               // place isn't room
+            printIO.display(String.format("%s has moved to the %s.\n",
+                    n.name(), n.getCurrentPlace().name()));
+
+        try { Thread.sleep(2000); } catch (Exception e) { }
         return true;
     }//end execute()
 }//end GoNPC class

@@ -12,7 +12,7 @@ public class Quit extends Move {
     public boolean execute() {
         IO printIO = IO.getIO();
         printIO.display("Thanks for playing. Bye!\n");
-        try { Thread.sleep(1500); } catch (Exception e) { }
+        try { Thread.sleep(2000); } catch (Exception e) { }
         System.exit(0);
         return true;
     }//end execute()

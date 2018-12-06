@@ -21,8 +21,14 @@ public class GetNPC extends Get {
     public boolean execute() {
         Artifact a = n.getCurrentPlace().getArtifact();
         if (a != null) {
+            IO printIO = IO.getIO();
             n.getCurrentPlace().removeArtifact(a); // remove from place
             n.addArtifact(a);                      // add to possessions
+
+            printIO.display(String.format("%s now possesses the %s.\n",
+                            n.name(), a.name().toLowerCase()));
+
+            try { Thread.sleep(2000); } catch (Exception e) { }
         }
         return true;
     }//end execute()
