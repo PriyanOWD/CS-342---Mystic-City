@@ -24,31 +24,33 @@ public class Buy extends Move {
     // of artifacts to unlock door
     public boolean execute() {
         IO printIO = IO.getIO();
-        if (!(p.currPlace instanceof Market)) {
-            printIO.display(String.format("Sorry, the %s isn\'t a market. " +
-                            "Buy things at a market.\n", p.currPlace.name()));
-            return false;
-        }
-        else {
-            Market m = (Market) p.currPlace;
-            if (m.soldOut()) {
-                printIO.display(String.format("Sorry, everything at the %s is sold out!\n",
-                                p.currPlace.name()));
+        if (arg.matches("BUY .*")) {
+            if (!(p.currPlace instanceof Market)) {
+                printIO.display(String.format("Sorry, the %s isn\'t a market. " +
+                        "Buy things at a market.\n", p.currPlace.name()));
                 return false;
-            }
-            
-            int userRoll = Integer.valueOf(arg.replace("BUY ", "").trim());
-            Artifact prize = m.winItem(userRoll);
-            
-            if (prize == null)
-                printIO.display("Sorry, you guessed the wrong number! " +
-                                "Try again.\n");
-            else {
-                p.addArtifact(prize);
-                printIO.display(String.format("Congratulations! You won the %.\n",
-                                prize.name().toLowerCase()));
+            } else {
+                Market m = (Market) p.currPlace;
+                if (m.soldOut()) {
+                    printIO.display(String.format("Sorry, everything at the %s is sold out!\n",
+                            p.currPlace.name()));
+                    return false;
+                }
+
+                int userRoll = Integer.valueOf(arg.replace("BUY ", "").trim());
+                Artifact prize = m.winItem(userRoll);
+
+                if (prize == null)
+                    printIO.display("Sorry, you guessed the wrong number! " +
+                            "Try again.\n");
+                else {
+                    p.addArtifact(prize);
+                    printIO.display(String.format("Congratulations! You won the %.\n",
+                            prize.name().toLowerCase()));
+                }
             }
         }
+        else printIO.display("Enter \'BUY\' followed by a random number [1..5].\n");
         return false;
     }//end execute()
 }//end Use class

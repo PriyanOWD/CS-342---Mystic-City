@@ -45,7 +45,7 @@ public class GUI_2 extends JFrame implements UserInterface {
     private JTextArea messageBox;
     private final TreeMap<String, JTextArea> messages;
     private final TreeMap<String, JComboBox> getMenus,   dropMenus,    useMenus,
-                                             equipMenus, consumeMenus;
+                                             equipMenus, consumeMenus, buyMenus;
     private final TreeMap<String, JButton>   btns_N,   btns_S,   btns_E,
                                              btns_W,   btns_U,   btns_D,
                                              btns_NE,  btns_NW,  btns_SE,
@@ -68,6 +68,7 @@ public class GUI_2 extends JFrame implements UserInterface {
         useMenus     = new TreeMap<String, JComboBox>();
         equipMenus   = new TreeMap<String, JComboBox>();
         consumeMenus = new TreeMap<String, JComboBox>();
+        buyMenus     = new TreeMap<String, JComboBox>();
         btns_N       = new TreeMap<String, JButton>();
         btns_S       = new TreeMap<String, JButton>();
         btns_E       = new TreeMap<String, JButton>();
@@ -286,6 +287,20 @@ public class GUI_2 extends JFrame implements UserInterface {
                         }
                     });
                     consumeMenus.put(currPlayer.name, consumeMenu);
+
+                    JComboBox buyMenu = new JComboBox();
+                    buyMenu.setBounds(18, 346, 323, 34);
+                    buyMenu.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
+                    //buyMenu.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+                    buyMenu.addActionListener(new ActionListener() {
+                        @Override public void actionPerformed(ActionEvent e) {
+                            line = "BUY" + String.valueOf(buyMenu.getSelectedItem()).replaceAll("■", "");
+                            synchronized(syncLock) { syncLock.notifyAll(); }
+                            try { Thread.sleep(10); } catch (Exception s) { }
+                            populateAllMenus();
+                        }
+                    });
+                    buyMenus.put(currPlayer.name, buyMenu);
 
                     JButton btn_N = new JButton("N");
                     btn_N.setBounds(161, 427, 46, 46);
@@ -612,6 +627,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                     card.add(useMenu);
                     card.add(equipMenu);
                     card.add(consumeMenu);
+                    card.add(buyMenu);
                     card.add(btn_N);
                     card.add(btn_S);
                     card.add(btn_E);
@@ -903,6 +919,19 @@ public class GUI_2 extends JFrame implements UserInterface {
     }//end populateConsumeMenu()
 
 
+    // populate consume menu
+    private void populateBuyMenu() {
+        String n                = currPlayer.name;
+        ArrayList<String> names = new ArrayList<String>();
+        names.add("BUY");
+
+        for (int i = 1; i < 6; i++)
+            names.add("■ " + i);
+
+        buyMenus.get(n).setModel(new DefaultComboBoxModel(names.toArray()));
+    }//end populateConsumeMenu()
+
+
     // populate all menus
     private void populateAllMenus() {
         populateGetMenu();
@@ -910,6 +939,7 @@ public class GUI_2 extends JFrame implements UserInterface {
         populateUseMenu();
         populateEquipMenu();
         populateConsumeMenu();
+        populateBuyMenu();
     }//end populateAllMenus()
 
 

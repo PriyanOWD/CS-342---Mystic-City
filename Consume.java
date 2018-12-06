@@ -24,6 +24,7 @@ public class Consume extends Move {
 
     // execute "CONSUME" command : consume artifact from player's collection
     public boolean execute() {
+        IO printIO = IO.getIO();
         if (arg.matches("CONSUME .*")) {
             arg = arg.replace("CONSUME ", "").trim();
             ArrayList<Artifact> matches = p.followArtifact(arg);
@@ -40,10 +41,10 @@ public class Consume extends Move {
                     p.consume(a);                          //   consume artifact
                 }
             }//end if...                                   // no match
-            else System.out.printf("Sorry, you don\'t possess the artifact.\n");
+            else printIO.display("Sorry, you don\'t possess the artifact.\n");
         }//end if...                                       // invalid command
-        else System.out.printf("Enter \'CONSUME\' followed by the name of " +
-                               "the food.\n");
+        else printIO.display("Enter \'CONSUME\' followed by the name of " +
+                             "the food.\n");
         return false;
     }//end execute()
 }//end Consume class
