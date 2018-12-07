@@ -28,6 +28,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import javax.imageio.ImageIO;
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonModel;
 import javax.swing.ImageIcon;
@@ -35,7 +36,10 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -55,6 +59,7 @@ public class GUI_1 extends JFrame implements UserInterface {
     // private attributes
     private String line;
     private Player currPlayer;
+    private Place currPlace;
     private final TreeMap<String, JTextArea> allTextBox;
     private JTextArea currTextBox; 
     private JLabel backGround;
@@ -216,14 +221,14 @@ public class GUI_1 extends JFrame implements UserInterface {
                 for(int i = 0; i < 3; ++i)
                     buttonEasts.add(new JButton());
                 buttonEasts.add(createChildButton("East-SouthEast", "GO ESE",650,750,buttonEasts));
-                buttonEasts.add(createChildButton("East-SouthWest", "GO ESW",650,850,buttonEasts));
+                buttonEasts.add(createChildButton("East-SouthWest", "GO ENE",650,850,buttonEasts));
                 JButton buttonE = createParentButton("East","GO E",buttonEasts,550,800);
                 
                 List<JButton> buttonWests =  new ArrayList<JButton>(3);
                 for(int i = 0; i < 3; ++i)
                     buttonWests.add(new JButton());
-                buttonWests.add(createChildButton("West-SouthEast", "GO WSE",200,750,buttonWests));
-                buttonWests.add(createChildButton("West-SouthWest", "GO WSW",200,850,buttonWests));
+                buttonWests.add(createChildButton("West-SouthWest", "GO WSW",200,750,buttonWests));
+                buttonWests.add(createChildButton("West-NorthWest", "GO WNW",200,850,buttonWests));
                 JButton buttonW = createParentButton("West","GO W",buttonWests,350,800);
                 
                 JButton upButton = new JButton("UP");
@@ -286,6 +291,32 @@ public class GUI_1 extends JFrame implements UserInterface {
                     }
                 });
                 
+                JButton lookButton = new JButton("Look");
+                lookButton.setBounds(450,400,100,100);
+                lookButton.setOpaque(true);
+                lookButton.setContentAreaFilled(true);
+                lookButton.setBackground(Color.WHITE);
+                lookButton.setVisible(true);
+                lookButton.setBorderPainted(true);
+                lookButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        line = "LOOK";
+                        synchronized (syncLock) { syncLock.notifyAll(); }
+                    }
+                });
+                
+                currPlace = currPlayer.currPlace;
+                JButton useButton = createDDButton("USE","USE", false,50,500);
+                JButton getButton = createDDButton("GET","GET", true,850,500);
+                JButton equipButton = createDDButton("EQUIP","EQUIP", false,50,1100);
+                JButton dropButton = createDDButton("DROP","DROP", false,850,1100);
+                
+                card.add(lookButton);
+                card.add(equipButton);
+                card.add(dropButton);
+                card.add(useButton);
+                card.add(getButton);
                 card.add(inspButton);
                 card.add(inveButton);
                 card.add(upButton);
@@ -359,6 +390,7 @@ public class GUI_1 extends JFrame implements UserInterface {
     public void switchCard(Player p, Place place)
     {
         currPlayer = p; 
+        currPlace = place;
         JPanel cards = (JPanel)(this.getContentPane().getComponent(0));        
         CardLayout cl = (CardLayout)cards.getLayout();
         currTextBox = allTextBox.get(currPlayer.name);
@@ -409,6 +441,39 @@ public class GUI_1 extends JFrame implements UserInterface {
         }
         catch (Exception e){System.out.println("Background Panel error");}
         this.add(backGround);
+    }
+    
+    public void update()
+    {
+        //System.out.println("UPDATING GUI_1");
+        JPanel cards = (JPanel)(this.getContentPane().getComponent(0)); 
+        cards.validate();
+        cards.repaint();
+        this.validate();
+        this.repaint();
+    }
+    
+    private JButton createDDButton(String name,String command,boolean PorP, int x, int y)
+    {
+        JButton button = new JButton(name);
+        button.setBounds(x,y,100,100);
+        button.setBackground(Color.WHITE);
+        button.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                JPopupMenu popup = new JPopupMenu();
+                for(Artifact arti: (PorP)?currPlace.placeArtifacts:currPlayer.inventory)
+                {
+                 popup.add(new JMenuItem(new AbstractAction(arti.name()) {
+                     public void actionPerformed(ActionEvent e) {
+                         line = command + " "+ arti.name();
+                         synchronized (syncLock) { syncLock.notifyAll();}
+                     }
+                     }));
+                }
+                popup.show(e.getComponent(), e.getX(), e.getY());
+            }
+        });
+        return button;
     }
     
     private JButton createChildButton(String name,String command, int x , int y,List<JButton> list  )

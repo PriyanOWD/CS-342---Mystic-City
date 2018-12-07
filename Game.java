@@ -78,7 +78,10 @@ public class Game {
                     gameIO.switchCard(p, p.currPlace);
                     if (p.currHP > 0) p.look(2);
                 }
-                while (!c.makeMove());        //     make move until "GO"
+                while (!c.makeMove())        //     make move until "GO"
+                {
+                    IO.getIO().update();
+                }
             }//end for...
 
             Place.updatePlaces();
