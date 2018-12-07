@@ -24,7 +24,7 @@ public class GameTester {
                           "Group 48:\n"                     +
                           "  psures5, Priyan Sureshkumar\n" +
                           "  spate54, Shyam Patel\n"        +
-                          "  svoorh2, Joey Voorhees\n";
+                          "  svoorh2, Joey Voorhees\n");
 
         String pathname = "";                             // pathname
         int    num      = 0;                              // # of players
