@@ -21,7 +21,7 @@ import java.util.Scanner;
 public class GameTester {
     public static void main(String[] args) {
         System.out.printf("CS342 Term Project Part V\n"          +
-                          "Group 48\n"                          +
+                          "Group 48\n"                           +
                           "GUI_1: psures5, Priyan Sureshkumar\n" +
                           "GUI_2: spate54, Shyam Patel\n"        +
                           "GUI_3: svoorh2, Joey Voorhees\n");
