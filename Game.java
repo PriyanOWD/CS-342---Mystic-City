@@ -74,10 +74,10 @@ public class Game {
         IO gameIO = IO.getIO();
         for(;;) {                             // infinite loop :
             for (Character c : characters) {  //   iterate thru characters :
-                checkWinner();                //   check winner
                 if (c.isActive && c instanceof Player) {
                     Player p = (Player) c;
                     gameIO.switchCard(p, p.currPlace);
+                    checkWinner();            //   check winner
                     if (p.currHP > 0) p.look(2);
                 }
                 while (!c.makeMove())         //     make move until "GO"
