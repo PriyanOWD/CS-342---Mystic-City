@@ -26,9 +26,15 @@ public class Food extends Artifact {
             s.close();                                  // close scanner
         } catch (Exception e) { e.printStackTrace(); }  // exception
     }//end class constructor
+    
+    public Food()
+        {
+         super();
+        }
 
 
     // return max health point
+    
     public int getMaxHP()        { return hp;       }
     // return mana point
     public int getMP()           { return mp;       }
