@@ -63,7 +63,7 @@ public class Buy extends Move {
                             m.name().toLowerCase()));   
             }
         }
-        else printIO.display("Enter \'BUY\' followed by a random number [1,5].\n");
+        else printIO.display("Enter \'BUY\' followed by a random number [1,2].\n");
         return false;
     }//end execute()
 }//end Use class
