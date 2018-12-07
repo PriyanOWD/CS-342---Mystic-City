@@ -246,7 +246,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                             line = "USE" + String.valueOf(useMenu.getSelectedItem()).replaceAll("■", "");
                             synchronized(syncLock) { syncLock.notifyAll(); }
                             try { Thread.sleep(10); } catch (Exception s) { }
-                            populateUseMenu();
+                            populateAllMenus();
                         }
                     });
                     useMenus.put(currPlayer.name, useMenu);
@@ -261,8 +261,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                             synchronized(syncLock) { syncLock.notifyAll(); }
                             try { Thread.sleep(10); } catch (Exception s) { }
                             updateStats();
-                            populateDropMenu();
-                            populateEquipMenu();
+                            populateAllMenus();
                         }
                     });
                     equipMenus.put(currPlayer.name, equipMenu);
@@ -277,8 +276,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                             synchronized(syncLock) { syncLock.notifyAll(); }
                             try { Thread.sleep(10); } catch (Exception s) { }
                             updateStats();
-                            populateDropMenu();
-                            populateConsumeMenu();
+                            populateAllMenus();
                         }
                     });
                     consumeMenus.put(currPlayer.name, consumeMenu);
@@ -292,7 +290,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                             line = "BUY" + String.valueOf(buyMenu.getSelectedItem()).replaceAll("■", "");
                             synchronized(syncLock) { syncLock.notifyAll(); }
                             try { Thread.sleep(10); } catch (Exception s) { }
-                            populateBuyMenu();
+                            populateAllMenus();
                         }
                     });
                     buyMenus.put(currPlayer.name, buyMenu);
@@ -306,7 +304,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                             line = "ATTACK" + String.valueOf(attackMenu.getSelectedItem()).replaceAll("■", "");
                             synchronized(syncLock) { syncLock.notifyAll(); }
                             try { Thread.sleep(10); } catch (Exception s) { }
-                            populateAttackMenu();
+                            populateAllMenus();
                         }
                     });
                     attackMenus.put(currPlayer.name, attackMenu);
