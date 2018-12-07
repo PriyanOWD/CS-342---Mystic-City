@@ -59,7 +59,7 @@ public class Buy extends Move {
                     }
                 }
                 else
-                    printIO.display(String.format("Sorry, the %s is closed",
+                    printIO.display(String.format("Sorry, the %s is closed\n",
                             m.name().toLowerCase()));   
             }
         }
