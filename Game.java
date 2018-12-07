@@ -13,9 +13,7 @@
  */
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 
 
 // Game class to encapsulate attributes and methods for Game object
@@ -55,6 +53,10 @@ public class Game {
 
             System.out.printf("\nWelcome to %s!\n",          // print name
                               name().replace("\t", " ").replace("!", ""));
+
+            int n = UI.requestInterface();
+            IO ourIO = IO.getIO();
+            ourIO.selectInterface(n);
         } catch (Exception e) { e.printStackTrace(); }       // exception
     }//end class constructor
 
