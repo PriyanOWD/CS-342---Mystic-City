@@ -1043,7 +1043,7 @@ public class GUI_2 extends JFrame implements UserInterface {
         ArrayList<String> names = new ArrayList<String>();
         names.add("BUY");
 
-        for (int i = 1; i < 6; i++)
+        for (int i = 1; i < 3; i++)
             names.add("■ " + i);
 
         buyMenus.get(n).setModel(new DefaultComboBoxModel(names.toArray()));

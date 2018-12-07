@@ -21,7 +21,7 @@ public class Commands extends Move {
                        "       \'USE <ARTIFACT>\' : use key\n"               +
                        "     \'EQUIP <ARTIFACT>\' : equip armor or weapon\n" +
                        "   \'CONSUME <ARTIFACT>\' : consume food or potion\n"+
-                       "   \'BUY <NUMBER [1,5]>\' : win a prize\n"           +
+                       "   \'BUY <NUMBER [1,2]>\' : win a prize\n"           +
                        "              \'INSPECT\' : display footprints\n"    +
                        "                 \'INVE\' : check inventory\n"       +
                        "                \'STATS\' : check stats\n"           +
