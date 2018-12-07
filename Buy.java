@@ -37,7 +37,7 @@ public class Buy extends Move {
                     return false;
                 }
 
-                Artifact prize = new Artifact();
+                Food prize = new Food();
                 boolean gotPrize = false;
                 int userRoll = Integer.valueOf(arg.replace("BUY ", "").trim());
                 if(userRoll<0 || userRoll>1)
