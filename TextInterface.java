@@ -22,6 +22,7 @@ public class TextInterface implements UserInterface {
     }//end display()
 
     public String getLine() {
+        System.out.printf(">> ");
         Scanner s = KeyboardScanner.getKeyboardScanner();
         return s.nextLine().trim();
     }//end getLine()
