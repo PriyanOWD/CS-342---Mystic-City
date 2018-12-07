@@ -62,8 +62,11 @@ public class Player extends Character
     // move executions except for "GO" (success returns true)
     public boolean makeMove()
     {
-        Move m = dm.getMove(this); // get move
-        return m.execute();        // execute move
+        if (isActive) {
+            Move m = dm.getMove(this); // get move
+            return m.execute();        // execute move
+        }
+        else return true;
     }//end makeMove()
 
 

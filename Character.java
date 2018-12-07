@@ -20,6 +20,7 @@ public abstract class Character
     protected String description = "";
     protected DecisionMaker dm;
     protected Place currPlace;
+    protected boolean isActive;
     protected int attack;
     protected int defense;
     protected int currHP;
@@ -70,6 +71,7 @@ public abstract class Character
         else
             currPlace = Place.getPlacebyID(indexCurrentPlace);
 
+        isActive = true;
         currPlace.addCharacter(this);
         if (!characterTree.containsKey(CHARID))
             characterTree.put(CHARID, this);

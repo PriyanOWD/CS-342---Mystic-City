@@ -23,13 +23,30 @@ public class SafeZone extends Place
    {
        for(Character ch: placeCharacters)
        {
-           if( (ch.currHP + val) > ch.maxHP) {
-               ch.currHP = ch.maxHP;
-               System.out.println(PNAME + " fully restored " + ch.name + "'s HP!");
-           }
-           else {
-               ch.currHP += val;
-               System.out.println(PNAME + " recovered " + val + " health for " + ch.name);
+           if(ch.isActive && ch instanceof Player)
+           {
+               Player p = (Player) ch;
+               IO printIO = IO.getIO();
+               if((p.currHP + val) > p.maxHP)
+               {
+                   p.currHP = p.maxHP;
+
+                   if (PNAME.matches("Room.*"))
+                       printIO.display(String.format("%s has fully restored %s\'s HP!\n", PNAME, p.name.replace("The ", "the ").replace("A ", "the ")));
+                   else
+                       printIO.display(String.format("The %s has fully restored %s\'s HP!\n", PNAME, p.name.replace("The ", "the ").replace("A ", "the ")));
+               }
+               else
+               {
+                   p.currHP += val;
+
+                   if (PNAME.matches("Room.*"))
+                       printIO.display(String.format("%s has recovered %s\'s HP by %d!\n", PNAME, p.name.replace("The ", "the ").replace("A ", "the "), val));
+                   else
+                       printIO.display(String.format("The %s has inflicted %s\'s HP by %d!\n", PNAME, p.name.replace("The ", "the ").replace("A ", "the "), val));
+               }
+
+               try { Thread.sleep(1500); } catch (Exception e) { }
            }
        }
    }

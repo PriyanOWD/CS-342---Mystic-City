@@ -31,12 +31,12 @@ public class GoNPC extends Go {
 
         if (n.getCurrentPlace().name().matches("Room.*"))  // place is room
             printIO.display(String.format("%s has moved to %s.\n",
-                    n.name(), n.getCurrentPlace().name()));
+                    n.name().replace("A ", "The "), n.getCurrentPlace().name()));
         else                                               // place isn't room
             printIO.display(String.format("%s has moved to the %s.\n",
-                    n.name(), n.getCurrentPlace().name()));
+                    n.name().replace("A ", "The "), n.getCurrentPlace().name()));
 
-        try { Thread.sleep(2000); } catch (Exception e) { }
+        try { Thread.sleep(1500); } catch (Exception e) { }
         return true;
     }//end execute()
 }//end GoNPC class

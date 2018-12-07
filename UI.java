@@ -14,6 +14,10 @@ public class UI implements DecisionMaker {
     static { output = new StringBuilder(); }
 
     public Move getMove(Character c) {
+        // REMOVE PLAYER     : dead
+        if (c.currHP == 0 && c.isActive && c instanceof Player)
+            return new RemovePlayer((Player) c);
+
         IO printIO = IO.getIO();
         String a   = printIO.getLine().toUpperCase();
 

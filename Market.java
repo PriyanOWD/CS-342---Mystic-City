@@ -93,20 +93,19 @@ public class Market extends Place
        try {
            Scanner s = new Scanner(CleanLineScanner.getCleanLine(sc));
            int num   = s.skip("MARKETITEMS").nextInt(); // get # of Martifacts
-           int mID = Integer.parseInt(sc.nextLine());
+           int mID   = Integer.parseInt(sc.nextLine());
+           Market m  = Market.getMarketbyID(mID);
            
-           Market m = Market.getMarketbyID(mID);
-           
-           s.close();                                 // close scanner
+           s.close();                                   // close scanner
 
-           for (int i = 0; i < num; i++) {            // allocate artifacts :
+           for (int i = 0; i < num; i++) {              // allocate artifacts :
                String type = CleanLineScanner.getCleanLine(sc);
                if      (type.equals("ARMOR" )) m.addToInve(new Armor   (sc, ver));
                else if (type.equals("WEAPON")) m.addToInve(new Weapon  (sc, ver));
                else if (type.equals("FOOD"  )) m.addToInve(new Food    (sc, ver));
                else                            m.addToInve(new Artifact(sc, ver));
            }//end for...
-       } catch (Exception e) { e.printStackTrace(); } // exception
+       } catch (Exception e) { e.printStackTrace(); }   // exception
    }//end allocateArtifacts()
    
    

@@ -26,9 +26,9 @@ public class GetNPC extends Get {
             n.addArtifact(a);                      // add to possessions
 
             printIO.display(String.format("%s now possesses the %s.\n",
-                            n.name(), a.name().toLowerCase()));
+                    n.name().replace("A ", "The "), a.name().toLowerCase()));
 
-            try { Thread.sleep(2000); } catch (Exception e) { }
+            try { Thread.sleep(1500); } catch (Exception e) { }
         }
         return true;
     }//end execute()

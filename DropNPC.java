@@ -27,12 +27,14 @@ public class DropNPC extends Drop {
 
             if (n.getCurrentPlace().name().matches("Room.*"))// place is room
                 printIO.display(String.format("%s has dropped the %s in %s.\n",
-                        n.name(), a.name().toLowerCase(), n.getCurrentPlace().name()));
+                        n.name().replace("A ", "The "), a.name().toLowerCase(),
+                        n.getCurrentPlace().name()));
             else                                             // place isn't room
                 printIO.display(String.format("%s has dropped the %s in the %s.\n",
-                        n.name(), a.name().toLowerCase(), n.getCurrentPlace().name()));
+                        n.name().replace("A ", "The "), a.name().toLowerCase(),
+                        n.getCurrentPlace().name()));
 
-            try { Thread.sleep(2000); } catch (Exception e) { }
+            try { Thread.sleep(1500); } catch (Exception e) { }
         }
         return true;
     }//end execute()

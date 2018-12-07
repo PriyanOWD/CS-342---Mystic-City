@@ -72,12 +72,15 @@ public class Game {
         IO gameIO = IO.getIO();
         for(;;) {                             // infinite loop :
             for (Character c : characters) {  //   iterate thru characters :
-                if (c instanceof Player) {
-                    gameIO.switchCard((Player) c, c.currPlace);
-                    ((Player) c).look(2);     //     display place if player
+                checkWinner();                //   check winner
+                if (c.isActive && c instanceof Player) {
+                    Player p = (Player) c;
+                    gameIO.switchCard(p, p.currPlace);
+                    if (p.currHP > 0) p.look(2);
                 }
                 while (!c.makeMove());        //     make move until "GO"
             }//end for...
+
             Place.updatePlaces();
         }//end for(;;)...
     }//end play()
@@ -189,23 +192,24 @@ public class Game {
     }//end allocatePlayers()
 
 
-    private void allocateMArtifacts(Scanner sc) {
-        try {
-            Scanner s = new Scanner(CleanLineScanner.getCleanLine(sc));
-            int num   = s.skip("MARKETITEMS").nextInt(); // get # of Martifacts
-            int mID = Integer.parseInt(sc.nextLine());
-            
-            Market m = Market.getMarketbyID(mID);
-            
-            s.close();                                 // close scanner
+    // declare last player standing
+    private void checkWinner() {
+        IO printIO = IO.getIO();
+        int numActivePlayers = 0;
+        Player p = null;
 
-            for (int i = 0; i < num; i++) {            // allocate artifacts :
-                String type = CleanLineScanner.getCleanLine(sc);
-                if      (type.equals("ARMOR" )) m.addToInve(new Armor   (sc, version()));
-                else if (type.equals("WEAPON")) m.addToInve(new Weapon  (sc, version()));
-                else if (type.equals("FOOD"  )) m.addToInve(new Food    (sc, version()));
-                else                            m.addToInve(new Artifact(sc, version()));
-            }//end for...
-        } catch (Exception e) {  System.out.println("Market error");e.printStackTrace(); } // exception
-    }//end allocateArtifacts()
+        for (Character c : characters) {
+            if (c.isActive && c instanceof Player) {
+                p = (Player) c;
+                numActivePlayers++;
+            }
+        }
+
+        if (numActivePlayers < 2) {
+            printIO.display(String.format("%s, YOU WIN. CONGRATULATIONS!\n",
+                    p.name.toUpperCase()));
+            try { Thread.sleep(4000); } catch (Exception e) { }
+            System.exit(0);
+        }
+    }//end declareWinner()
 }//end Game class

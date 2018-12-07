@@ -31,7 +31,7 @@ public class IO {
     // get line
     public String getLine()                    { return ui.getLine();    }
     // switch card
-    public void switchCard(Player pl, Place p) { ui.switchCard(pl, p);    }
+    public void switchCard(Player pl, Place p) { ui.switchCard(pl, p);   }
 
 
     // return IO instance
@@ -44,10 +44,10 @@ public class IO {
 
     // select interface
     public void selectInterface(int i) {
-        if      (i == TEXT ) ui = new GUI_1();
+        if      (i == TEXT ) ui = new TextInterface();
         else if (i == GUI_1) ui = new GUI_1();
         else if (i == GUI_2) ui = new GUI_2();
         else if (i == GUI_3) ui = new GUI_1();
-        else                 ui = new GUI_1();
+        else                 ui = new GUI_2();
     }
 }//end IO class

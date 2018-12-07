@@ -22,15 +22,30 @@ public class DangerZone extends Place
    {
        for(Character ch: placeCharacters)
        {
-           if(ch.currHP > dmg)
+           if(ch.isActive && ch instanceof Player)
            {
-               ch.currHP -= dmg;
-               System.out.println(PNAME + " inflicted " + dmg + " to " + ch.name);
-           }
-           else
-           {
-               ch.currHP = 1;
-               System.out.println(PNAME + " reduced " + ch.name + "'s HP to 1!");
+               Player p = (Player) ch;
+               IO printIO = IO.getIO();
+               if(p.currHP > dmg)
+               {
+                   p.currHP -= dmg;
+
+                   if (PNAME.matches("Room.*"))
+                       printIO.display(String.format("%s has inflicted %s\'s HP by %d!\n", PNAME, p.name.replace("The ", "the ").replace("A ", "the "), dmg));
+                   else
+                       printIO.display(String.format("The %s has inflicted %s\'s HP by %d!\n", PNAME, p.name.replace("The ", "the ").replace("A ", "the "), dmg));
+               }
+               else
+               {
+                   p.currHP = 0;
+
+                   if (PNAME.matches("Room.*"))
+                       printIO.display(String.format("%s has killed %s!\n", PNAME, p.name.replace("The ", "the ").replace("A ", "the ")));
+                   else
+                       printIO.display(String.format("The %s has killed %s!\n", PNAME, p.name.replace("The ", "the ").replace("A ", "the ")));
+               }
+
+               try { Thread.sleep(1500); } catch (Exception e) { }
            }
        }
    }
