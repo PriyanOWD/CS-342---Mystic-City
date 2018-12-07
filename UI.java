@@ -161,6 +161,28 @@ public class UI implements DecisionMaker {
     }//end requestNumber()
 
 
+    // request game interface interface
+    public static int requestInterface() {
+        System.out.printf("\n");
+        for (;;) {
+            System.out.printf("\nPlease select an interface.\n" +
+                    "0 : Text Interface\n"            +
+                    "1 : GUI #1\n"                    +
+                    "2 : GUI #2\n"                    +
+                    "3 : GUI #3\n"                    +
+                    ">> ");                           // request inter
+            int n = 0;
+            try {
+                Scanner sc = KeyboardScanner.getKeyboardScanner();
+                Scanner s = new Scanner(sc.nextLine().trim());  // read input
+                if (s.hasNextInt()) n = s.nextInt();            // get #
+                s.close();                                      // close scanner
+                if (n > -1 && n < 4) return n;                  // return #
+            } catch (Exception e) { e.printStackTrace(); }      // exception
+        }//end for (;;)...
+    }//end requestInterface()
+
+
     // print formatted boxed lines for use in display() and print() methods
     public static void printFormat(String str) {
         output.setLength(0);

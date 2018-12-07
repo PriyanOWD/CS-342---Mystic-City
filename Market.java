@@ -105,6 +105,4 @@ public class Market extends Place
            }//end for...
        } catch (Exception e) {  System.out.println("Market error");e.printStackTrace(); } // exception
    }//end allocateArtifacts()
-   
-   
 }

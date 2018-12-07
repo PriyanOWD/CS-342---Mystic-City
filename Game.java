@@ -14,9 +14,7 @@
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 
 
 // Game class to encapsulate attributes and methods for Game object
@@ -57,6 +55,10 @@ public class Game {
 
             System.out.printf("\nWelcome to %s!\n",          // print name
                               name().replace("\t", " ").replace("!", ""));
+
+            int n = UI.requestInterface();
+            IO ourIO = IO.getIO();
+            ourIO.selectInterface(n);
         } catch (Exception e) { e.printStackTrace(); }       // exception
     }//end class constructor
 
@@ -194,40 +196,18 @@ public class Game {
             System.exit(0);
         }
     }//end declareWinner()
-    
-    
-    public static void addTicket(String name,String desc)
-    {
-//        System.out.println(name);
-//        ArrayList<String> list = tickets.get(name);
-//        if(list == null)
-//            System.out.println("LIST IS NULL");
-//        if(tickets.get(name) == null)
-//            System.out.println("TICKETS GET " +name+ " IS NULL");
-//        
-//        Set<String> set = tickets.keySet();
-//        {
-//            for(String s: set)
-//            {
-//                System.out.println("KEY ->" + s + ": list is ");
-//                if(tickets.get(s) == null)
-//                    System.out.println("NULL\n");
-//                else
-//                    System.out.println("NOT NOT NOT NULL\n");
-//            }
-//        }
-        //System.out.println(name +  desc);
+
+
+    public static void addTicket(String name, String desc) {
         tickets.get(name).add(desc);
     }
-    
-    public static void updateTickets(String name, ArrayList<String> list)
-    {
-        for(String s: list)
-        {
+
+    public static void updateTickets(String name, ArrayList<String> list) {
+        for(String s: list) {
            tickets.remove(s); 
-        } 
+        }
     }
-    
+
     // main infinite loop to play game
     public void play() {
         IO gameIO = IO.getIO();
@@ -237,28 +217,23 @@ public class Game {
                 if (c.isActive && c instanceof Player) {
                     Player p = (Player) c;
                     gameIO.switchCard(p, p.currPlace);
-                    checkWinner();//   check winner
-                    for(String s: tickets.get(c.name))
-                    {
+                    checkWinner();            //   check winner
+                    for (String s: tickets.get(c.name)) {
                         gameIO.display(s);
                         usedStrings.add(s);
                     }
-                    updateTickets(c.name,usedStrings);
+                    updateTickets(c.name, usedStrings);
                     if (p.currHP > 0) p.look(2);
                 }
-                else
-                {
-                    for(String s: tickets.get(c.name))
-                    {
+                else {
+                    for (String s : tickets.get(c.name)) {
                         gameIO.display(s);
                         usedStrings.add(s);
                     }
-                    updateTickets(c.name,usedStrings);
+                    updateTickets(c.name, usedStrings);
                 }
-                while (!c.makeMove())        //     make move until "GO"
-                {
+                while (!c.makeMove())         //   make move until "GO"
                     IO.getIO().update();
-                }
             }//end for...
 
             Place.updatePlaces();

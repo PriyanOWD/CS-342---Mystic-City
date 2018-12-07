@@ -42,7 +42,7 @@ public class Buy extends Move {
                 int userRoll = Integer.valueOf(arg.replace("BUY ", "").trim());
                 if(userRoll<0 || userRoll>1)
                 {
-                    printIO.display("\n Only enter either 0 or 1 to win a prize\n");
+                    printIO.display("Only enter either 0 or 1 to win a prize\n");
                     return false;
                 }
                 gotPrize = m.winItem(userRoll,prize);

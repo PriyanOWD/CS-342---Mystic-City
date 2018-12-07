@@ -47,7 +47,8 @@ public class GUI_2 extends JFrame implements UserInterface {
     private final TreeMap<String, JLabel>    attackStats, defenseStats,
                                              hpStats,     mpStats;
     private final TreeMap<String, JComboBox> getMenus,   dropMenus,    useMenus,
-                                             equipMenus, consumeMenus, buyMenus;
+                                             equipMenus, consumeMenus, buyMenus,
+                                             attackMenus;
     private final TreeMap<String, JButton>   btns_N,   btns_S,   btns_E,
                                              btns_W,   btns_U,   btns_D,
                                              btns_NE,  btns_NW,  btns_SE,
@@ -75,6 +76,7 @@ public class GUI_2 extends JFrame implements UserInterface {
         equipMenus   = new TreeMap<String, JComboBox>();
         consumeMenus = new TreeMap<String, JComboBox>();
         buyMenus     = new TreeMap<String, JComboBox>();
+        attackMenus  = new TreeMap<String, JComboBox>();
         btns_N       = new TreeMap<String, JButton>();
         btns_S       = new TreeMap<String, JButton>();
         btns_E       = new TreeMap<String, JButton>();
@@ -209,7 +211,7 @@ public class GUI_2 extends JFrame implements UserInterface {
 
                     // 'GET' command menu
                     JComboBox getMenu = new JComboBox();
-                    getMenu.setBounds(18, 176, 323, 34);
+                    getMenu.setBounds(18, 176, 323, 28);
                     getMenu.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
                     getMenu.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
@@ -223,7 +225,7 @@ public class GUI_2 extends JFrame implements UserInterface {
 
                     // 'DROP' command menu
                     JComboBox dropMenu = new JComboBox();
-                    dropMenu.setBounds(18, 210, 323, 34);
+                    dropMenu.setBounds(18, 204, 323, 28);
                     dropMenu.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
                     dropMenu.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
@@ -237,7 +239,7 @@ public class GUI_2 extends JFrame implements UserInterface {
 
                     // 'USE' command menu
                     JComboBox useMenu = new JComboBox();
-                    useMenu.setBounds(18, 244, 323, 34);
+                    useMenu.setBounds(18, 232, 323, 28);
                     useMenu.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
                     useMenu.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
@@ -251,7 +253,7 @@ public class GUI_2 extends JFrame implements UserInterface {
 
                     // 'EQUIP' command menu
                     JComboBox equipMenu = new JComboBox();
-                    equipMenu.setBounds(18, 278, 323, 34);
+                    equipMenu.setBounds(18, 260, 323, 28);
                     equipMenu.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
                     equipMenu.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
@@ -267,7 +269,7 @@ public class GUI_2 extends JFrame implements UserInterface {
 
                     // 'CONSUME' command menu
                     JComboBox consumeMenu = new JComboBox();
-                    consumeMenu.setBounds(18, 312, 323, 34);
+                    consumeMenu.setBounds(18, 288, 323, 28);
                     consumeMenu.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
                     consumeMenu.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
@@ -283,7 +285,7 @@ public class GUI_2 extends JFrame implements UserInterface {
 
                     // 'BUY' command menu
                     JComboBox buyMenu = new JComboBox();
-                    buyMenu.setBounds(18, 346, 323, 34);
+                    buyMenu.setBounds(18, 316, 323, 28);
                     buyMenu.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
                     buyMenu.addActionListener(new ActionListener() {
                         @Override public void actionPerformed(ActionEvent e) {
@@ -294,6 +296,20 @@ public class GUI_2 extends JFrame implements UserInterface {
                         }
                     });
                     buyMenus.put(currPlayer.name, buyMenu);
+
+                    // 'ATTACK' command menu
+                    JComboBox attackMenu = new JComboBox();
+                    attackMenu.setBounds(18, 344, 323, 28);
+                    attackMenu.setFont(new Font("Helvetica Neue", Font.BOLD, 17));
+                    attackMenu.addActionListener(new ActionListener() {
+                        @Override public void actionPerformed(ActionEvent e) {
+                            line = "ATTACK" + String.valueOf(attackMenu.getSelectedItem()).replaceAll("■", "");
+                            synchronized(syncLock) { syncLock.notifyAll(); }
+                            try { Thread.sleep(10); } catch (Exception s) { }
+                            populateAttackMenu();
+                        }
+                    });
+                    attackMenus.put(currPlayer.name, attackMenu);
 
                     // 'INVE' command button
                     JButton btn_inve = new JButton("INVENTORY");
@@ -638,6 +654,7 @@ public class GUI_2 extends JFrame implements UserInterface {
                     card.add(equipMenu);
                     card.add(consumeMenu);
                     card.add(buyMenu);
+                    card.add(attackMenu);
                     card.add(btn_inve);
                     card.add(btn_insp);
                     card.add(btn_N);
@@ -1061,6 +1078,32 @@ public class GUI_2 extends JFrame implements UserInterface {
     }//end populateConsumeMenu()
 
 
+    // populate attack menu
+    public void populateAttackMenu() {
+        String n                     = currPlayer.name;
+        List<Character>   characters = currPlayer.currPlace.placeCharacters;
+        ArrayList<String> names      = new ArrayList<String>();
+        names.add("ATTACK");
+
+        for (Character c : characters)
+            if (!n.equalsIgnoreCase(c.name()))
+                names.add("■ " + c.name().toUpperCase());
+
+        attackMenus.get(n).setModel(new DefaultComboBoxModel(names.toArray()));
+
+        if (attackMenus.get(n).getItemCount() > 1) {
+            attackMenus.get(n).setEnabled(true);
+            attackMenus.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            attackMenus.get(n).setToolTipText("ATTACK CHARACTER");
+        }
+        else {
+            attackMenus.get(n).setEnabled(false);
+            attackMenus.get(n).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            attackMenus.get(n).setToolTipText("");
+        }
+    }
+
+
     // populate all menus
     private void populateAllMenus() {
         populateGetMenu();
@@ -1069,6 +1112,7 @@ public class GUI_2 extends JFrame implements UserInterface {
         populateEquipMenu();
         populateConsumeMenu();
         populateBuyMenu();
+        populateAttackMenu();
     }//end populateAllMenus()
 
 
