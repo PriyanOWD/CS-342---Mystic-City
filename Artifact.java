@@ -180,4 +180,10 @@ public class Artifact {
                            ID(), name(), pattern(), value(), weight(),
                            description().replaceAll("(?m)^", "      ")));
     }//end print()
+    
+//    @Override
+//    public void equals(Object art)
+//    {
+//        
+//    }
 }//end Artifact class

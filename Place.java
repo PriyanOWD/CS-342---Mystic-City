@@ -164,7 +164,6 @@ public class Place
             if(ft.wither())
                 toRem.add(ft);
         }
-
         footPrints.removeAll(toRem);
     }
 

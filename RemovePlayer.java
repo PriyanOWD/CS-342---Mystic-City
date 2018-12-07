@@ -31,7 +31,7 @@ public class RemovePlayer extends Move {
 
         printIO.display(String.format("\n%s, YOU\'RE DEAD!\n",
                 p.name().toUpperCase()));
-
+        Game.numActive--;
         try { Thread.sleep(2000); } catch (Exception e) { }
 
         return true;

@@ -35,7 +35,11 @@ public class GoPlayer extends Go {
         prevPlace.removeCharacter(p);                      // remove from place
         p.setCurrentPlace(prevPlace.followDirection(arg)); // update place
         p.getCurrentPlace().addCharacter(p);               // add to place
-        if (p.reachedExit()) System.exit(0);         // exit if reached exit
+        if (p.reachedExit()) 
+        {
+            new RemovePlayer(p); 
+            return true;         // exit if reached exit
+        }
 
         else if (p.getCurrentPlace() != prevPlace) { // match found :
             if (p.placeName().matches("Room.*"))     //   place is room

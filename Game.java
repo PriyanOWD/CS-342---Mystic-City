@@ -13,7 +13,10 @@
  */
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 
 // Game class to encapsulate attributes and methods for Game object
@@ -22,9 +25,10 @@ public class Game {
     private String               name;               // game name
     private int                  ver;                // game version
     public  int                  numPlayers;         // # of players
+    public static int            numActive;
     private ArrayList<Character> characters;         // collection of characters
 
-
+    private static HashMap<String,ArrayList<String>> tickets = new  HashMap<String,ArrayList<String>>();
     // constructor for Game class
     public Game(Scanner sc, int num) {
         try {
@@ -53,10 +57,6 @@ public class Game {
 
             System.out.printf("\nWelcome to %s!\n",          // print name
                               name().replace("\t", " ").replace("!", ""));
-
-            int n = UI.requestInterface();
-            IO ourIO = IO.getIO();
-            ourIO.selectInterface(n);
         } catch (Exception e) { e.printStackTrace(); }       // exception
     }//end class constructor
 
@@ -67,29 +67,6 @@ public class Game {
     public int    version()                 { return ver;        }
     // add character to collection of characters
     public void   addCharacter(Character c) { characters.add(c); }
-
-
-    // main infinite loop to play game
-    public void play() {
-        IO gameIO = IO.getIO();
-        for(;;) {                             // infinite loop :
-            for (Character c : characters) {  //   iterate thru characters :
-                checkWinner();                //   check winner
-                if (c.isActive && c instanceof Player) {
-                    Player p = (Player) c;
-                    gameIO.switchCard(p, p.currPlace);
-                    if (p.currHP > 0) p.look(2);
-                }
-                while (!c.makeMove())        //     make move until "GO"
-                {
-                    IO.getIO().update();
-                }
-            }//end for...
-
-            Place.updatePlaces();
-        }//end for(;;)...
-    }//end play()
-
 
     // parse header + allocate places, directions, characters or artifacts
     private void allocateObjects(Scanner sc, String str) {
@@ -144,6 +121,7 @@ public class Game {
                     c = new Player  (sc, version(), ++playerNum);
                 
                 addCharacter(c);                        // add to collection
+                tickets.put(c.name,new ArrayList<String>());
             }//end for...
         } catch (Exception e) { e.printStackTrace(); }  // exception
     }//end allocateCharacters()
@@ -209,7 +187,6 @@ public class Game {
                 numActivePlayers++;
             }
         }
-
         if (numActivePlayers < 2) {
             printIO.display(String.format("%s, YOU WIN. CONGRATULATIONS!\n",
                     p.name.toUpperCase()));
@@ -217,4 +194,74 @@ public class Game {
             System.exit(0);
         }
     }//end declareWinner()
+    
+    
+    public static void addTicket(String name,String desc)
+    {
+//        System.out.println(name);
+//        ArrayList<String> list = tickets.get(name);
+//        if(list == null)
+//            System.out.println("LIST IS NULL");
+//        if(tickets.get(name) == null)
+//            System.out.println("TICKETS GET " +name+ " IS NULL");
+//        
+//        Set<String> set = tickets.keySet();
+//        {
+//            for(String s: set)
+//            {
+//                System.out.println("KEY ->" + s + ": list is ");
+//                if(tickets.get(s) == null)
+//                    System.out.println("NULL\n");
+//                else
+//                    System.out.println("NOT NOT NOT NULL\n");
+//            }
+//        }
+        //System.out.println(name +  desc);
+        tickets.get(name).add(desc);
+    }
+    
+    public static void updateTickets(String name, ArrayList<String> list)
+    {
+        for(String s: list)
+        {
+           tickets.remove(s); 
+        } 
+    }
+    
+    // main infinite loop to play game
+    public void play() {
+        IO gameIO = IO.getIO();
+        for(;;) {                             // infinite loop :
+            for (Character c : characters) {  //   iterate thru characters :
+                ArrayList<String> usedStrings = new ArrayList<String>();
+                if (c.isActive && c instanceof Player) {
+                    Player p = (Player) c;
+                    gameIO.switchCard(p, p.currPlace);
+                    checkWinner();//   check winner
+                    for(String s: tickets.get(c.name))
+                    {
+                        gameIO.display(s);
+                        usedStrings.add(s);
+                    }
+                    updateTickets(c.name,usedStrings);
+                    if (p.currHP > 0) p.look(2);
+                }
+                else
+                {
+                    for(String s: tickets.get(c.name))
+                    {
+                        gameIO.display(s);
+                        usedStrings.add(s);
+                    }
+                    updateTickets(c.name,usedStrings);
+                }
+                while (!c.makeMove())        //     make move until "GO"
+                {
+                    IO.getIO().update();
+                }
+            }//end for...
+
+            Place.updatePlaces();
+        }//end for(;;)...
+    }//end play()
 }//end Game class

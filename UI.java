@@ -15,7 +15,7 @@ public class UI implements DecisionMaker {
 
     public Move getMove(Character c) {
         // REMOVE PLAYER     : dead
-        if (c.currHP == 0 && c.isActive && c instanceof Player)
+        if (c.currHP <= 0 && c.isActive && c instanceof Player)
             return new RemovePlayer((Player) c);
 
         IO printIO = IO.getIO();
@@ -44,6 +44,10 @@ public class UI implements DecisionMaker {
         // "USE"     command : use artifact to unlock door
         else if (a.matches("USE.*"))
             return new Use((Player) c, a);
+        
+        // "ATTACK"     command : use artifact to unlock door
+        else if (a.matches("ATTACK.*"))
+            return new AttackPlayer((Player) c, a);
 
         // "EQUIP"   command : equip artifact
         else if (a.matches("EQUIP.*"))
@@ -136,28 +140,6 @@ public class UI implements DecisionMaker {
     }//end requestPlayerName()
 
 
-    // request game interface interface
-    public static int requestInterface() {
-        System.out.printf("\n");
-        for (;;) {
-            System.out.printf("\nPlease select an interface.\n" +
-                              "0 : Text Interface\n"            +
-                              "1 : GUI #1\n"                    +
-                              "2 : GUI #2\n"                    +
-                              "3 : GUI #3\n"                    +
-                              ">> ");                           // request inter
-            int n = 0;
-            try {
-                Scanner sc = KeyboardScanner.getKeyboardScanner();
-                Scanner s = new Scanner(sc.nextLine().trim());  // read input
-                if (s.hasNextInt()) n = s.nextInt();            // get #
-                s.close();                                      // close scanner
-                if (n > -1 && n < 4) return n;                  // return #
-            } catch (Exception e) { e.printStackTrace(); }      // exception
-        }//end for (;;)...
-    }//end requestInterface()
-
-
     // request match number for potential matched Artifact objects
     // for use in "GET", "DROP" and "USE" commands
     public static int requestNumber(ArrayList<Artifact> matches, String str) {
@@ -169,6 +151,7 @@ public class UI implements DecisionMaker {
                                 ++n, str, a.name().toLowerCase()));
             n = 0;
             try {
+                //Scanner sc = KeyboardScanner.getKeyboardScanner();
                 Scanner s = new Scanner(printIO.getLine().trim());// read input
                 if (s.hasNextInt()) n = s.nextInt();            // get #
                 s.close();                                      // close scanner

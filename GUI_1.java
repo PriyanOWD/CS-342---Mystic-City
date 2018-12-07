@@ -71,6 +71,8 @@ public class GUI_1 extends JFrame implements UserInterface {
         def ("default.jpg"),
         DZ  ("DZ.png"),
         SZ  ("SZ.jpg"),
+        death ("death.png"),
+        win ("win.png"),
         mkt ("market.png");
         
         private JLabel bg;
@@ -98,16 +100,6 @@ public class GUI_1 extends JFrame implements UserInterface {
     // constructor for GUI_1 class
     public GUI_1() { 
         
-        allTextBox = new TreeMap<String, JTextArea>();
-        Set<Map.Entry<Integer,Character>> allChars = Character.characterTree.entrySet();
-        this.setResizable(false);
-        this.setName("MAGICAL GIRL FORCE GO!!! (GUI #1)");
-        this.setSize(1995, 1400);
-        
-        JPanel cards = new JPanel();
-        cards.setOpaque(false);
-        cards.setSize(2000, 1500);
-        cards.setLayout(new CardLayout());
         ImageIcon statIcon = null;
         try{
             statIcon = new ImageIcon(javax.imageio.ImageIO.read(new File("statsIcon.png")).getScaledInstance(1000, 90, Image.SCALE_SMOOTH));
@@ -118,6 +110,17 @@ public class GUI_1 extends JFrame implements UserInterface {
             ribIcon = new ImageIcon(javax.imageio.ImageIO.read(new File("ribbon.png")).getScaledInstance(800, 200, Image.SCALE_SMOOTH));
         } catch(Exception e){System.out.println("Image not found");}
         
+        allTextBox = new TreeMap<String, JTextArea>();
+        Set<Map.Entry<Integer,Character>> allChars = Character.characterTree.entrySet();
+        this.setResizable(false);
+        this.setName("MAGICAL GIRL FORCE GO!!! (GUI #1)");
+        this.setSize(1995, 1400);
+        
+        JPanel cards = new JPanel();
+        cards.setOpaque(false);
+        cards.setSize(2000, 1500);
+        cards.setLayout(new CardLayout());
+
         for(Map.Entry<Integer,Character> tuple: allChars)
         {
             if (tuple.getValue() instanceof Player)
@@ -203,33 +206,48 @@ public class GUI_1 extends JFrame implements UserInterface {
                 });
                  
                 List<JButton> buttonNorths =  new ArrayList<JButton>();
-                buttonNorths.add(createChildButton("North-NorthEast","GO NNE",650,600,buttonNorths ));
-                buttonNorths.add(createChildButton("NorthEast","GO NE",500,600,buttonNorths  ));
-                buttonNorths.add(createChildButton("NorthWest","GO NW",350,600,buttonNorths ));
-                buttonNorths.add(createChildButton("North-NorthWest","GO NNW",200,600,buttonNorths ));
-                JButton buttonN = createParentButton("North","GO N",buttonNorths,450,700);
+                buttonNorths.add(createChildButton("NORTH-NORTHEAST","GO NNE",650,600,buttonNorths,Color.WHITE ));
+                buttonNorths.add(createChildButton("NORTHEAST","GO NE",500,600,buttonNorths,Color.WHITE  ));
+                buttonNorths.add(createChildButton("NORTHWEST","GO NW",350,600,buttonNorths,Color.WHITE ));
+                buttonNorths.add(createChildButton("NORTH-NORTHWEST","GO NNW",200,600,buttonNorths,Color.WHITE ));
+                JButton buttonN = createParentButton("NORTH","GO N",buttonNorths,450,700,Color.WHITE);
 
                 
                 List<JButton> buttonSouths =  new ArrayList<JButton>();
-                buttonSouths.add(createChildButton("South-SouthEast", "GO SSE",650,1000,buttonSouths));
-                buttonSouths.add(createChildButton("SouthEast", "GO SE",500,1000,buttonSouths));
-                buttonSouths.add(createChildButton("South-West", "GO SW",350,1000,buttonSouths));
-                buttonSouths.add(createChildButton("South-SouthWest", "GO SSW",200,1000,buttonSouths));
-                JButton buttonS = createParentButton("South","GO S",buttonSouths,450,900);
+                buttonSouths.add(createChildButton("SOUTH-SOUTHEAST", "GO SSE",650,1000,buttonSouths,Color.WHITE));
+                buttonSouths.add(createChildButton("SOUTHEAST", "GO SE",500,1000,buttonSouths,Color.WHITE));
+                buttonSouths.add(createChildButton("SOUTH-WEST", "GO SW",350,1000,buttonSouths,Color.WHITE));
+                buttonSouths.add(createChildButton("SOUTH-SOUTHWEST", "GO SSW",200,1000,buttonSouths,Color.WHITE));
+                JButton buttonS = createParentButton("SOUTH","GO S",buttonSouths,450,900,Color.WHITE);
                 
                 List<JButton> buttonEasts =  new ArrayList<JButton>(3);
                 for(int i = 0; i < 3; ++i)
                     buttonEasts.add(new JButton());
-                buttonEasts.add(createChildButton("East-SouthEast", "GO ESE",650,750,buttonEasts));
-                buttonEasts.add(createChildButton("East-SouthWest", "GO ENE",650,850,buttonEasts));
-                JButton buttonE = createParentButton("East","GO E",buttonEasts,550,800);
+                buttonEasts.add(createChildButton("EAST-SOUTHEAST", "GO ESE",650,750,buttonEasts,Color.WHITE));
+                buttonEasts.add(createChildButton("EAST-SOUTHWEST", "GO ENE",650,850,buttonEasts,Color.WHITE));
+                JButton buttonE = createParentButton("EAST","GO E",buttonEasts,550,800,Color.WHITE);
                 
                 List<JButton> buttonWests =  new ArrayList<JButton>(3);
                 for(int i = 0; i < 3; ++i)
                     buttonWests.add(new JButton());
-                buttonWests.add(createChildButton("West-SouthWest", "GO WSW",200,750,buttonWests));
-                buttonWests.add(createChildButton("West-NorthWest", "GO WNW",200,850,buttonWests));
-                JButton buttonW = createParentButton("West","GO W",buttonWests,350,800);
+                buttonWests.add(createChildButton("WEST-SOUTHWEST", "GO WSW",200,750,buttonWests,Color.WHITE));
+                buttonWests.add(createChildButton("WEST-NORTHWEST", "GO WNW",200,850,buttonWests,Color.WHITE));
+                JButton buttonW = createParentButton("WEST","GO W",buttonWests,350,800,Color.WHITE);
+                
+                JButton quitButton = new JButton("QUIT");
+                quitButton.setBounds(1875,1225,100,100);
+                quitButton.setOpaque(true);
+                quitButton.setContentAreaFilled(true);
+                quitButton.setBackground(Color.WHITE);
+                quitButton.setBorderPainted(true);
+                quitButton.setVisible(true);
+                quitButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        line = "QUIT";
+                        synchronized (syncLock) { syncLock.notifyAll(); }
+                    }
+                });
                 
                 JButton upButton = new JButton("UP");
                 upButton.setBounds(450,800,100,50);
@@ -276,7 +294,7 @@ public class GUI_1 extends JFrame implements UserInterface {
                     }
                 });
                 
-                JButton inspButton = new JButton("Inspect");
+                JButton inspButton = new JButton("INSPECT");
                 inspButton.setBounds(450,1100,100,100);
                 inspButton.setOpaque(true);
                 inspButton.setContentAreaFilled(true);
@@ -291,7 +309,7 @@ public class GUI_1 extends JFrame implements UserInterface {
                     }
                 });
                 
-                JButton lookButton = new JButton("Look");
+                JButton lookButton = new JButton("LOOK");
                 lookButton.setBounds(450,400,100,100);
                 lookButton.setOpaque(true);
                 lookButton.setContentAreaFilled(true);
@@ -306,12 +324,40 @@ public class GUI_1 extends JFrame implements UserInterface {
                     }
                 });
                 
-                currPlace = currPlayer.currPlace;
-                JButton useButton = createDDButton("USE","USE", false,50,500);
-                JButton getButton = createDDButton("GET","GET", true,850,500);
-                JButton equipButton = createDDButton("EQUIP","EQUIP", false,50,1100);
-                JButton dropButton = createDDButton("DROP","DROP", false,850,1100);
+                    JPopupMenu buyStuff = new JPopupMenu();
+                    buyStuff.add(new JMenuItem(new AbstractAction("Guess 0") {
+                        public void actionPerformed(ActionEvent e) {
+                            line = "BUY 0";
+                            synchronized (syncLock) { syncLock.notifyAll();}
+                        }
+                        }));
+                    buyStuff.add(new JMenuItem(new AbstractAction("Guess 1") {
+                        public void actionPerformed(ActionEvent e) {
+                            line = "BUY 1";
+                            synchronized (syncLock) { syncLock.notifyAll();}
+                        }
+                        }));
+                JButton buyButton = new JButton("BUY");
+                buyButton.setBounds(850,800,100,100);
+                buyButton.setBackground(new Color(237,188,66));
+                buyButton.addMouseListener(new MouseAdapter() {
+                    public void mousePressed(MouseEvent e) {
+                        buyStuff.show(e.getComponent(), e.getX(), e.getY());
+                    }
+                });
                 
+                currPlace = currPlayer.currPlace;
+                JButton useButton = createDDButton("USE","USE", false,false,50,500,Color.WHITE);
+                JButton consButton = createDDButton("CONSUME","CONSUME", false,false,50,800,Color.WHITE);
+                JButton getButton = createDDButton("GET","GET", true,false,850,500,Color.WHITE);
+                JButton equipButton = createDDButton("EQUIP","EQUIP", false,false,50,1100,Color.WHITE);
+                JButton dropButton = createDDButton("DROP","DROP", false,false,850,1100,Color.WHITE);
+                JButton attackButton = createDDButton("ATTACK","ATTACK", false,true,450,1200,new Color(178,0,29));
+                
+                card.add(quitButton);
+                card.add(buyButton);
+                card.add(consButton);
+                card.add(attackButton);
                 card.add(lookButton);
                 card.add(equipButton);
                 card.add(dropButton);
@@ -395,18 +441,26 @@ public class GUI_1 extends JFrame implements UserInterface {
         CardLayout cl = (CardLayout)cards.getLayout();
         currTextBox = allTextBox.get(currPlayer.name);
         cl.show(cards, currPlayer.name); 
-        changeBG(place);
+        changeBG();
 //        cards.revalidate();
 //        cards.repaint();
 //        this.validate();
 //        this.repaint();
     }
     
-    private void changeBG(Place place)
+    private void changeBG()
     {
         this.remove(backGround);
         try{
-            if(place instanceof Market)
+            if(currPlayer.currHP <= 0)
+            {
+                backGround = bgType.death.getBG();
+            }
+            else if(Game.numActive < 2)
+            {
+                backGround = bgType.win.getBG();
+            }
+            else if(currPlace instanceof Market)
             {
 //              img = ImageIO.read(new File("market.png")); 
 //              panel.setContentPane(new JLabel(new ImageIcon(img)));
@@ -414,7 +468,7 @@ public class GUI_1 extends JFrame implements UserInterface {
 //              backgroundImage  = javax.imageio.ImageIO.read(new File("default.jpg"));
                 backGround = bgType.mkt.getBG();
             }
-            else if(place instanceof DangerZone)
+            else if(currPlace instanceof DangerZone)
             {
 //              img = ImageIO.read(new File("market.png")); 
 //              panel.setContentPane(new JLabel(new ImageIcon(img)));
@@ -422,7 +476,7 @@ public class GUI_1 extends JFrame implements UserInterface {
 //              backgroundImage  = javax.imageio.ImageIO.read(new File("default.jpg"));
                 backGround = bgType.DZ.getBG();
             }
-            else if(place instanceof SafeZone)
+            else if(currPlace instanceof SafeZone)
             {
 //              img = ImageIO.read(new File("market.png")); 
 //              panel.setContentPane(new JLabel(new ImageIcon(img)));
@@ -430,6 +484,7 @@ public class GUI_1 extends JFrame implements UserInterface {
 //              backgroundImage  = javax.imageio.ImageIO.read(new File("default.jpg"));
                 backGround = bgType.SZ.getBG();
             }
+
             else 
             {
 //              img = ImageIO.read(new File("market.png")); 
@@ -453,36 +508,56 @@ public class GUI_1 extends JFrame implements UserInterface {
         this.repaint();
     }
     
-    private JButton createDDButton(String name,String command,boolean PorP, int x, int y)
+    private JButton createDDButton(String name,String command,boolean PlayorPlac ,boolean InveorChar, int x, int y,Color col)
     {
         JButton button = new JButton(name);
         button.setBounds(x,y,100,100);
-        button.setBackground(Color.WHITE);
+        button.setBackground(col);
         button.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 JPopupMenu popup = new JPopupMenu();
-                for(Artifact arti: (PorP)?currPlace.placeArtifacts:currPlayer.inventory)
+                if(InveorChar)
                 {
-                 popup.add(new JMenuItem(new AbstractAction(arti.name()) {
-                     public void actionPerformed(ActionEvent e) {
-                         line = command + " "+ arti.name();
-                         synchronized (syncLock) { syncLock.notifyAll();}
-                     }
-                     }));
+                    for(Character c: currPlace.placeCharacters)
+                    {
+                        if(c.isActive && !c.name.equals(currPlayer.name))
+                        {
+                             popup.add(new JMenuItem(new AbstractAction(c.name()) {
+                             public void actionPerformed(ActionEvent e) {
+                                 line = command + " "+ c.name();
+                                 synchronized (syncLock) { syncLock.notifyAll();}
+                             }
+                             }));
+                        }
+                    }
+                    popup.show(e.getComponent(), e.getX(), e.getY());
+                    
                 }
-                popup.show(e.getComponent(), e.getX(), e.getY());
+                else
+                {
+                    for(Artifact arti: (PlayorPlac)?currPlace.placeArtifacts:currPlayer.inventory)
+                    {
+                     popup.add(new JMenuItem(new AbstractAction(arti.name()) {
+                         public void actionPerformed(ActionEvent e) {
+                             line = command + " "+ arti.name();
+                             synchronized (syncLock) { syncLock.notifyAll();}
+                         }
+                         }));
+                    }
+                    popup.show(e.getComponent(), e.getX(), e.getY());
+                }
             }
         });
         return button;
     }
     
-    private JButton createChildButton(String name,String command, int x , int y,List<JButton> list  )
+    private JButton createChildButton(String name,String command, int x , int y,List<JButton> list,Color col )
     {
         JButton childButton = new JButton(name);
         childButton.setBounds(x,y,150,100);
         childButton.setOpaque(true);
         childButton.setContentAreaFilled(true);
-        childButton.setBackground(Color.WHITE);
+        childButton.setBackground(col);
         childButton.setBorderPainted(true);
         childButton.setVisible(false);
         //button.setFont(new Font("Courier New", Font.BOLD, 14));
@@ -513,12 +588,12 @@ public class GUI_1 extends JFrame implements UserInterface {
         return childButton;
         
     }
-    private JButton createParentButton(String name,String command, List<JButton> list,int x, int y)
+    private JButton createParentButton(String name,String command, List<JButton> list,int x, int y,Color col)
     {
         JButton parentButton= new JButton();
         parentButton.setBounds(x,y,100,100);
         parentButton.setOpaque(true);
-        parentButton.setBackground(Color.WHITE);
+        parentButton.setBackground(col);
         parentButton.setText(name);
         parentButton.setHorizontalAlignment(SwingConstants.CENTER);
         parentButton.setVerticalAlignment(SwingConstants.CENTER);

@@ -34,6 +34,7 @@ public class Player extends Character
         accessory = null;
         primary   = null;
         offhand   = null;
+        Game.numActive++;
     }
 
 
@@ -51,6 +52,7 @@ public class Player extends Character
         accessory = null;
         primary   = null;
         offhand   = null;
+        Game.numActive++;
     }
 
 

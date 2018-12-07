@@ -21,10 +21,11 @@ public class Commands extends Move {
                        "       \'USE <ARTIFACT>\' : use key\n"               +
                        "     \'EQUIP <ARTIFACT>\' : equip armor or weapon\n" +
                        "   \'CONSUME <ARTIFACT>\' : consume food or potion\n"+
-                       "   \'BUY <NUMBER [1,2]>\' : win a prize\n"           +
+                       "\'BUY <NUMBER [0 or 1]>\' : win a prize\n"           +
                        "              \'INSPECT\' : display footprints\n"    +
                        "                 \'INVE\' : check inventory\n"       +
                        "                \'STATS\' : check stats\n"           +
+                       "  \'ATTACK   <CHARACTER>\': attack player\n"         + 
                        "       \'GO <DIRECTION>\' : go to direction "        +
                        "(e.g., N, S, E, W, U, D)");
         UI.printDivider(2);       // print divider
