@@ -198,46 +198,33 @@ public class GUI_1 extends JFrame implements UserInterface {
                 });
                  
                 List<JButton> buttonNorths =  new ArrayList<JButton>();
-                buttonNorths.add(createChildButton("North-NorthEast","GO NNE",125,600,buttonNorths ));
-                buttonNorths.add(createChildButton("NorthEast","GO NE",275,600,buttonNorths  ));
-                buttonNorths.add(createChildButton("North","GO N",425,600,buttonNorths ));
-                buttonNorths.add(createChildButton("NorthWest","GO NW",575,600,buttonNorths ));
-                buttonNorths.add(createChildButton("North-NorthWest","GO NNW",725,600,buttonNorths ));
-                JLabel buttonNLabel = createButtonLabel("North",buttonNorths,450,700);
-//              buttonN.getModel().addChangeListener(new ChangeListener() {
-//              @Override
-//              public void stateChanged(ChangeEvent e) {
-//                  ButtonModel model = (ButtonModel) e.getSource();
-//                  if (model.isRollover()) {
-//                      buttonNNE.setVisible(true);
-//                  } else {}
-//              }});
+                buttonNorths.add(createChildButton("North-NorthEast","GO NNE",650,600,buttonNorths ));
+                buttonNorths.add(createChildButton("NorthEast","GO NE",500,600,buttonNorths  ));
+                buttonNorths.add(createChildButton("NorthWest","GO NW",350,600,buttonNorths ));
+                buttonNorths.add(createChildButton("North-NorthWest","GO NNW",200,600,buttonNorths ));
+                JButton buttonN = createParentButton("North","GO N",buttonNorths,450,700);
+
                 
-                List<JButton> buttonSouths =  new ArrayList<JButton>(5);
-                for(int i = 0; i < 5; ++i)
-                    buttonSouths.add(new JButton());
-                buttonSouths.add(createChildButton("South-SouthEast", "GO SSE",125,1000,buttonSouths));
-                buttonSouths.add(createChildButton("SouthEast", "GO SE",275,1000,buttonSouths));
-                buttonSouths.add(createChildButton("South", "GO S",425,1000,buttonSouths));
-                buttonSouths.add(createChildButton("South-West", "GO SW",575,1000,buttonSouths));
-                buttonSouths.add(createChildButton("South-SouthWest", "GO SSW",725,1000,buttonSouths));
-                JLabel buttonSLabel = createButtonLabel("South",buttonSouths,450,900);
+                List<JButton> buttonSouths =  new ArrayList<JButton>();
+                buttonSouths.add(createChildButton("South-SouthEast", "GO SSE",650,1000,buttonSouths));
+                buttonSouths.add(createChildButton("SouthEast", "GO SE",500,1000,buttonSouths));
+                buttonSouths.add(createChildButton("South-West", "GO SW",350,1000,buttonSouths));
+                buttonSouths.add(createChildButton("South-SouthWest", "GO SSW",200,1000,buttonSouths));
+                JButton buttonS = createParentButton("South","GO S",buttonSouths,450,900);
                 
                 List<JButton> buttonEasts =  new ArrayList<JButton>(3);
                 for(int i = 0; i < 3; ++i)
                     buttonEasts.add(new JButton());
-                buttonEasts.add(createChildButton("East-SouthEast", "GO ESE",650,700,buttonEasts));
-                buttonEasts.add(createChildButton("East", "GO E",650,800,buttonEasts));
-                buttonEasts.add(createChildButton("East-SouthWest", "GO ESW",650,900,buttonEasts));
-                JLabel buttonELabel = createButtonLabel("East",buttonEasts,550,800);
+                buttonEasts.add(createChildButton("East-SouthEast", "GO ESE",650,750,buttonEasts));
+                buttonEasts.add(createChildButton("East-SouthWest", "GO ESW",650,850,buttonEasts));
+                JButton buttonE = createParentButton("East","GO E",buttonEasts,550,800);
                 
                 List<JButton> buttonWests =  new ArrayList<JButton>(3);
                 for(int i = 0; i < 3; ++i)
                     buttonWests.add(new JButton());
-                buttonWests.add(createChildButton("West-SouthEast", "GO WSE",200,700,buttonWests));
-                buttonWests.add(createChildButton("West", "GO W",200,800,buttonWests));
-                buttonWests.add(createChildButton("West-SouthWest", "GO WSW",200,900,buttonWests));
-                JLabel buttonWLabel = createButtonLabel("West",buttonWests,350,800);
+                buttonWests.add(createChildButton("West-SouthEast", "GO WSE",200,750,buttonWests));
+                buttonWests.add(createChildButton("West-SouthWest", "GO WSW",200,850,buttonWests));
+                JButton buttonW = createParentButton("West","GO W",buttonWests,350,800);
                 
                 JButton upButton = new JButton("UP");
                 upButton.setBounds(450,800,100,50);
@@ -285,7 +272,7 @@ public class GUI_1 extends JFrame implements UserInterface {
                 });
                 
                 JButton inspButton = new JButton("Inspect");
-                inspButton.setBounds(450,500,100,100);
+                inspButton.setBounds(450,1100,100,100);
                 inspButton.setOpaque(true);
                 inspButton.setContentAreaFilled(true);
                 inspButton.setBackground(Color.WHITE);
@@ -307,19 +294,19 @@ public class GUI_1 extends JFrame implements UserInterface {
                 
                 for(JButton but: buttonNorths)
                     card.add(but);
-                card.add(buttonNLabel);
+                card.add(buttonN);
                 
                 for(JButton but: buttonSouths)
                     card.add(but);
-                card.add(buttonSLabel);
+                card.add(buttonS);
                 
                 for(JButton but: buttonEasts)
                     card.add(but);
-                card.add(buttonELabel);
+                card.add(buttonE);
                 
                 for(JButton but: buttonWests)
                     card.add(but);
-                card.add(buttonWLabel);
+                card.add(buttonW);
                 
                 card.add(scrollPane);
                 card.add(playerLabel);
@@ -461,17 +448,23 @@ public class GUI_1 extends JFrame implements UserInterface {
         return childButton;
         
     }
-    private JLabel createButtonLabel(String name,List<JButton> list,int x, int y)
+    private JButton createParentButton(String name,String command, List<JButton> list,int x, int y)
     {
-        JLabel parentLabel= new JLabel();
-        parentLabel.setBounds(x,y,100,100);
-        parentLabel.setOpaque(true);
-        parentLabel.setFont(new Font("Courier New", Font.BOLD, 30));
-        parentLabel.setBackground(Color.WHITE);
-        parentLabel.setText(name);
-        parentLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        parentLabel.setVerticalAlignment(SwingConstants.CENTER);
-        parentLabel.addMouseListener(new MouseAdapter() {
+        JButton parentButton= new JButton();
+        parentButton.setBounds(x,y,100,100);
+        parentButton.setOpaque(true);
+        parentButton.setBackground(Color.WHITE);
+        parentButton.setText(name);
+        parentButton.setHorizontalAlignment(SwingConstants.CENTER);
+        parentButton.setVerticalAlignment(SwingConstants.CENTER);
+        parentButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                line = command;
+                synchronized (syncLock) { syncLock.notifyAll(); }
+            }
+        });
+        parentButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 for(JButton but: list)
@@ -483,7 +476,7 @@ public class GUI_1 extends JFrame implements UserInterface {
                     but.setVisible(false);
             }
         });
-        return parentLabel;
+        return parentButton;
     }
 
     // display
