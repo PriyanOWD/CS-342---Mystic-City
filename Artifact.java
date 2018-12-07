@@ -57,8 +57,17 @@ public class Artifact {
             else{}
         } catch (Exception e) { e.printStackTrace(); }       // exception
     }//end class constructor
-
-
+    
+    Artifact()
+    {
+        ID = -999;          
+        name = "";        
+        description = ""; 
+        value = -999;       
+        mobility = -999;   
+        keyPattern = -999; 
+    }
+    
     // return artifact ID
     public int     ID()          { return ID;           }
     // return artifact name
@@ -124,6 +133,16 @@ public class Artifact {
         else printIO.display(String.format("Sorry, the %s is not a key.\n",
                              name().toLowerCase()));
     }//end use()
+    
+    public void copy(Artifact other)
+    {
+        other.ID = this.ID;        
+        other.name = this.name;      
+        other.description = this.description;
+        other.value = this.value;       
+        other.mobility = this.mobility; 
+        other. keyPattern = this.keyPattern;
+    }
 
 
     // display artifact information for use in "LOOK" command

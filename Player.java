@@ -176,21 +176,22 @@ public class Player extends Character
         }
     }
 
-
     public String getStats()
     {
         StringBuilder stats = new StringBuilder();
         stats.append("Health:");
-        stats.append(currHP);
+        stats.append(Integer.toString(this.currHP));
         stats.append("/");
-        stats.append(maxHP);
-        stats.append("\n");
+        stats.append(Integer.toString(this.maxHP));
+        stats.append("   ");
         stats.append("Attack:");
-        stats.append(attack);
+        stats.append(Integer.toString(this.attack));
+        stats.append("   ");
         stats.append("Defense:");
-        stats.append(defense);
+        stats.append(Integer.toString(this.defense));
+        stats.append(" ");
         stats.append("Magic Points:");
-        stats.append(mp);
+        stats.append(Integer.toString(this.mp));
         return stats.toString();
     }
 

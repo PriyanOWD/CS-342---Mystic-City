@@ -37,17 +37,25 @@ public class Buy extends Move {
                     return false;
                 }
 
+                Artifact prize = new Artifact();
+                boolean gotPrize = false;
                 int userRoll = Integer.valueOf(arg.replace("BUY ", "").trim());
-                Artifact prize = m.winItem(userRoll);
+                gotPrize = m.winItem(userRoll,prize);
 
-                if (prize == null)
-                    printIO.display("Sorry, you guessed the wrong number! " +
-                            "Try again.\n");
-                else {
-                    p.addArtifact(prize);
-                    printIO.display(String.format("Congratulations! You won the %.\n",
-                            prize.name().toLowerCase()));
+                if(gotPrize)
+                {
+                    if (prize.name() == "")
+                        printIO.display("Sorry, you guessed the wrong number! " +
+                                "Try again.\n");
+                    else {
+                        p.addArtifact(prize);
+                        printIO.display(String.format("Congratulations! You won the %s.\n",
+                                prize.name().toLowerCase()));
+                    }
                 }
+                else
+                    printIO.display(String.format("Sorry, the %s is closed",
+                            m.name().toLowerCase()));   
             }
         }
         else printIO.display("Enter \'BUY\' followed by a random number [1,5].\n");
