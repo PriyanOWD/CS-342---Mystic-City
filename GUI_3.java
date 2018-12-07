@@ -1,9 +1,8 @@
 /* CS342 Term Project Part V: Wrap Up and Graphical User Interface
- * Name: Joey Voorhees
- * netid: svoorh2
- * Date: Dec 6th, 2018
+ * Name:   Joey Voorhees
+ * NetID:  svoorh2
+ * Date:   Dec 6th, 2018
  */
-
 
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -14,20 +13,12 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Insets;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -37,6 +28,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.text.DefaultCaret;
+
+
 public class GUI_3 extends JFrame implements UserInterface {
     private String    line;
     private Player    currPlayer;
