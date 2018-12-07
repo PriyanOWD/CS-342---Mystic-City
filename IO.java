@@ -23,9 +23,8 @@ public class IO {
     private static IO ourIO;
     private UserInterface ui;
 
-
     // constructor
-    private IO()                               { selectInterface(GUI_2); }
+    private IO()                               { selectInterface(GUI_1); }
     // display
     public void display(String message)        { ui.display(message);    }
     // get line

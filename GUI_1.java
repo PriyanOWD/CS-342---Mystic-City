@@ -16,6 +16,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -36,6 +38,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
@@ -124,7 +127,7 @@ public class GUI_1 extends JFrame implements UserInterface {
                 JLabel playerLabel = new JLabel(){
                     @Override public void paintComponent(Graphics g) {
                         super.paintComponent(g);
-                        g.drawString(currPlayer.name, getWidth()/4,60);
+                        g.drawString(currPlayer.name, (getWidth()/2) - (currPlayer.name.length()*15),60);
                     }
                 };
                 playerLabel.setBounds(0, 0, 1000, 100);
@@ -169,6 +172,30 @@ public class GUI_1 extends JFrame implements UserInterface {
                 scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
                 //scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
                 allTextBox.put(tuple.getValue().name, textBox);
+                
+                JTextField outputBox = new JTextField("Enter command");
+                outputBox.setBounds(1000,1100,990,100);
+                outputBox.setBackground(new Color(106, 103, 102)); 
+                outputBox.setFont(fontCN);
+                outputBox.setForeground(Color.WHITE);
+                outputBox.setBorder(BorderFactory.createMatteBorder(15, 15, 15, 15, new Color(50,50,50)));
+                outputBox.addActionListener(new ActionListener() {
+                    @Override public void actionPerformed(ActionEvent e) {
+                        line = outputBox.getText();
+                        outputBox.setText("");
+                        synchronized(syncLock) { syncLock.notifyAll(); }
+                    }
+                });
+                outputBox.addFocusListener(new FocusListener() {
+                    @Override public void focusGained(FocusEvent e) {
+                        outputBox.setText("");
+                        outputBox.setForeground(Color.WHITE);
+                    }
+                    @Override public void focusLost(FocusEvent e) {
+                        outputBox.setText("Enter command");
+                        outputBox.setForeground(Color.WHITE);
+                    }
+                });
                  
                 List<JButton> buttonNorths =  new ArrayList<JButton>();
                 buttonNorths.add(createChildButton("North-NorthEast","GO NNE",125,600,buttonNorths ));
@@ -211,6 +238,72 @@ public class GUI_1 extends JFrame implements UserInterface {
                 buttonWests.add(createChildButton("West", "GO W",200,800,buttonWests));
                 buttonWests.add(createChildButton("West-SouthWest", "GO WSW",200,900,buttonWests));
                 JLabel buttonWLabel = createButtonLabel("West",buttonWests,350,800);
+                
+                JButton upButton = new JButton("UP");
+                upButton.setBounds(450,800,100,50);
+                upButton.setOpaque(true);
+                upButton.setContentAreaFilled(true);
+                upButton.setBackground(Color.WHITE);
+                upButton.setBorderPainted(true);
+                upButton.setVisible(true);
+                upButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        line = "GO UP";
+                        synchronized (syncLock) { syncLock.notifyAll(); }
+                    }
+                });
+                
+                JButton downButton = new JButton("DOWN");
+                downButton.setBounds(450,850,100,50);
+                downButton.setOpaque(true);
+                downButton.setContentAreaFilled(true);
+                downButton.setBackground(Color.WHITE);
+                downButton.setVisible(true);
+                downButton.setBorderPainted(true);
+                downButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        line = "GO DOWN";
+                        synchronized (syncLock) { syncLock.notifyAll(); }
+                    }
+                });
+                
+                JButton inveButton = new JButton("Inventory");
+                inveButton.setBounds(450,500,100,100);
+                inveButton.setOpaque(true);
+                inveButton.setContentAreaFilled(true);
+                inveButton.setBackground(Color.WHITE);
+                inveButton.setVisible(true);
+                inveButton.setBorderPainted(true);
+                inveButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        line = "INVENTORY";
+                        synchronized (syncLock) { syncLock.notifyAll(); }
+                    }
+                });
+                
+                JButton inspButton = new JButton("Inspect");
+                inspButton.setBounds(450,500,100,100);
+                inspButton.setOpaque(true);
+                inspButton.setContentAreaFilled(true);
+                inspButton.setBackground(Color.WHITE);
+                inspButton.setVisible(true);
+                inspButton.setBorderPainted(true);
+                inspButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        line = "INSPECT";
+                        synchronized (syncLock) { syncLock.notifyAll(); }
+                    }
+                });
+                
+                card.add(inspButton);
+                card.add(inveButton);
+                card.add(upButton);
+                card.add(downButton);
+                card.add(outputBox);
                 
                 for(JButton but: buttonNorths)
                     card.add(but);

@@ -189,7 +189,7 @@ public class Player extends Character
         stats.append("   ");
         stats.append("Defense:");
         stats.append(Integer.toString(this.defense));
-        stats.append(" ");
+        stats.append("   ");
         stats.append("Magic Points:");
         stats.append(Integer.toString(this.mp));
         return stats.toString();
