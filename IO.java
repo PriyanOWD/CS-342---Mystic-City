@@ -25,7 +25,7 @@ public class IO {
 
 
     // constructor
-    private IO()                               { selectInterface(TEXT); }
+    private IO()                               { selectInterface(GUI_2); }
     // display
     public void display(String message)        { ui.display(message);    }
     // get line
