@@ -29,7 +29,8 @@ public class Buy extends Move {
                 printIO.display(String.format("Sorry, the %s isn\'t a market. " +
                         "Buy things at a market.\n", p.currPlace.name()));
                 return false;
-            } else {
+            }
+            else {
                 Market m = (Market) p.currPlace;
                 if (m.soldOut()) {
                     printIO.display(String.format("Sorry, everything at the %s is sold out!\n",
@@ -45,7 +46,7 @@ public class Buy extends Move {
                             "Try again.\n");
                 else {
                     p.addArtifact(prize);
-                    printIO.display(String.format("Congratulations! You won the %.\n",
+                    printIO.display(String.format("Congratulations! You won the %s.\n",
                             prize.name().toLowerCase()));
                 }
             }
