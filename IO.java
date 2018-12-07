@@ -47,5 +47,12 @@ public class IO {
         else if (i == GUI_1) ui = new GUI_1();
         else if (i == GUI_2) ui = new GUI_2();
         else if (i == GUI_3) ui = new GUI_3();
-    }
+    }//end selectInterface()
+
+
+    // update for GUI #1
+    public void update() {
+        if (ui instanceof GUI_1)
+            ((GUI_1) ui).update();
+    }//end update()
 }//end IO class
