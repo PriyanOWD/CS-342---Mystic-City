@@ -47,7 +47,7 @@ public class IO {
         if      (i == TEXT ) ui = new TextInterface();
         else if (i == GUI_1) ui = new GUI_1();
         else if (i == GUI_2) ui = new GUI_2();
-        else if (i == GUI_3) ui = new GUI_1();
+        else if (i == GUI_3) ui = new GUI_3();
         else                 ui = new GUI_2();
     }
 }//end IO class
