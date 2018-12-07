@@ -55,6 +55,10 @@ public class Game {
 
             System.out.printf("\nWelcome to %s!\n",          // print name
                               name().replace("\t", " ").replace("!", ""));
+
+            int n = UI.requestInterface();
+            IO ourIO = IO.getIO();
+            ourIO.selectInterface(n);
         } catch (Exception e) { e.printStackTrace(); }       // exception
     }//end class constructor
 

@@ -24,7 +24,7 @@ public class IO {
     private UserInterface ui;
 
     // constructor
-    private IO()                               { selectInterface(GUI_1); }
+    private IO()                               { }
     // display
     public void display(String message)        { ui.display(message);    }
     // get line
@@ -47,6 +47,5 @@ public class IO {
         else if (i == GUI_1) ui = new GUI_1();
         else if (i == GUI_2) ui = new GUI_2();
         else if (i == GUI_3) ui = new GUI_3();
-        else                 ui = new GUI_2();
     }
 }//end IO class
