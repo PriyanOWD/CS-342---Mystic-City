@@ -61,42 +61,42 @@ public class Place
             IO fpIO = IO.getIO();
             if (ttlTurns == remTurns )
             {
-                fpIO.display("A fresh pair of tracks is on the floor");
-                fpIO.display("You believe it belongs to " + charName);
+                fpIO.display("A fresh pair of tracks is on the floor.\n");
+                fpIO.display("You believe it belongs to " + charName.replace("The ", "the ").replace("A ", "the ") + ".\n");
             }
             else if (remTurns > 1)
             {
                 Random rndBool = new Random();
-                fpIO.display("A faint trail of footprints line the floor");
+                fpIO.display("A faint trail of footprints line the floor.\n");
                 fpIO.display("You somewhat remember who they belong to -> ");
                 
-                for(char ch: charName.toCharArray())
+                for(char ch: charName.replace("The ", "").replace("A ", "").toCharArray())
                 {
                     if( rndBool.nextBoolean() )
                         fpIO.display(String.valueOf(ch));
                     else
                         fpIO.display("_");
                 }
-                System.out.println();
+                fpIO.display(".\n");
             }
             
             else if (remTurns == 1)
             {
                 Random rndBool = new Random();
-                fpIO.display("A very faint trail of footprints line the floor");
-                fpIO.display("You can't really recall who they belong to -> _");
-                for(char ch: charName.substring(1).toCharArray())
+                fpIO.display("A very faint trail of footprints line the floor.\n");
+                fpIO.display("You can\'t really recall who they belong to -> _");
+                for(char ch: charName.replace("The ", "").replace("A ", "").substring(1).toCharArray())
                 {
                     if( rndBool.nextBoolean() )
                         fpIO.display(String.valueOf(ch));
                     else
                         fpIO.display("_");
                 }
-                System.out.println();
+                fpIO.display(".\n");
             }
             
             else
-                fpIO.display("FootPrint decayed");
+                fpIO.display("The footprint decayed.\n");
         }
     }
     
@@ -131,13 +131,13 @@ public class Place
         IO fpIO = IO.getIO();
         if(footPrints.size() == 0)
         {
-            fpIO.display("No footprints discovered here");
+            fpIO.display("No footprints were discovered here.\n");
             return;
         }
         int count = 1;
         for(footPrint ft: footPrints)
         {
-            fpIO.display(count++ + ":");
+            fpIO.display(count++ + ": ");
             ft.display();
         }
     }

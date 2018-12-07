@@ -33,50 +33,43 @@ public class Market extends Place
        try {
            sc = new Scanner(new File("marketItems.gdf"));
        } 
-       catch (FileNotFoundException e) {               // not found
+       catch (FileNotFoundException e) {                    // not found
            System.err.printf("\nFile \'%s\' could not be found.\n", "marketItems.gdf");
            return;
        } 
-       catch (Exception e) { e.printStackTrace(); return;}    // exception
+       catch (Exception e) { e.printStackTrace(); return; } // exception
       
        allocateMArtifacts(sc, ver);
        sc.close();
    }
-   
+
    public void addToInve(Artifact item)
    {
        mInventory.add(item);
    }
-   
+
    public boolean soldOut()
    {
        return mInventory.size() == 0;
    }
-   
+
    public boolean winItem(int num, Artifact item)
    {
        if(!active)
            return false;
-       
+
        Random rand = new Random();
        int roll = rand.nextInt(2);
        if( (roll+1) == num)
        {
-               //Close the market during a win
+           //Close the market during a win
            (mInventory.get(rand.nextInt(mInventory.size()-1))).copy(item);
        } 
        //active = !active; //Close the market win or lose
        active = !active;
        return true;
    }
-   
-//   @Override
-//   public void removeCharacter(Character charVar)
-//   {
-//       super.removeCharacter(charVar);
-//       active = !active;
-//   }
-   
+
    @Override()
    public void update()
    {
@@ -85,15 +78,15 @@ public class Market extends Place
        if(!active)  
            active = !active;
    }
-   
+
    private void allocateMArtifacts(Scanner sc, int ver) {
        try {
            Scanner s = new Scanner(CleanLineScanner.getCleanLine(sc));
            int num   = s.skip("MARKETITEMS").nextInt(); // get # of Martifacts
            int mID = Integer.parseInt(sc.nextLine());
-           
+
            Market m = Market.getMarketbyID(mID);
-           
+
            s.close();                                 // close scanner
 
            for (int i = 0; i < num; i++) {            // allocate artifacts :
@@ -105,6 +98,4 @@ public class Market extends Place
            }//end for...
        } catch (Exception e) {  System.out.println("Market error");e.printStackTrace(); } // exception
    }//end allocateArtifacts()
-   
-   
 }
