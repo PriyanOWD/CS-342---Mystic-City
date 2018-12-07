@@ -50,7 +50,7 @@ public class GUI_3 extends JFrame implements UserInterface {
             btnENE, btnWNW, btnESE,
             btnWSW, btnSSE, btnSSW;
     public static final Object syncLock = new Object();
-
+//constructor
     public GUI_3(){
         Set<Map.Entry<Integer,Character>> characters
                 = Character.characterTree.entrySet();
@@ -75,15 +75,10 @@ public class GUI_3 extends JFrame implements UserInterface {
         btnSSW = new TreeMap<String, JButton>();
 
         try{
-
-                //Image img =
-          //          ImageIO.read(new File("template.png"))
-                // .getScaledInstance(1200, 800, Image.SCALE_SMOOTH);
                 this.setTitle("MAGICAL GIRL FORCE GO!!! (GUI #3)");
                 this.setSize(1200, 800);
                 this.setResizable(false);
                 this.setBackground(new Color(147, 117, 196));
-               // this.setContentPane(new JLabel(new ImageIcon(img)));
 
                 JPanel cards = new JPanel();
                 cards.setSize(1200, 800);
@@ -94,7 +89,7 @@ public class GUI_3 extends JFrame implements UserInterface {
                 for (Map.Entry<Integer,Character> c : characters) {
                     if (c.getValue() instanceof Player) {
                         currPlayer = (Player) c.getValue();
-
+//label for player name
                         JLabel playerName;
                         playerName = new JLabel(currPlayer.name);
                         playerName.setToolTipText(currPlayer.description);
@@ -102,7 +97,7 @@ public class GUI_3 extends JFrame implements UserInterface {
                         playerName.setForeground(Color.WHITE);
                         //playerName.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                         playerName.setFont(new Font("Helvetica Neue", Font.BOLD, 30));
-
+//displays attack
                         JLabel attack = new JLabel("Attack:");
                         attack.setBounds(875, 72, 80, 20);
                         attack.setForeground(new Color(220, 221, 222));
@@ -119,7 +114,7 @@ public class GUI_3 extends JFrame implements UserInterface {
                         attackStat.setForeground(new Color(220, 221, 222));
                         //attackStat.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                         attackStat.setFont(new Font("Helvetica Neue", Font.PLAIN, 17));
-
+//displays defense
                         JLabel defense = new JLabel("Defense:");
                         defense.setBounds(875, 92, 80, 20);
                         defense.setForeground(new Color(220, 221, 222));
@@ -136,7 +131,7 @@ public class GUI_3 extends JFrame implements UserInterface {
                         defenseStat.setForeground(new Color(220, 221, 222));
                         //defenseStat.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                         defenseStat.setFont(new Font("Helvetica Neue", Font.PLAIN, 17));
-
+//displays HP
                         JLabel hp = new JLabel("HP:");
                         hp.setBounds(875, 112, 80, 20);
                         hp.setForeground(new Color(220, 221, 222));
@@ -153,7 +148,7 @@ public class GUI_3 extends JFrame implements UserInterface {
                         hpStat.setForeground(new Color(220, 221, 222));
                         //hpStat.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                         hpStat.setFont(new Font("Helvetica Neue", Font.PLAIN, 17));
-
+//displays MP
                         JLabel mp = new JLabel("MP:");
                         mp.setBounds(875, 132, 80, 20);
                         mp.setForeground(new Color(220, 221, 222));
@@ -171,12 +166,7 @@ public class GUI_3 extends JFrame implements UserInterface {
                         //mpStat.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                         mpStat.setFont(new Font("Helvetica Neue", Font.PLAIN, 17));
 
-//                        JPanel statsbox = new JPanel();
-//                        statsbox.setBackground(new Color(47, 49, 54));
-//                        statsbox.setForeground(new Color(131, 148, 150));
-//                        statsbox.setOpaque(true);
-
-
+//Game display
                         messageBox = new JTextArea();
                         messageBox.setBackground(new Color(47, 49, 54));
                         messageBox.setForeground(Color.WHITE);
@@ -218,7 +208,7 @@ public class GUI_3 extends JFrame implements UserInterface {
                             }
                         });
 
-
+//create directional buttons 
                         JButton btn_N = new JButton("N");
                         btn_N.setBounds(1000, 427, 40, 40);
                         btn_N.setFont(new Font("Helvetica Neue", Font.BOLD,
@@ -237,7 +227,7 @@ public class GUI_3 extends JFrame implements UserInterface {
                             }
                         });
                         btnN.put(currPlayer.name, btn_N);
-
+//south button
                         JButton btn_S = new JButton("S");
                         btn_S.setBounds(1000, 626, 40, 40);
                         btn_S.setFont(new Font("Helvetica Neue", Font.BOLD,
@@ -256,7 +246,7 @@ public class GUI_3 extends JFrame implements UserInterface {
                             }
                         });
                         btnS.put(currPlayer.name, btn_S);
-
+//east button
                         JButton btn_E = new JButton("E");
                         btn_E.setBounds(1100, 525, 40, 40);
                         btn_E.setFont(new Font("Helvetica Neue", Font.BOLD,
@@ -275,7 +265,7 @@ public class GUI_3 extends JFrame implements UserInterface {
                             }
                         });
                         btnE.put(currPlayer.name, btn_E);
-
+//west button
                         JButton btn_W = new JButton("W");
                         btn_W.setBounds(900, 525, 40, 40);
                         btn_W.setFont(new Font("Helvetica Neue", Font.BOLD,
@@ -294,7 +284,7 @@ public class GUI_3 extends JFrame implements UserInterface {
                             }
                         });
                         btnW.put(currPlayer.name, btn_W);
-
+//up button
                         JButton btn_U = new JButton("U");
                         btn_U.setBounds(975, 525, 40, 40);
                         btn_U.setFont(new Font("Helvetica Neue", Font.BOLD,
@@ -313,7 +303,7 @@ public class GUI_3 extends JFrame implements UserInterface {
                             }
                         });
                         btnU.put(currPlayer.name, btn_U);
-
+//down button
                         JButton btn_D = new JButton("D");
                         btn_D.setBounds(1025, 525, 40, 40);
                         btn_D.setFont(new Font("Helvetica Neue", Font.BOLD,
@@ -332,7 +322,7 @@ public class GUI_3 extends JFrame implements UserInterface {
                             }
                         });
                         btnD.put(currPlayer.name, btn_D);
-
+//NE
                         JButton btn_NE = new JButton("NE");
                         btn_NE.setBounds(1100, 427, 40, 40);
                         btn_NE.setFont(new Font("Helvetica Neue", Font.BOLD,
@@ -351,7 +341,7 @@ public class GUI_3 extends JFrame implements UserInterface {
                             }
                         });
                         btnNE.put(currPlayer.name, btn_NE);
-
+//NW
                         JButton btn_NW = new JButton("NW");
                         btn_NW.setBounds(900, 427, 40, 40);
                         btn_NW.setFont(new Font("Helvetica Neue", Font.BOLD,
@@ -370,7 +360,7 @@ public class GUI_3 extends JFrame implements UserInterface {
                             }
                         });
                         btnNW.put(currPlayer.name, btn_NW);
-
+//SE
                         JButton btn_SE = new JButton("SE");
                         btn_SE.setBounds(1100, 626, 40, 40);
                         btn_SE.setFont(new Font("Helvetica Neue", Font.BOLD,
@@ -389,7 +379,7 @@ public class GUI_3 extends JFrame implements UserInterface {
                             }
                         });
                         btnSE.put(currPlayer.name, btn_SE);
-
+//SW
                         JButton btn_SW = new JButton("SW");
                         btn_SW.setBounds(900, 626, 40, 40);
                         btn_SW.setFont(new Font("Helvetica Neue", Font.BOLD,
@@ -408,7 +398,7 @@ public class GUI_3 extends JFrame implements UserInterface {
                             }
                         });
                         btnSW.put(currPlayer.name, btn_SW);
-
+//NNE
                         JButton btn_NNE = new JButton("NNE");
                         btn_NNE.setBounds(1050, 427, 40, 40);
                         btn_NNE.setFont(new Font("Helvetica Neue", Font.BOLD,
@@ -427,7 +417,7 @@ public class GUI_3 extends JFrame implements UserInterface {
                             }
                         });
                         btnNNE.put(currPlayer.name, btn_NNE);
-
+//NNW
                         JButton btn_NNW = new JButton("NNW");
                         btn_NNW.setBounds(950, 427, 40, 40);
                         btn_NNW.setFont(new Font("Helvetica Neue", Font.BOLD,
@@ -446,7 +436,7 @@ public class GUI_3 extends JFrame implements UserInterface {
                             }
                         });
                         btnNNW.put(currPlayer.name, btn_NNW);
-
+//ENE
                         JButton btn_ENE = new JButton("ENE");
                         btn_ENE.setBounds(1100, 476, 40, 40);
                         btn_ENE.setFont(new Font("Helvetica Neue", Font.BOLD,
@@ -465,7 +455,7 @@ public class GUI_3 extends JFrame implements UserInterface {
                             }
                         });
                         btnENE.put(currPlayer.name, btn_ENE);
-
+//WNW
                         JButton btn_WNW = new JButton("WNW");
                         btn_WNW.setBounds(900, 476, 40, 40);
                         btn_WNW.setFont(new Font("Helvetica Neue", Font.BOLD,
@@ -484,7 +474,7 @@ public class GUI_3 extends JFrame implements UserInterface {
                             }
                         });
                         btnWNW.put(currPlayer.name, btn_WNW);
-
+//ESE
                         JButton btn_ESE = new JButton("ESE");
                         btn_ESE.setBounds(1100, 576, 40, 40);
                         btn_ESE.setFont(new Font("Helvetica Neue", Font.BOLD,
@@ -503,7 +493,7 @@ public class GUI_3 extends JFrame implements UserInterface {
                             }
                         });
                         btnESE.put(currPlayer.name, btn_ESE);
-
+//WSW
                         JButton btn_WSW = new JButton("WSW");
                         btn_WSW.setBounds(900, 576, 40, 40);
                         btn_WSW.setFont(new Font("Helvetica Neue", Font.BOLD,
@@ -522,7 +512,7 @@ public class GUI_3 extends JFrame implements UserInterface {
                             }
                         });
                         btnWSW.put(currPlayer.name, btn_WSW);
-
+//SSE
                         JButton btn_SSE = new JButton("SSE");
                         btn_SSE.setBounds(1050, 626, 40, 40);
                         btn_SSE.setFont(new Font("Helvetica Neue", Font.BOLD,
@@ -541,7 +531,7 @@ public class GUI_3 extends JFrame implements UserInterface {
                             }
                         });
                         btnSSE.put(currPlayer.name, btn_SSE);
-
+//SSW
                         JButton btn_SSW = new JButton("SSW");
                         btn_SSW.setBounds(950, 626, 40, 40);
                         btn_SSW.setFont(new Font("Helvetica Neue", Font.BOLD,
@@ -560,7 +550,7 @@ public class GUI_3 extends JFrame implements UserInterface {
                             }
                         });
                         btnSSW.put(currPlayer.name, btn_SSW);
-
+//adds everything to the window
                         JPanel card = new JPanel();
                         card.setLayout(null);
                         card.setOpaque(false);
@@ -608,11 +598,14 @@ public class GUI_3 extends JFrame implements UserInterface {
     }
 
     @Override
+    //displays the current game area to 
+    //the player
     public void display(String message) {
         messageBox.append(message);
     }
 
     @Override
+    
     public String getLine() {
         try {
             synchronized(syncLock) {
@@ -625,6 +618,7 @@ public class GUI_3 extends JFrame implements UserInterface {
     }
 
     @Override
+    //switches the game mode between players
     public void switchCard(Player p, Place place) {
         JPanel cards    = (JPanel) this.getContentPane().getComponent(0);
         CardLayout card = (CardLayout) cards.getLayout();
